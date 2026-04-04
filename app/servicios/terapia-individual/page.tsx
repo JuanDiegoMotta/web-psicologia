@@ -1,0 +1,1 @@
+export default function TerapiaIndividualPage() {return <h1>Terapia individual</h1>}

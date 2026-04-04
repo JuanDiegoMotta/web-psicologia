@@ -1,0 +1,1 @@
+export default function GuiasPage() {return <h1>Guías</h1>}

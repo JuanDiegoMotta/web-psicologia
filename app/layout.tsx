@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 // Cargamos una fuente optimizada de Google Fonts
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,20 +20,14 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        {/* Aquí construiremos nuestro Navbar más adelante */}
-        <header className="bg-gray-100 p-4 text-center border-b">
-          <p className="text-gray-500">Aquí irá el Navbar</p>
-        </header>
-
+        <Navbar/>        
         {/* 'children' representa el contenido de cada página individual (como tu page.tsx) */}
         <div className="min-h-screen">
           {children}
         </div>
 
         {/* Aquí construiremos nuestro Footer más adelante */}
-        <footer className="bg-gray-100 p-4 text-center border-t">
-          <p className="text-gray-500">Aquí irá el Footer</p>
-        </footer>
+        <Footer/>
       </body>
     </html>
   );

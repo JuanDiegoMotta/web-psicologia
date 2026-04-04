@@ -1,0 +1,1 @@
+export default function TerapiaInfantojuvenilPage() {return <h1>Terapia infantojuvenil</h1>}

@@ -1,0 +1,1 @@
+export default function TerapiaParejaPage() {return <h1>Terapia de pareja</h1>}
