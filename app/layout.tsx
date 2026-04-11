@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import WhatsAppButton from '@/components/WhatsAppButton'; // <-- Importamos nuestro nuevo componente
+
 // Cargamos una fuente optimizada de Google Fonts
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,15 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <Navbar/>        
         {/* 'children' representa el contenido de cada página individual (como tu page.tsx) */}
         <div className="min-h-screen">
           {children}
         </div>
 
-        {/* Aquí construiremos nuestro Footer más adelante */}
         <Footer/>
+        
+        {/* El botón de WhatsApp flotará sobre toda la web */}
+        <WhatsAppButton />
       </body>
     </html>
   );
