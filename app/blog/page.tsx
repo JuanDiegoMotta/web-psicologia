@@ -89,6 +89,7 @@ export default function BlogPage() {
                   src={post.imageUrl}
                   alt={post.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw" // <-- ¡Aquí está la magia que quita los errores!
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Etiqueta de Categoría Flotante */}

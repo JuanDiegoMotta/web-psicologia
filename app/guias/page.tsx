@@ -30,11 +30,12 @@ export default function GuiasDigitalesPage() {
               <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               {/* Aquí va el mockp de tu libro */}
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                 <Image 
-                  src="/images/guides/hablar-para-conectar.png" 
+                <Image 
+                  src="/images/guides/hablar-para-conectar.png" // (Asegúrate de que esta ruta coincida con la tuya)
                   alt="Libro digital Hablar para Conectar" 
                   fill 
                   className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
             </div>
@@ -74,11 +75,12 @@ export default function GuiasDigitalesPage() {
             <div className="w-full h-64 bg-[#FFF5F3] relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
               <div className="absolute inset-0 bg-pink-200 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                 <Image 
+                <Image 
                   src="/images/guides/conexion-real.png" 
                   alt="Libro digital Conexión Real" 
                   fill 
                   className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
             </div>
@@ -118,11 +120,12 @@ export default function GuiasDigitalesPage() {
             <div className="w-full h-64 bg-pink-50 relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
               <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                 <Image 
+                <Image 
                   src="/images/guides/amor-en-equilibrio.png" 
                   alt="Libro digital Amor en Equilibrio" 
                   fill 
                   className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
             </div>

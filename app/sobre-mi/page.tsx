@@ -22,10 +22,6 @@ export default function SobreMiPage() {
 
           {/* Columna Derecha: Mosaico de 5 Fotos (CSS Grid) */}
           <div className="w-full lg:w-7/12 h-[500px] md:h-[600px]">
-            {/* El Grid: 
-              En celular (default): 2 columnas. 
-              En escritorio (md): 4 columnas.
-            */}
             <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-3 md:gap-4 h-full w-full">
               
               {/* Foto 1 (Principal y más grande) */}
@@ -35,7 +31,8 @@ export default function SobreMiPage() {
                   fill 
                   className="object-cover object-[60%_center]" 
                   alt="Daniela Vargas en el bosque" 
-                  priority // Carga prioritaria porque es la imagen más grande
+                  priority 
+                  sizes="(max-width: 768px) 100vw, 50vw" 
                 />
               </div>
 
@@ -44,9 +41,10 @@ export default function SobreMiPage() {
                 <Image 
                   src="/images/daniela/daniela-consulta.jpg" 
                   fill 
-                  /* Usamos object-right para anclar la imagen a la derecha y no cortarte */
                   className="object-cover object-right" 
                   alt="Daniela Vargas en consulta" 
+                  priority // Añadido para el LCP
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
 
@@ -57,6 +55,8 @@ export default function SobreMiPage() {
                   fill 
                   className="object-cover" 
                   alt="Daniela Vargas en el río" 
+                  priority // Añadido para el LCP
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
 
@@ -67,6 +67,7 @@ export default function SobreMiPage() {
                   fill 
                   className="object-cover object-[70%_center]" 
                   alt="Daniela Vargas en su escritorio" 
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
 
@@ -77,6 +78,7 @@ export default function SobreMiPage() {
                   fill 
                   className="object-cover" 
                   alt="Daniela Vargas con tablet" 
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
 
@@ -94,8 +96,9 @@ export default function SobreMiPage() {
           src="/images/daniela/daniela-consulta.jpg" 
           alt="Psicóloga Daniela Vargas" 
           fill
-          priority // Carga prioritaria para imagen de fondo
-          className="object-cover object-center z-0 brightness-[0.8]" // brightness para legibilidad
+          priority 
+          sizes="100vw" // Al ser fondo, siempre ocupa el 100%
+          className="object-cover object-center z-0 brightness-[0.8]" 
         />
 
         {/* Capa 2: Contenedor de Contenido (Alineado a la izquierda) */}
@@ -110,7 +113,7 @@ export default function SobreMiPage() {
               Creo firmemente que la salud mental es un pilar de la vida, aunque muchas veces el mundo la subestime. Desde niña tuve una conexión especial con el sufrimiento humano, una sensibilidad que me llevó a elegir la psicología no solo como carrera, sino como vocación.
             </p>
             <p>
-              Soy <strong className="text-gray-800 font-semibold">Psicóloga Clínica</strong>, formada específicamente en trastornos emocionales y afectivos como la <span className="text-pink-500 font-medium">ansiedad, depresión, duelo y trauma</span>. 
+              Soy <strong className="text-gray-800 font-semibold">Psicóloga Clínica</strong>, formada específicamente en trastornos emocionales y afectivos como la <span className="text-pink-500 font-medium">ansiedad, depresión, duelo y trauma</span>. 
             </p>
             <p>
               A lo largo de mi trayectoria y en constante actualización, he acompañado a cientos de personas en Latinoamérica, España y Estados Unidos, siempre con una meta clara: ofrecer un estilo de terapia <strong className="text-gray-800 font-semibold">basado en evidencia, humano y cálido</strong>.

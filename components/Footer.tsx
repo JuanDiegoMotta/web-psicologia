@@ -11,8 +11,31 @@ export default function Footer() {
           <div>
             <p className="mb-2 font-medium text-pink-300">Sígueme en mis redes 🧠</p>
             <div className="flex gap-2 justify-center md:justify-start">
-              <Image src="/icons/socials/fb.svg" alt="Facebook" width={27} height={27} className="brightness-0 invert opacity-100" />
-              <Image src="/icons/socials/insta.svg" alt="Instagram" width={30} height={30} className="brightness-0 invert opacity-100" />
+              {/* Enlace de Facebook */}
+              <a 
+                href="https://www.facebook.com/Psicologadanivargas/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-200"
+              >
+              <Image 
+                src="/icons/socials/fb.svg" 
+                alt="Facebook" 
+                width={27} 
+                height={27} 
+                className="brightness-0 invert opacity-100 w-[27px] h-[27px]" 
+              />
+              </a>
+              
+              {/* Enlace de Instagram */}
+              <a 
+                href="https://www.instagram.com/psicologa_danivargas/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-200"
+              >
+                <Image src="/icons/socials/insta.svg" alt="Instagram" width={30} height={30} className="brightness-0 invert opacity-100" />
+              </a>
             </div>
           </div>
           
