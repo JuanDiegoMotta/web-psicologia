@@ -1,7 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { useContactForm } from '@/hooks/useContactForm';
 
 export default function HomePage() {
+  const {isSubmitting, handleFormAction} = useContactForm();
   return (
     <main className="flex flex-col w-full">
       {/* --- HERO SECTION --- */}
@@ -15,7 +19,7 @@ export default function HomePage() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
-          <source src="/video/hero-video.mp4" type="video/mp4"/>
+          <source src="/video/hero-video.mp4" type="video/mp4" />
           Tu navegador no soporta la etiqueta de video.
 
         </video>
@@ -27,7 +31,7 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight">
             Tu espacio seguro para <span className="text-pink-500">sanar</span> y <span className="text-pink-500">crecer</span>.
           </h1>
-          
+
           <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shasdow-sm">
             Te acompaño a través de terapia psicológica basada en evidencia para que recuperes la calma, la confianza y el sentido en tu vida.
           </p>
@@ -41,7 +45,7 @@ export default function HomePage() {
         </div>
       </section>
 
-{/*--- SECCIÓN SOBRE MÍ ---*/}
+      {/*--- SECCIÓN SOBRE MÍ ---*/}
       <section className="w-full py-24 px-6 bg-[#FFF5F3]/30">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 lg:gap-24">
 
@@ -63,7 +67,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight">
               Sobre mí
             </h2>
-            
+
             <div className="space-y-5 text-gray-600 md:text-lg leading-relaxed">
               <p>
                 Soy <strong className="text-gray-800 font-semibold">Dani Vargas</strong>, Psicóloga Clínica especializada en terapias basadas en evidencia como la Cognitivo Conductual y Terapias Contextuales.
@@ -74,7 +78,7 @@ export default function HomePage() {
               <p>
                 Junto a mi equipo, acompañamos a miles de personas en Colombia, Latinoamérica y Estados Unidos con un enfoque claro:
               </p>
-              
+
               {/* Cita Destacada (Blockquote) */}
               <div className="bg-pink-50 border-l-4 border-pink-400 p-4 rounded-r-lg mt-4 text-left">
                 <p className="font-medium text-gray-800 italic">
@@ -82,22 +86,22 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            
-            <Link 
-              href="/sobre-mi" 
+
+            <Link
+              href="/sobre-mi"
               className="mt-8 inline-block border-2 border-pink-400 text-pink-500 hover:bg-pink-400 hover:text-white font-medium py-3 px-8 rounded-full transition-colors"
             >
               Conóceme más
             </Link>
           </div>
-          
+
         </div>
       </section>
 
       {/* --- SECCIÓN: SERVICIOS --- */}
       <section className="w-full py-24 px-6 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto flex flex-col items-center">
-          
+
           {/* Encabezado de la sección */}
           <div className="text-center mb-16 max-w-2xl">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 tracking-tight">
@@ -110,7 +114,7 @@ export default function HomePage() {
 
           {/* Grid de Tarjetas de Servicios */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-            
+
             {/* Tarjeta 1: Individual */}
             <div className="bg-[#FFF5F3]/60 p-8 md:p-10 rounded-3xl border border-pink-100 flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
@@ -155,11 +159,11 @@ export default function HomePage() {
             </div>
 
           </div>
-          
+
           {/* Botón secundario global */}
           <div className="mt-16">
-            <Link 
-              href="/contacto" 
+            <Link
+              href="/contacto"
               className="bg-gray-800 hover:bg-gray-900 text-white font-medium py-4 px-10 rounded-full transition-colors shadow-md"
             >
               Agendar mi primera sesión
@@ -168,10 +172,10 @@ export default function HomePage() {
 
         </div>
       </section>
-{/* --- SECCIÓN: TESTIMONIOS --- */}
+      {/* --- SECCIÓN: TESTIMONIOS --- */}
       <section className="w-full py-24 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col items-center">
-          
+
           {/* Encabezado */}
           <div className="text-center mb-20 max-w-2xl">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 tracking-tight">
@@ -184,16 +188,16 @@ export default function HomePage() {
 
           {/* Grid de Testimonios (Con mayor gap-y para la versión móvil) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-8 w-full mt-4">
-            
+
             {/* Testimonio 1 */}
             <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
-                <Image 
-                  src="images/ilustrations/avatar-woman.svg" 
-                  alt="Avatar Mujer" 
-                  fill 
-                  className="object-cover" 
+                <Image
+                  src="images/ilustrations/avatar-woman.svg"
+                  alt="Avatar Mujer"
+                  fill
+                  className="object-cover"
                 />
               </div>
 
@@ -214,11 +218,11 @@ export default function HomePage() {
             <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
-                <Image 
-                  src="images/ilustrations/avatar-couple.svg" 
-                  alt="Avatar Pareja" 
-                  fill 
-                  className="object-cover pt-2" 
+                <Image
+                  src="images/ilustrations/avatar-couple.svg"
+                  alt="Avatar Pareja"
+                  fill
+                  className="object-cover pt-2"
                 />
               </div>
 
@@ -238,11 +242,11 @@ export default function HomePage() {
             <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
-                <Image 
-                  src="images/ilustrations/avatar-male.svg" 
-                  alt="Avatar Hombre" 
-                  fill 
-                  className="object-cover" 
+                <Image
+                  src="images/ilustrations/avatar-male.svg"
+                  alt="Avatar Hombre"
+                  fill
+                  className="object-cover"
                 />
               </div>
 
@@ -261,9 +265,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      
+
       {/* --- AQUÍ IRÁN LAS SIGUIENTES SECCIONES (Servicios, etc.) --- */}
-{/* --- SECCIÓN: CONTACTO RÁPIDO --- */}
+      {/* --- SECCIÓN: CONTACTO RÁPIDO --- */}
       <section className="w-full py-24 px-6  bg-gradient-to-b from-[#FFF5F3](50) to-pink-200/40 border-t border-pink-100">
         <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-pink-100/50">
 
@@ -300,45 +304,55 @@ export default function HomePage() {
           <div className="w-full lg:w-3/5 p-10 md:p-14">
             <h3 className="text-2xl font-bold text-gray-800 mb-6">Déjame tus datos</h3>
 
-            {/* Nota: Si vas a manejar el estado onSubmit aquí igual que en la página de contacto, 
-                recuerda poner 'use client'; en la primera línea del archivo de tu página de inicio. */}
-            <form className="space-y-5">
-              
+            <form id="contact-form" action={handleFormAction} className="space-y-5">
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <input
                   type="text"
+                  name="name" 
+                  id="name-home"
                   placeholder="Tu nombre *"
                   required
                   className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
                 />
                 <input
                   type="tel"
+                  name="cellphone" 
+                  id="cellphone-home"
                   placeholder="Celular / WhatsApp *"
                   required
                   className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
                 />
               </div>
-              
+
               <input
                 type="email"
+                name="email" 
+                id="email-home"
                 placeholder="Tu correo electrónico *"
                 required
                 className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
               />
-              
+
               <textarea
+                name="reason" 
+                id="reason-home"
                 rows={3}
                 placeholder="¿En qué te puedo ayudar? (Opcional)"
                 className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors resize-none text-gray-700"
               ></textarea>
 
               <button
-                type="button" 
-                className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5 mt-2"
+                type="submit" // Cambiado de "button" a "submit"
+                disabled={isSubmitting}
+                className={`w-full font-bold py-4 rounded-xl transition-all shadow-md transform mt-2 ${isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-gray-800 hover:bg-gray-900 text-white hover:-translate-y-0.5'
+                  }`}
               >
-                Enviar mensaje
+                {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
               </button>
-              
+
               <p className="text-xs text-gray-400 text-center mt-2">
                 Tus datos están protegidos por nuestra política de privacidad.
               </p>

@@ -1,22 +1,11 @@
-'use client'; // Necesario porque tendremos un formulario interactivo
+'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useContactForm } from '@/hooks/useContactForm';
 
 export default function ContactoPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Función para manejar el envío del formulario (Aquí luego conectarás EmailJS o tu backend)
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulamos un envío de 1 segundo
-    setTimeout(() => {
-      alert('¡Gracias por escribirme! Me pondré en contacto contigo muy pronto.');
-      setIsSubmitting(false);
-      (e.target as HTMLFormElement).reset();
-    }, 1000);
-  };
+  // Importamos la lógica centralizada
+  const { isSubmitting, handleFormAction } = useContactForm();
 
   return (
     <main className="flex flex-col w-full min-h-screen bg-[#FFF5F3]/30">
@@ -86,11 +75,11 @@ export default function ContactoPage() {
             </div>
           </div>
 
-          {/* Columna Derecha: Formulario */}
+          {/* Columna Derecha: Formulario (Ahora usando handleFormAction) */}
           <div className="w-full lg:w-3/5 p-10 md:p-14">
             <h3 className="text-2xl font-bold text-gray-800 mb-8">Déjame tus datos</h3>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form id="contact-form" action={handleFormAction} className="space-y-6">
               
               {/* Fila 1: Nombre y Celular */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,8 +88,9 @@ export default function ContactoPage() {
                   <input 
                     type="text" 
                     id="name" 
+                    name="name" // Obligatorio para FormData
                     required 
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors"
+                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors text-gray-700"
                     placeholder="Tu nombre"
                   />
                 </div>
@@ -109,8 +99,9 @@ export default function ContactoPage() {
                   <input 
                     type="tel" 
                     id="cellphone" 
+                    name="cellphone" // Obligatorio para FormData
                     required 
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors"
+                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors text-gray-700"
                     placeholder="+57 300 000 0000"
                   />
                 </div>
@@ -123,8 +114,9 @@ export default function ContactoPage() {
                   <input 
                     type="email" 
                     id="email" 
+                    name="email" // Obligatorio para FormData
                     required 
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors"
+                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors text-gray-700"
                     placeholder="tucorreo@ejemplo.com"
                   />
                 </div>
@@ -133,10 +125,11 @@ export default function ContactoPage() {
                   <input 
                     type="number" 
                     id="age" 
+                    name="age" // Obligatorio para FormData
                     required 
                     min="1"
                     max="99"
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors"
+                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors text-gray-700"
                     placeholder="Tu edad"
                   />
                 </div>
@@ -147,8 +140,9 @@ export default function ContactoPage() {
                 <label htmlFor="service" className="block text-sm font-bold text-gray-700 mb-2">Tipo de servicio de interés *</label>
                 <select 
                   id="service" 
+                  name="service" // Obligatorio para FormData
                   required
-                  defaultValue = ""
+                  defaultValue=""
                   className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors text-gray-700 appearance-none"
                 >
                   <option value="" disabled>Selecciona una opción</option>
@@ -165,8 +159,9 @@ export default function ContactoPage() {
                 <label htmlFor="reason" className="block text-sm font-bold text-gray-700 mb-2">Describe brevemente el motivo de tu consulta</label>
                 <textarea 
                   id="reason" 
+                  name="reason" // Obligatorio para FormData
                   rows={4}
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors resize-none"
+                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white transition-colors resize-none text-gray-700"
                   placeholder="Escribe aquí..."
                 ></textarea>
               </div>
@@ -176,6 +171,7 @@ export default function ContactoPage() {
                 <input 
                   type="checkbox" 
                   id="privacy" 
+                  name="privacy" 
                   required
                   className="mt-1 w-4 h-4 text-pink-500 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 focus:ring-2"
                 />
@@ -184,7 +180,7 @@ export default function ContactoPage() {
                 </label>
               </div>
 
-              {/* Botón de Enviar */}
+              {/* Botón de Enviar (Cambiado a type="submit") */}
               <button 
                 type="submit" 
                 disabled={isSubmitting}
