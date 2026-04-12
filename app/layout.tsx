@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import WhatsAppButton from '@/components/WhatsAppButton'; // <-- Importamos nuestro nuevo componente
+import WhatsAppButton from '@/components/WhatsAppButton';
+import { Analytics } from '@vercel/analytics/react';
 
 // Cargamos una fuente optimizada de Google Fonts
 const inter = Inter({ subsets: ["latin"] });
@@ -32,6 +33,7 @@ export default function RootLayout({
         
         {/* El botón de WhatsApp flotará sobre toda la web */}
         <WhatsAppButton />
+        <Analytics/>
       </body>
     </html>
   );
