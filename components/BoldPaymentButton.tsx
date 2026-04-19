@@ -36,6 +36,8 @@ export default function BoldPaymentButton({ amount, description }: BoldPaymentBu
 
       if (!data.hash) throw new Error('No se pudo generar la firma de seguridad');
 
+      console.log("Mi llave pública es:", process.env.BOLD_API_KEY);
+
       // 4. Inicializamos la pasarela de Bold
 
       const checkout = new window.BoldCheckout({
