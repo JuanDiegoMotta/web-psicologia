@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import BoldPaymentButton from '@/components/BoldPaymentButton';
 
 export default function GuiasDigitalesPage() {
   return (
@@ -150,14 +151,10 @@ export default function GuiasDigitalesPage() {
                 </p>
               </div>
 
-              <a 
-                href="https://pay.hotmart.com/R98082764Y?_gl=1*8lsf7m*_gcl_au*MTgyODM2NTcwNy4xNzU3NzM0NzAyLjE1MDQzNDkzNjMuMTc2MDA1MDQyNS4xNzYwMDUwNDc0*FPAU*MTgyODM2NTcwNy4xNzU3NzM0NzAy*_ga*MTc4ODU5NzUzMS4xNzU3NzM0NzAy*_ga_GQH2V1F11Q*czE3NjAwNTA0MDUkbzM5JGcxJHQxNzYwMDUwNDY3JGo2MCRsMCRoMTYzODkxNTEyOQ..&bid=1760050479338" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md"
-              >
-                Adquirir mi guía
-              </a>
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+              />
             </div>
           </div>
 
