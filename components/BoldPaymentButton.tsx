@@ -13,9 +13,10 @@ declare global {
 interface BoldPaymentButtonProps {
   amount: string; // Ejemplo: '150000' (Sin puntos ni comas)
   description: string;
+  orderPrefix: string;
 }
 
-export default function BoldPaymentButton({ amount, description }: BoldPaymentButtonProps) {
+export default function BoldPaymentButton({ amount, description, orderPrefix }: BoldPaymentButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -23,7 +24,7 @@ export default function BoldPaymentButton({ amount, description }: BoldPaymentBu
 
     try {
       // 1. Generamos un ID de orden único para esta venta
-      const orderId = `CITA-${Date.now()}`;
+      const orderId = `${orderPrefix}-${Date.now()}`;
       const currency = 'COP';
 
       // 2. Pedimos el Hash de Integridad a nuestro servidor seguro
@@ -46,7 +47,7 @@ export default function BoldPaymentButton({ amount, description }: BoldPaymentBu
         integritySignature: data.hash,
         description: description,
         // Aquí pondremos la URL a la que vuelve el cliente tras pagar:
-        redirectionUrl: `${window.location.origin}/guides`,
+        redirectionUrl: `${window.location.origin}/verificar-pago`,
       });
 
       // 5. ¡Abrimos la pasarela!
