@@ -1,119 +1,214 @@
-import { NextResponse } from 'next/server';
-import crypto from 'crypto';
-import { Resend } from 'resend';
+'use client';
 
-// Inicializamos Resend con tu llave secreta
-const resend = new Resend(process.env.RESEND_API_KEY);
+import Image from 'next/image';
+import BoldPaymentButton from '@/components/BoldPaymentButton';
 
-export async function POST(request: Request) {
-  try {
-    const signature = request.headers.get('x-bold-signature');
-    const secretKey = process.env.BOLD_SECRET_KEY;
+export default function GuiasDigitalesPage() {
+  console.log("Mi llave pública es:", process.env.NEXT_PUBLIC_BOLD_API_KEY);
+  return (
+    <main className="flex flex-col w-full">
+      
+      {/* --- HERO DE PRODUCTOS DIGITALES --- */}
+      <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-pink-200/40 to-white  text-center">
+        <div className="max-w-3xl mx-auto">
+          <span className="text-pink-500 font-bold uppercase tracking-wider text-sm mb-4 block">Recursos Clínicos a tu ritmo</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight font-serif leading-tight">
+            Transforma tu bienestar <br /> y tus relaciones
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+            En cada etapa de tu vida, necesitas herramientas claras y prácticas que te acompañen a sanar, crecer y conectar mejor. He creado estas guías para darte pasos concretos que puedes aplicar desde hoy.
+          </p>
+        </div>
+      </section>
 
-    if (!signature || !secretKey) {
-      return NextResponse.json({ error: 'Faltan credenciales' }, { status: 401 });
-    }
+      {/* --- GRID DE GUÍAS (E-COMMERCE STYLE) --- */}
+      <section className="w-full py-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
+          
+          {/* GUÍA 1: Hablar para conectar */}
+          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+            {/* Imagen del E-book (Asegúrate de subir la imagen a la carpeta public) */}
+            <div className="w-full h-64 bg-pink-50 relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              {/* Aquí va el mockp de tu libro */}
+              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                <Image 
+                  src="/images/guides/hablar-para-conectar.png" // (Asegúrate de que esta ruta coincida con la tuya)
+                  alt="Libro digital Hablar para Conectar" 
+                  fill 
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            </div>
+            
+            <div className="p-8 flex flex-col flex-grow">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl">📖</span>
+                <h3 className="text-2xl font-bold text-gray-800">Hablar para conectar</h3>
+              </div>
+              <p className="text-pink-500 font-medium mb-6 text-sm">Guía práctica para mejorar la comunicación</p>
+              
+              <div className="flex-grow">
+                <p className="font-bold text-gray-800 mb-3 text-sm">🔑 ¿Qué lograrás?</p>
+                <ul className="space-y-3 text-gray-600 text-sm mb-6">
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
+                </ul>
+                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
+                  👉 Ideal para parejas que sienten que sí se aman, pero no siempre se entienden.
+                </p>
+              </div>
 
-    const rawBody = await request.text();
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-HABLAR"
+              />
+            </div>
+          </div>
 
-    const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
-    const calculatedHash = crypto
-      .createHmac('sha256', secretKey)
-      .update(encodedBody)
-      .digest('hex');
+          {/* GUÍA 2: Conexión Real */}
+          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-full h-64 bg-[#FFF5F3] relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-pink-200 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                <Image 
+                  src="/images/guides/conexion-real.png" 
+                  alt="Libro digital Conexión Real" 
+                  fill 
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            </div>
+            
+            <div className="p-8 flex flex-col flex-grow">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl">💬</span>
+                <h3 className="text-2xl font-bold text-gray-800">Conexión real</h3>
+              </div>
+              <p className="text-pink-500 font-medium mb-6 text-sm">50 preguntas de terapia para descubrirse</p>
+              
+              <div className="flex-grow">
+                <p className="font-bold text-gray-800 mb-3 text-sm">💡 Lo que encontrarás:</p>
+                <ul className="space-y-3 text-gray-600 text-sm mb-6">
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
+                </ul>
+                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
+                  👉 Para quienes desean sentirse más cerca y redescubrirse como pareja.
+                </p>
+              </div>
 
-    if (calculatedHash !== signature) {
-      console.error('Firma inválida. Posible intento de fraude.');
-      return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
-    }
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-CONEXION"
+              />
+            </div>
+          </div>
 
-    const body = JSON.parse(rawBody);
-    const eventType = body.type;
-    const paymentData = body.data;
+          {/* GUÍA 3: Amor en equilibrio */}
+          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-full h-64 bg-pink-50 relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                <Image 
+                  src="/images/guides/amor-en-equilibrio.png" 
+                  alt="Libro digital Amor en Equilibrio" 
+                  fill 
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            </div>
+            
+            <div className="p-8 flex flex-col flex-grow">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl">❤️</span>
+                <h3 className="text-2xl font-bold text-gray-800">Amor en equilibrio</h3>
+              </div>
+              <p className="text-pink-500 font-medium mb-6 text-sm">Cómo cuidar de ti misma/o mientras amas</p>
+              
+              <div className="flex-grow">
+                <p className="font-bold text-gray-800 mb-3 text-sm">🌿 Con esta guía aprenderás a:</p>
+                <ul className="space-y-3 text-gray-600 text-sm mb-6">
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Amar sin perderte en la relación.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
+                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
+                </ul>
+                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
+                  👉 Pensada para quienes han dado todo en una relación y ahora desean amar desde la plenitud.
+                </p>
+              </div>
 
-    // --- LÓGICA DE NEGOCIO (ENVÍO DE CORREOS) ---
-    if (eventType === 'SALE_APPROVED') {
-      const reference = paymentData.metadata?.reference || '';
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-AMOR"
+              />
+            </div>
+          </div>
 
-      // OJO: Para la prueba gratuita de Resend, asegúrate de que este correo sea el tuyo propio.
-      const payerEmail = paymentData.payer_email || 'tucorreo@ejemplo.com';
+        </div>
+      </section>
 
-      console.log(`¡Pago aprobado! Ref: ${reference} | Email: ${payerEmail}`);
+      {/* --- CÓMO FUNCIONAN ESTAS GUÍAS (Propuesta de Valor) --- */}
+      <section className="w-full py-16 px-6 bg-[#FFF5F3]/50">
+        <div className="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-pink-100">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-2xl">🚀</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">
+              ¿Cómo funcionan estas guías?
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <div className="flex flex-col gap-2">
+              <span className="text-2xl">📱</span>
+              <h4 className="font-bold text-gray-800">100% Digitales</h4>
+              <p className="text-gray-600 text-sm">Descárgalas inmediatamente tras la compra y accede desde tu celular, tablet o computador para siempre.</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="text-2xl">✍️</span>
+              <h4 className="font-bold text-gray-800">Prácticas</h4>
+              <p className="text-gray-600 text-sm">No es solo teoría. Incluyen ejercicios reflexivos y accionables diseñados desde la psicología clínica.</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="text-2xl">🧠</span>
+              <h4 className="font-bold text-gray-800">Confiables</h4>
+              <p className="text-gray-600 text-sm">Creadas por Daniela Vargas, Psicóloga Clínica con más de 7.800 horas de experiencia acompañando procesos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      // 1. CASO: Compró la Guía de Conexión
-      if (reference.startsWith('GUIA-CONEXION')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: [payerEmail],
-          subject: '🤝 Aquí tienes tu Guía: Conexión y Vínculos',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Haz clic en el enlace de abajo para descargar tu guía en formato PDF:</p>
-            <a href="https://tudominio.com/links-secretos/guia-conexion.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Conexión</a>
-            <p>Si tienes algún problema, responde a este correo.</p>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
-        });
-      }
+      {/* --- CTA FINAL --- */}
+      <section className="w-full py-24 px-6 bg-gradient-to-b from-white to-pink-200/40 text-center">
+        <div className="max-w-2xl mx-auto flex flex-col items-center">
+          <div className="text-4xl mb-6">🎁</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            Empieza tu cambio hoy
+          </h2>
+          <p className="text-gray-600/80 mb-10 text-lg md:text-xl">
+            Las relaciones más sanas no se construyen con suerte, sino con herramientas. Elige la guía que más resuene contigo y comienza a transformar tu vida emocional.
+          </p>
+          <a 
+            href="#" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="bg-white text-pink-500 font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-1"
+          >
+            Ver catálogo de guías 👆
+          </a>
+        </div>
+      </section>
 
-      // 2. CASO: Compró la Guía de Amor
-      else if (reference.startsWith('GUIA-AMOR')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: [payerEmail],
-          subject: '💖 Aquí tienes tu Guía: Amor Propio y Relaciones',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Aquí tienes el enlace para descargar tu guía:</p>
-            <a href="https://tudominio.com/links-secretos/guia-amor.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Amor</a>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
-        });
-      }
-
-      // 3. CASO: Compró la Guía de Hablar/Comunicación
-      else if (reference.startsWith('GUIA-HABLAR')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: [payerEmail],
-          subject: '💬 Aquí tienes tu Guía: Comunicación Asertiva',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Aquí tienes el enlace para descargar tu guía de comunicación:</p>
-            <a href="https://tudominio.com/links-secretos/guia-hablar.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Comunicación</a>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
-        });
-      }
-
-      // 4. CASO: Agendó una Terapia / Cita
-      else if (reference.startsWith('CITA')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: ['tucorreo@ejemplo.com'], // El correo personal de Daniela
-          subject: '💰 ¡Nuevo pago de sesión recibido!',
-          html: `
-            <h2>¡Felicidades, Daniela!</h2>
-            <p>Acabas de recibir un pago por una sesión de terapia.</p>
-            <ul>
-              <li><strong>Monto:</strong> $${paymentData.amount.total}</li>
-              <li><strong>Referencia:</strong> ${reference}</li>
-              <li><strong>Email del paciente:</strong> ${payerEmail}</li>
-            </ul>
-            <p>Revisa tu WhatsApp o agenda para confirmar el horario con el paciente.</p>
-          `
-        });
-      }
-    }
-
-    else if (eventType === 'SALE_REJECTED') {
-      console.log(`Pago rechazado para la ref: ${paymentData.metadata?.reference}`);
-    }
-
-    return NextResponse.json({ received: true }, { status: 200 });
-
-  } catch (error) {
-    console.error('Error procesando el webhook de Bold:', error);
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
-  }
+    </main>
+  );
 }
