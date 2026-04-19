@@ -42,7 +42,7 @@ export default function BoldPaymentButton({ amount, description }: BoldPaymentBu
         orderId: orderId,
         currency: currency,
         amount: amount,
-        apiKey: process.env.NEXT_PUBLIC_BOLD_API_KEY,
+        apiKey: process.env.BOLD_API_KEY,
         integritySignature: data.hash,
         description: description,
         // Aquí pondremos la URL a la que vuelve el cliente tras pagar:
