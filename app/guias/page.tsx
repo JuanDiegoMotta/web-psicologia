@@ -4,7 +4,7 @@ import Image from 'next/image';
 import BoldPaymentButton from '@/components/BoldPaymentButton';
 
 export default function GuiasDigitalesPage() {
-  console.log("Mi llave pública es:", process.env.BOLD_API_KEY);
+  console.log("Mi llave pública es:", process.env.NEXT_PUBLIC_BOLD_API_KEY);
   return (
     <main className="flex flex-col w-full">
       
