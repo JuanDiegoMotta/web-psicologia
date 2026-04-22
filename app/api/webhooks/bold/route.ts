@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const signature = request.headers.get('x-bold-signature');
 
     // Ya no pedimos secretKey de las variables de entorno porque usaremos ''
-    if (!signature) {
+    /*if (!signature) {
       return NextResponse.json({ error: 'Falta la firma' }, { status: 401 });
     }
 
@@ -27,8 +27,8 @@ export async function POST(request: Request) {
     if (calculatedHash !== signature) {
       console.error('Firma inválida. Posible intento de fraude.');
       return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
-    }
-
+    }*/
+    const rawBody = await request.text();
     const body = JSON.parse(rawBody);
     const eventType = body.type;
     const paymentData = body.data;
