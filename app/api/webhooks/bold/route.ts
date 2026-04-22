@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       const reference = paymentData.metadata?.reference || '';
 
       // OJO: Para la prueba gratuita de Resend, asegúrate de que este correo sea el tuyo propio.
-      const payerEmail = paymentData.payer_email || 'tucorreo@ejemplo.com';
+      const payerEmail = 'mottajuandiego.work@gmail.com';
 
       console.log(`¡Pago aprobado! Ref: ${reference} | Email: ${payerEmail}`);
 
