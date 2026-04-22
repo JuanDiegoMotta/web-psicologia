@@ -9,14 +9,20 @@ function VerificarPagoContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const status = searchParams.get('status') || searchParams.get('payment_status'); 
+    // AHORA SÍ: Leemos exactamente el parámetro 'bold-tx-status' que nos arroja la URL
+    const status = searchParams.get('bold-tx-status') || searchParams.get('status'); 
 
     const timer = setTimeout(() => {
-      if (status === 'APPROVED' || status === 'PAID' || status === 'approved') {
+      // Verificamos 'approved' (en minúscula, que es como lo envía Bold)
+      if (status === 'approved' || status === 'APPROVED') {
         router.push('/pago-completado');
-      } else if (status === 'REJECTED' || status === 'FAILED' || status === 'rejected') {
+      } 
+      // Verificamos 'rejected' o 'failed'
+      else if (status === 'rejected' || status === 'failed' || status === 'REJECTED' || status === 'FAILED') {
         router.push('/pago-rechazado');
-      } else {
+      } 
+      // Si por algún motivo entra sin estado válido
+      else {
         router.push('/');
       }
     }, 1500);
