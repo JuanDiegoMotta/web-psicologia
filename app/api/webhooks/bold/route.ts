@@ -8,17 +8,19 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const signature = request.headers.get('x-bold-signature');
-    const secretKey = process.env.BOLD_SECRET_KEY;
 
-    if (!signature || !secretKey) {
-      return NextResponse.json({ error: 'Faltan credenciales' }, { status: 401 });
+    // Ya no pedimos secretKey de las variables de entorno porque usaremos ''
+    if (!signature) {
+      return NextResponse.json({ error: 'Falta la firma' }, { status: 401 });
     }
 
     const rawBody = await request.text();
 
     const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
+    
+    // APLICADO EXACTAMENTE COMO PIDES: Llave secreta vacía ('') para modo pruebas
     const calculatedHash = crypto
-      .createHmac('sha256', secretKey)
+      .createHmac('sha256', '')
       .update(encodedBody)
       .digest('hex');
 
