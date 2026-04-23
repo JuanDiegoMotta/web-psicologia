@@ -19,37 +19,36 @@ interface BoldWebhookEvent {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
+  console.log('🟢 [WEBHOOK BOLD] Petición recibida:', new Date().toISOString());
+  console.log('🟢 [WEBHOOK BOLD] URL:', request.url);
   try {
     const signature = request.headers.get('x-bold-signature');
-
-    if (!signature) {
-      console.error('Petición rechazada: Falta la firma de Bold');
-      return NextResponse.json({ error: 'Falta la firma' }, { status: 401 });
-    }
 
     // 1. Extraemos el Raw Body (Cuerpo crudo)
     const rawBody = await request.text();
 
-    // 2. Validación de Firma de Bold
-    // Usamos una variable de entorno. En modo PRUEBAS, asegúrate de que BOLD_WEBHOOK_SECRET no exista o esté vacía.
-    // En PRODUCCIÓN, pondrás tu llave real en Vercel.
-    const secretKey = process.env.BOLD_WEBHOOK_SECRET || ''; 
-    const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
-    
-    const calculatedHash = crypto
-      .createHmac('sha256', secretKey)
-      .update(encodedBody)
-      .digest('hex');
+    // 2. Validación (MODIFICADA TEMPORALMENTE PARA SIMULACIÓN)
+    if (!signature) {
+      console.warn('⚠️ No se recibió firma de Bold. Permitiendo ejecución temporal por simulación.');
+    } else {
+      // Si SÍ hay firma, hacemos la validación normal
+      const secretKey = process.env.BOLD_WEBHOOK_SECRET || '';
+      const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
 
-    // Usamos timingSafeEqual para prevenir ataques de timing (buena práctica de seguridad)
-    const isValidSignature = crypto.timingSafeEqual(
-      Buffer.from(calculatedHash),
-      Buffer.from(signature)
-    );
+      const calculatedHash = crypto
+        .createHmac('sha256', secretKey)
+        .update(encodedBody)
+        .digest('hex');
 
-    if (!isValidSignature) {
-      console.error('Firma inválida. Posible intento de fraude.');
-      return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
+      const isValidSignature = crypto.timingSafeEqual(
+        Buffer.from(calculatedHash),
+        Buffer.from(signature)
+      );
+
+      if (!isValidSignature) {
+        console.error('Firma inválida. Posible intento de fraude.');
+        return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
+      }
     }
 
     // 3. Parseamos el cuerpo ya validado
@@ -60,10 +59,10 @@ export async function POST(request: Request) {
     // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {
       const reference = paymentData.metadata?.reference || '';
-      
+
       // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
       // Cuando pases a producción y verifiques tu dominio en Resend, cambia esto por: paymentData.payer_email
-      const payerEmail = 'mottajuandiego.work@gmail.com'; 
+      const payerEmail = 'mottajuandiego.work@gmail.com';
 
       console.log(`¡Pago aprobado! Ref: ${reference} | Email real comprador: ${paymentData.payer_email}`);
 
