@@ -2,116 +2,109 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { Resend } from 'resend';
 
-// Inicializamos Resend con tu llave secreta
+// === TIPOS DE TYPESCRIPT ===
+// Esto te dará autocompletado y evitará errores de tipeo
+interface BoldWebhookEvent {
+  id: string;
+  type: 'SALE_APPROVED' | 'SALE_REJECTED' | 'VOID_APPROVED' | 'VOID_REJECTED';
+  data: {
+    payment_id: string;
+    amount: { total: number };
+    payer_email: string;
+    metadata?: { reference: string };
+    // Puedes agregar más campos según necesites
+  };
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
     const signature = request.headers.get('x-bold-signature');
 
-    // Ya no pedimos secretKey de las variables de entorno porque usaremos ''
-    /*if (!signature) {
+    if (!signature) {
+      console.error('Petición rechazada: Falta la firma de Bold');
       return NextResponse.json({ error: 'Falta la firma' }, { status: 401 });
     }
 
+    // 1. Extraemos el Raw Body (Cuerpo crudo)
     const rawBody = await request.text();
 
+    // 2. Validación de Firma de Bold
+    // Usamos una variable de entorno. En modo PRUEBAS, asegúrate de que BOLD_WEBHOOK_SECRET no exista o esté vacía.
+    // En PRODUCCIÓN, pondrás tu llave real en Vercel.
+    const secretKey = process.env.BOLD_WEBHOOK_SECRET || ''; 
     const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
     
-    // APLICADO EXACTAMENTE COMO PIDES: Llave secreta vacía ('') para modo pruebas
     const calculatedHash = crypto
-      .createHmac('sha256', '')
+      .createHmac('sha256', secretKey)
       .update(encodedBody)
       .digest('hex');
 
-    if (calculatedHash !== signature) {
+    // Usamos timingSafeEqual para prevenir ataques de timing (buena práctica de seguridad)
+    const isValidSignature = crypto.timingSafeEqual(
+      Buffer.from(calculatedHash),
+      Buffer.from(signature)
+    );
+
+    if (!isValidSignature) {
       console.error('Firma inválida. Posible intento de fraude.');
       return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
-    }*/
-    const rawBody = await request.text();
-    const body = JSON.parse(rawBody);
+    }
+
+    // 3. Parseamos el cuerpo ya validado
+    const body: BoldWebhookEvent = JSON.parse(rawBody);
     const eventType = body.type;
     const paymentData = body.data;
 
-    // --- LÓGICA DE NEGOCIO (ENVÍO DE CORREOS) ---
+    // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {
       const reference = paymentData.metadata?.reference || '';
+      
+      // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
+      // Cuando pases a producción y verifiques tu dominio en Resend, cambia esto por: paymentData.payer_email
+      const payerEmail = 'mottajuandiego.work@gmail.com'; 
 
-      // OJO: Para la prueba gratuita de Resend, asegúrate de que este correo sea el tuyo propio.
-      const payerEmail = 'mottajuandiego.work@gmail.com';
+      console.log(`¡Pago aprobado! Ref: ${reference} | Email real comprador: ${paymentData.payer_email}`);
 
-      console.log(`¡Pago aprobado! Ref: ${reference} | Email: ${payerEmail}`);
+      // Preparamos el correo según la referencia
+      let emailSubject = '';
+      let emailHtml = '';
 
-      // 1. CASO: Compró la Guía de Conexión
       if (reference.startsWith('GUIA-CONEXION')) {
+        emailSubject = '🤝 Aquí tienes tu Guía: Conexión y Vínculos';
+        emailHtml = `
+          <h2>¡Hola! Gracias por tu compra.</h2>
+          <p>Haz clic en el enlace de abajo para descargar tu guía en formato PDF:</p>
+          <a href="https://tudominio.com/links-secretos/guia-conexion.pdf" style="...">Descargar Guía</a>
+        `;
+      } else if (reference.startsWith('GUIA-AMOR')) {
+        emailSubject = '💖 Aquí tienes tu Guía: Amor Propio y Relaciones';
+        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Amor</a></p>`;
+      } else if (reference.startsWith('GUIA-HABLAR')) {
+        emailSubject = '💬 Aquí tienes tu Guía: Comunicación Asertiva';
+        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Comunicación</a></p>`;
+      } else if (reference.startsWith('CITA')) {
+        emailSubject = '💰 ¡Nuevo pago de sesión recibido!';
+        emailHtml = `<h2>¡Felicidades, Daniela!</h2><p>Pago de $${paymentData.amount.total} recibido de ${paymentData.payer_email}.</p>`;
+      }
+
+      // 4. Envío de correo
+      // ATENCIÓN AL TIMEOUT: Resend suele tardar < 1s, lo cual entra en el límite de 2s de Bold.
+      if (emailSubject) {
         await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
+          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a algo como 'hola@tudominio.com'
           to: [payerEmail],
-          subject: '🤝 Aquí tienes tu Guía: Conexión y Vínculos',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Haz clic en el enlace de abajo para descargar tu guía en formato PDF:</p>
-            <a href="https://tudominio.com/links-secretos/guia-conexion.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Conexión</a>
-            <p>Si tienes algún problema, responde a este correo.</p>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
+          subject: emailSubject,
+          html: emailHtml
         });
+        console.log(`Correo enviado correctamente para la referencia: ${reference}`);
       }
-
-      // 2. CASO: Compró la Guía de Amor
-      else if (reference.startsWith('GUIA-AMOR')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: [payerEmail],
-          subject: '💖 Aquí tienes tu Guía: Amor Propio y Relaciones',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Aquí tienes el enlace para descargar tu guía:</p>
-            <a href="https://tudominio.com/links-secretos/guia-amor.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Amor</a>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
-        });
-      }
-
-      // 3. CASO: Compró la Guía de Hablar/Comunicación
-      else if (reference.startsWith('GUIA-HABLAR')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: [payerEmail],
-          subject: '💬 Aquí tienes tu Guía: Comunicación Asertiva',
-          html: `
-            <h2>¡Hola! Gracias por tu compra.</h2>
-            <p>Tu pago ha sido procesado con éxito. Aquí tienes el enlace para descargar tu guía de comunicación:</p>
-            <a href="https://tudominio.com/links-secretos/guia-hablar.pdf" style="display:inline-block; padding:10px 20px; background-color:#ec4899; color:white; text-decoration:none; border-radius:5px;">Descargar Guía de Comunicación</a>
-            <p>Un abrazo,<br/>Daniela Vargas</p>
-          `
-        });
-      }
-
-      // 4. CASO: Agendó una Terapia / Cita
-      else if (reference.startsWith('CITA')) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: ['tucorreo@ejemplo.com'], // El correo personal de Daniela
-          subject: '💰 ¡Nuevo pago de sesión recibido!',
-          html: `
-            <h2>¡Felicidades, Daniela!</h2>
-            <p>Acabas de recibir un pago por una sesión de terapia.</p>
-            <ul>
-              <li><strong>Monto:</strong> $${paymentData.amount.total}</li>
-              <li><strong>Referencia:</strong> ${reference}</li>
-              <li><strong>Email del paciente:</strong> ${payerEmail}</li>
-            </ul>
-            <p>Revisa tu WhatsApp o agenda para confirmar el horario con el paciente.</p>
-          `
-        });
-      }
-    }
-
-    else if (eventType === 'SALE_REJECTED') {
+    } else if (eventType === 'SALE_REJECTED') {
       console.log(`Pago rechazado para la ref: ${paymentData.metadata?.reference}`);
     }
 
+    // 5. Respondemos 200 OK lo más rápido posible
     return NextResponse.json({ received: true }, { status: 200 });
 
   } catch (error) {
