@@ -1,5 +1,17 @@
 # CLAUDE.md — Web Clínica Psicóloga Daniela Vargas
 
+## Estilo de trabajo
+ 
+El desarrollador viene de Java/backend y está aprendiendo el ecosistema React/Next.js. Por ello, ante cualquier cambio en el código:
+ 
+- Explica **qué** estás haciendo y **por qué**, no solo el resultado
+- Si introduces un concepto nuevo de Next.js, React o TypeScript, dedica un párrafo a explicarlo en términos sencillos
+- Si hay varias formas de hacer algo, menciona brevemente por qué eliges esta y no otra
+- Si un cambio puede tener implicaciones en otras partes del proyecto, adviértelo explícitamente
+No hace falta ser exhaustivo en cosas ya vistas (Tailwind, componentes básicos), pero sí en patrones nuevos, decisiones de arquitectura o comportamientos específicos de Next.js App Router.
+ 
+---
+
 ## Contexto del proyecto
 
 Web profesional de una psicóloga colombiana (Daniela Vargas). Migrada de un sitio estático HTML/CSS a una aplicación Next.js moderna. El objetivo es que funcione como clínica online: captación de pacientes, venta de guías digitales y eventualmente gestión de citas.
@@ -184,7 +196,8 @@ public/
 **Variables de entorno necesarias:**
 ```
 CONTENTFUL_SPACE_ID=...
-CONTENTFUL_ACCESS_TOKEN=...
+CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # contenido publicado
+CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # borradores (opcional)
 ```
 
 **Próximos pasos:**
@@ -240,9 +253,10 @@ NEXT_PUBLIC_BOLD_API_KEY=...   # pública, accesible en el cliente (abre el moda
 BOLD_SECRET_KEY=...            # genera el hash de integridad del botón de pago
 BOLD_WEBHOOK_SECRET=...        # verifica la firma de las notificaciones del webhook
 
-# Contentful (blog, pendiente)
+# Contentful (blog, pendiente de conectar al código)
 CONTENTFUL_SPACE_ID=...
-CONTENTFUL_ACCESS_TOKEN=...
+CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # para contenido publicado (producción)
+CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en desarrollo)
 ```
 
 ---
