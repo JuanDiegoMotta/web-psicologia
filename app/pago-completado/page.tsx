@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
 // 1. ESTO EVITA QUE GOOGLE INDEXE LA PÁGINA
 export const metadata: Metadata = {
     robots: {

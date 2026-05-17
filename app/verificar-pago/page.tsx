@@ -3,6 +3,7 @@
 import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
 // 1. Separamos la lógica que usa 'useSearchParams' en un componente secundario
 function VerificarPagoContent() {
   const router = useRouter();
