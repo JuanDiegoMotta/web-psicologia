@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 // 1. ESTO EVITA QUE GOOGLE INDEXE LA PÁGINA
 export const metadata: Metadata = {
     robots: {
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PagoCompletadoPage() {
+    await connection();
     // 2. PROTECCIÓN CONTRA ACCESO MANUAL
     const headersList = await headers();
     const referer = headersList.get('referer');

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
     robots: {
         index: false,
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     },
 };
 export default async function PagoRechazadoPage() {
+    await connection();
     // 2. PROTECCIÓN CONTRA ACCESO MANUAL
     const headersList = await headers();
     const referer = headersList.get('referer');

@@ -2,8 +2,8 @@
 
 import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { connection } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 // 1. Separamos la lógica que usa 'useSearchParams' en un componente secundario
 function VerificarPagoContent() {
   const router = useRouter();
@@ -44,7 +44,8 @@ function VerificarPagoContent() {
 }
 
 // 2. Exportamos la página principal envolviendo el contenido en <Suspense>
-export default function VerificarPagoPage() {
+export default async function VerificarPagoPage() {
+  await connection();
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30">
       <Suspense fallback={
