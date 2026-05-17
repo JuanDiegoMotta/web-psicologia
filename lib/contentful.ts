@@ -43,7 +43,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
   const entries = await client.getEntries({
     content_type: 'blogPost',
-    order: ['-sys.createdAt'],
+    order: ['-fields.publishedDate'],
   });
 
   return entries.items.map(mapEntry);
