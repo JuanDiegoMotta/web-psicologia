@@ -4,6 +4,8 @@ import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { connection } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
     robots: {
         index: false,
