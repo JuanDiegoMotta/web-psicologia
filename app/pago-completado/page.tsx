@@ -1,12 +1,10 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { connection } from 'next/server';
 
-export const dynamic = 'force-dynamic';
-
-// 1. ESTO EVITA QUE GOOGLE INDEXE LA PÁGINA
 export const metadata: Metadata = {
     robots: {
         index: false,
@@ -14,14 +12,10 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function PagoCompletadoPage() {
-    await connection();
-    // 2. PROTECCIÓN CONTRA ACCESO MANUAL
+async function PagoCompletadoContent() {
     const headersList = await headers();
     const referer = headersList.get('referer');
 
-    // Si no hay un origen (es decir, el usuario tecleó la URL a mano y le dio a Enter)
-    // lo redirigimos silenciosamente a la página principal.
     if (!referer) {
         redirect('/');
     }
@@ -30,7 +24,6 @@ export default async function PagoCompletadoPage() {
         <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30 px-6 py-24">
             <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 md:p-14 text-center border border-pink-100">
 
-                {/* Icono de éxito */}
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-8 animate-bounce">
                     ✓
                 </div>
@@ -64,5 +57,14 @@ export default async function PagoCompletadoPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default async function PagoCompletadoPage() {
+    await connection();
+    return (
+        <Suspense fallback={null}>
+            <PagoCompletadoContent />
+        </Suspense>
     );
 }

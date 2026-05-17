@@ -1,10 +1,9 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { connection } from 'next/server';
-
-export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     robots: {
@@ -12,22 +11,19 @@ export const metadata: Metadata = {
         follow: false,
     },
 };
-export default async function PagoRechazadoPage() {
-    await connection();
-    // 2. PROTECCIÓN CONTRA ACCESO MANUAL
+
+async function PagoRechazadoContent() {
     const headersList = await headers();
     const referer = headersList.get('referer');
 
-    // Si no hay un origen (es decir, el usuario tecleó la URL a mano y le dio a Enter)
-    // lo redirigimos silenciosamente a la página principal.
     if (!referer) {
         redirect('/');
     }
+
     return (
         <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30 px-6 py-24">
             <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 md:p-14 text-center border border-pink-100">
 
-                {/* Icono de error/advertencia */}
                 <div className="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-8">
                     ⚠️
                 </div>
@@ -59,5 +55,14 @@ export default async function PagoRechazadoPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default async function PagoRechazadoPage() {
+    await connection();
+    return (
+        <Suspense fallback={null}>
+            <PagoRechazadoContent />
+        </Suspense>
     );
 }
