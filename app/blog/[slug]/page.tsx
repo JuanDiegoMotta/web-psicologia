@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES, MARKS, Block, Inline } from '@contentful/rich-text-types';
 import { getPostBySlug, getAllSlugs } from '@/lib/contentful';
 
 export async function generateStaticParams() {
@@ -40,9 +40,9 @@ const richTextOptions = {
       </blockquote>
     ),
     [BLOCKS.HR]: () => <hr className="my-8 border-gray-200" />,
-    [INLINES.HYPERLINK]: (node: { data: { uri: string } }, children: React.ReactNode) => (
+    [INLINES.HYPERLINK]: (node: Block | Inline, children: React.ReactNode) => (
       <a
-        href={node.data.uri}
+        href={(node as Inline).data.uri}
         target="_blank"
         rel="noopener noreferrer"
         className="text-pink-500 underline hover:text-pink-600 transition-colors"
