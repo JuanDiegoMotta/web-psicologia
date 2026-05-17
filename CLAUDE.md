@@ -18,7 +18,7 @@ El desarrollador tiene background en Java/backend y está aprendiendo el ecosist
 - **Hosting:** Vercel (plan Hobby)
 - **Correos:** Resend (`RESEND_API_KEY` en variables de entorno)
 - **Pagos:** Bold (pasarela colombiana). Tres variables distintas: `NEXT_PUBLIC_BOLD_API_KEY` (pública, abre el modal), `BOLD_SECRET_KEY` (genera el hash de integridad del botón, solo servidor) y `BOLD_WEBHOOK_SECRET` (verifica la firma de las notificaciones entrantes del webhook, solo servidor)
-- **CMS Blog:** Contentful (pendiente de conectar). Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_ACCESS_TOKEN`
+- **CMS Blog:** Contentful (pendiente de conectar). Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`
 - **Base de datos:** Supabase (planeada, no implementada aún)
 
 ---
