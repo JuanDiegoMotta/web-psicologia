@@ -1,0 +1,113 @@
+import { NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { Resend } from 'resend';
+
+// === TIPOS DE TYPESCRIPT ===
+// Esto te dará autocompletado y evitará errores de tipeo
+interface BoldWebhookEvent {
+  id: string;
+  type: 'SALE_APPROVED' | 'SALE_REJECTED' | 'VOID_APPROVED' | 'VOID_REJECTED';
+  data: {
+    payment_id: string;
+    amount: { total: number };
+    payer_email: string;
+    metadata?: { reference: string };
+    // Puedes agregar más campos según necesites
+  };
+}
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(request: Request) {
+  console.log('🟢 [WEBHOOK BOLD] Petición recibida:', new Date().toISOString());
+  console.log('🟢 [WEBHOOK BOLD] URL:', request.url);
+  try {
+    const signature = request.headers.get('x-bold-signature');
+
+    // 1. Extraemos el Raw Body (Cuerpo crudo)
+    const rawBody = await request.text();
+
+    // 2. Validación (MODIFICADA TEMPORALMENTE PARA SIMULACIÓN)
+    if (!signature) {
+      console.warn('⚠️ No se recibió firma de Bold. Permitiendo ejecución temporal por simulación.');
+    } else {
+      // Si SÍ hay firma, hacemos la validación normal
+      const secretKey = process.env.BOLD_WEBHOOK_SECRET || '';
+      const encodedBody = Buffer.from(rawBody, 'utf-8').toString('base64');
+
+      const calculatedHash = crypto
+        .createHmac('sha256', secretKey)
+        .update(encodedBody)
+        .digest('hex');
+
+      const isValidSignature = crypto.timingSafeEqual(
+        Buffer.from(calculatedHash),
+        Buffer.from(signature)
+      );
+
+      if (!isValidSignature) {
+        console.error('Firma inválida. Posible intento de fraude.');
+        return NextResponse.json({ error: 'Firma inválida' }, { status: 400 });
+      }
+    }
+
+    // 3. Parseamos el cuerpo ya validado
+    const body: BoldWebhookEvent = JSON.parse(rawBody);
+    const eventType = body.type;
+    const paymentData = body.data;
+
+    // --- LÓGICA DE NEGOCIO ---
+    if (eventType === 'SALE_APPROVED') {
+      const reference = paymentData.metadata?.reference || '';
+
+      // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
+      // Cuando pases a producción y verifiques tu dominio en Resend, cambia esto por: paymentData.payer_email
+      const payerEmail = 'mottajuandiego.work@gmail.com';
+
+      console.log(`¡Pago aprobado! Ref: ${reference} | Email real comprador: ${paymentData.payer_email}`);
+
+      // Preparamos el correo según la referencia
+      let emailSubject = '';
+      let emailHtml = '';
+
+      if (reference.startsWith('GUIA-CONEXION')) {
+        emailSubject = '🤝 Aquí tienes tu Guía: Conexión y Vínculos';
+        emailHtml = `
+          <h2>¡Hola! Gracias por tu compra.</h2>
+          <p>Haz clic en el enlace de abajo para descargar tu guía en formato PDF:</p>
+          <a href="https://tudominio.com/links-secretos/guia-conexion.pdf" style="...">Descargar Guía</a>
+        `;
+      } else if (reference.startsWith('GUIA-AMOR')) {
+        emailSubject = '💖 Aquí tienes tu Guía: Amor Propio y Relaciones';
+        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Amor</a></p>`;
+      } else if (reference.startsWith('GUIA-HABLAR')) {
+        emailSubject = '💬 Aquí tienes tu Guía: Comunicación Asertiva';
+        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Comunicación</a></p>`;
+      } else if (reference.startsWith('CITA')) {
+        emailSubject = '💰 ¡Nuevo pago de sesión recibido!';
+        emailHtml = `<h2>¡Felicidades, Daniela!</h2><p>Pago de $${paymentData.amount.total} recibido de ${paymentData.payer_email}.</p>`;
+      }
+
+      // 4. Envío de correo
+      // ATENCIÓN AL TIMEOUT: Resend suele tardar < 1s, lo cual entra en el límite de 2s de Bold.
+      if (emailSubject) {
+        await resend.emails.send({
+          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a algo como 'hola@tudominio.com'
+          to: [payerEmail],
+          subject: emailSubject,
+          html: emailHtml
+        });
+        console.log(`Correo enviado correctamente para la referencia: ${reference}`);
+      }
+    } else if (eventType === 'SALE_REJECTED') {
+      console.log(`Pago rechazado para la ref: ${paymentData.metadata?.reference}`);
+    }
+
+    // 5. Respondemos 200 OK lo más rápido posible
+    return NextResponse.json({ received: true }, { status: 200 });
+
+  } catch (error) {
+    console.error('Error procesando el webhook de Bold:', error);
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
+  }
+}

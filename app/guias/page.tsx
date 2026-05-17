@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import BoldPaymentButton from '@/components/BoldPaymentButton';
 
 export default function GuiasDigitalesPage() {
+  console.log("Mi llave pública es:", process.env.NEXT_PUBLIC_BOLD_API_KEY);
   return (
     <main className="flex flex-col w-full">
       
@@ -59,14 +61,11 @@ export default function GuiasDigitalesPage() {
                 </p>
               </div>
 
-              <a 
-                href="https://pay.hotmart.com/L98064362T?_gl=1*1ykdm0i*_gcl_au*MTgyODM2NTcwNy4xNzU3NzM0NzAyLjE1MDQzNDkzNjMuMTc2MDA1MDQyNS4xNzYwMDUwNTc4*FPAU*MTgyODM2NTcwNy4xNzU3NzM0NzAy*_ga*MTc4ODU5NzUzMS4xNzU3NzM0NzAy*_ga_GQH2V1F11Q*czE3NjAwNTA0MDUkbzM5JGcxJHQxNzYwMDUwNTc2JGoxMSRsMCRoNTk1MDUxMjU3&bid=1760050583974" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md"
-              >
-                Adquirir mi guía
-              </a>
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-HABLAR"
+              />
             </div>
           </div>
 
@@ -104,14 +103,11 @@ export default function GuiasDigitalesPage() {
                 </p>
               </div>
 
-              <a 
-                href="https://pay.hotmart.com/H98068688R?_gl=1*156xolp*_gcl_au*MTgyODM2NTcwNy4xNzU3NzM0NzAyLjE1MDQzNDkzNjMuMTc2MDA1MDQyNS4xNzYwMDUwNTM4*FPAU*MTgyODM2NTcwNy4xNzU3NzM0NzAy*_ga*MTc4ODU5NzUzMS4xNzU3NzM0NzAy*_ga_GQH2V1F11Q*czE3NjAwNTA0MDUkbzM5JGcxJHQxNzYwMDUwNTM0JGo1MyRsMCRoODY4MzQxOTU1&bid=1760050539418" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md"
-              >
-                Adquirir mi guía
-              </a>
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-CONEXION"
+              />
             </div>
           </div>
 
@@ -150,14 +146,11 @@ export default function GuiasDigitalesPage() {
                 </p>
               </div>
 
-              <a 
-                href="https://pay.hotmart.com/R98082764Y?_gl=1*8lsf7m*_gcl_au*MTgyODM2NTcwNy4xNzU3NzM0NzAyLjE1MDQzNDkzNjMuMTc2MDA1MDQyNS4xNzYwMDUwNDc0*FPAU*MTgyODM2NTcwNy4xNzU3NzM0NzAy*_ga*MTc4ODU5NzUzMS4xNzU3NzM0NzAy*_ga_GQH2V1F11Q*czE3NjAwNTA0MDUkbzM5JGcxJHQxNzYwMDUwNDY3JGo2MCRsMCRoMTYzODkxNTEyOQ..&bid=1760050479338" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md"
-              >
-                Adquirir mi guía
-              </a>
+              <BoldPaymentButton
+                amount = "150000"
+                description = "Amor en equilibrio"
+                orderPrefix = "GUIA-AMOR"
+              />
             </div>
           </div>
 
