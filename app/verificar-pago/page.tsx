@@ -2,7 +2,6 @@
 
 import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { connection } from 'next/server';
 
 // 1. Separamos la lógica que usa 'useSearchParams' en un componente secundario
 function VerificarPagoContent() {
@@ -44,8 +43,7 @@ function VerificarPagoContent() {
 }
 
 // 2. Exportamos la página principal envolviendo el contenido en <Suspense>
-export default async function VerificarPagoPage() {
-  await connection();
+export default function VerificarPagoPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30">
       <Suspense fallback={
