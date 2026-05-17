@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.title}
         </h1>
         <div className="flex items-center justify-center gap-4 text-sm text-gray-500 font-medium">
-          <span>📅 {new Date(post.publishedDate).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          <span>📅 {new Date(post.publishDate).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
           <span>•</span>
           <span>⏱️ {post.readTime}</span>
         </div>

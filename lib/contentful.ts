@@ -12,7 +12,7 @@ export type BlogPost = {
   slug: string;
   excerpt: string;
   category: string;
-  publishedDate: string;
+  publishDate: string;
   readTime: string;
   heroImage: { url: string; alt: string };
   content: Document;
@@ -27,7 +27,7 @@ function mapEntry(item: any): BlogPost {
     slug: f.slug,
     excerpt: f.excerpt,
     category: f.category,
-    publishedDate: f.publishedDate,
+    publishDate: f.publishDate,
     readTime: f.readTime,
     heroImage: {
       url: asset ? `https:${asset.url}` : '',
@@ -43,7 +43,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
   const entries = await client.getEntries({
     content_type: 'blogPost',
-    order: ['-fields.publishedDate'],
+    order: ['-fields.publishDate'],
   });
 
   return entries.items.map(mapEntry);

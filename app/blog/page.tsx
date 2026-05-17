@@ -56,7 +56,7 @@ export default async function BlogPage() {
               {/* Contenido del Post */}
               <div className="p-8 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 text-xs text-gray-400 font-medium mb-4">
-                  <span>📅 {new Date(post.publishedDate).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  <span>📅 {new Date(post.publishDate).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                   <span>•</span>
                   <span>⏱️ {post.readTime}</span>
                 </div>
