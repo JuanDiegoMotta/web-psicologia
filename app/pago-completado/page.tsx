@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 async function PagoCompletadoContent() {
+    await connection();
     const headersList = await headers();
     const referer = headersList.get('referer');
 
@@ -60,8 +61,7 @@ async function PagoCompletadoContent() {
     );
 }
 
-export default async function PagoCompletadoPage() {
-    await connection();
+export default function PagoCompletadoPage() {
     return (
         <Suspense fallback={null}>
             <PagoCompletadoContent />

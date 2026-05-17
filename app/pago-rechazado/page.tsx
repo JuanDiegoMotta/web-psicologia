@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 async function PagoRechazadoContent() {
+    await connection();
     const headersList = await headers();
     const referer = headersList.get('referer');
 
@@ -58,8 +59,7 @@ async function PagoRechazadoContent() {
     );
 }
 
-export default async function PagoRechazadoPage() {
-    await connection();
+export default function PagoRechazadoPage() {
     return (
         <Suspense fallback={null}>
             <PagoRechazadoContent />
