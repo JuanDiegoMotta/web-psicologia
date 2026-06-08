@@ -30,7 +30,7 @@ El desarrollador tiene background en Java/backend y está aprendiendo el ecosist
 - **Hosting:** Vercel (plan Hobby)
 - **Correos:** Resend (`RESEND_API_KEY` en variables de entorno)
 - **Pagos:** Bold (pasarela colombiana). Tres variables distintas: `NEXT_PUBLIC_BOLD_API_KEY` (pública, abre el modal), `BOLD_SECRET_KEY` (genera el hash de integridad del botón, solo servidor) y `BOLD_WEBHOOK_SECRET` (verifica la firma de las notificaciones entrantes del webhook, solo servidor)
-- **CMS Blog:** Contentful (pendiente de conectar). Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`
+- **CMS Blog:** Contentful (✅ conectado). Cliente en `lib/contentful.ts`. Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`
 - **Base de datos:** Supabase (planeada, no implementada aún)
 
 ---
@@ -49,8 +49,8 @@ app/
 │   └── empresas/page.tsx             # B2B
 ├── guias/page.tsx                    # /guias — E-commerce guías digitales
 ├── blog/
-│   ├── page.tsx                      # Listado de posts (mock data, pendiente Contentful)
-│   └── [slug]/page.tsx               # Artículo individual (async, await params)
+│   ├── page.tsx                      # Listado de posts (fetch real a Contentful vía getAllPosts)
+│   └── [slug]/page.tsx               # Artículo individual (async, await params; Rich Text + generateStaticParams)
 ├── contacto/page.tsx                 # Formulario completo
 ├── verificar-pago/page.tsx           # Enrutador post-pago Bold (usa Suspense + useSearchParams)
 ├── pago-completado/page.tsx          # Éxito (noindex, protegida por referer)
@@ -74,6 +74,19 @@ app/
 | `Footer.tsx` | Links redes sociales, logos de métodos de pago (brightness-0 invert), copyright |
 | `WhatsAppButton.tsx` | Botón flotante fixed bottom-right, usa `/icons/socials/whatsapp.svg` |
 | `BoldPaymentButton.tsx` | Botón de pago Bold. Props: `amount`, `description`, `orderPrefix` |
+| `NewsletterForm.tsx` | Caja de suscripción al final del blog. Client Component. ⚠️ Solo UI: el `onSubmit` hace `preventDefault`, aún no envía a ningún sitio |
+
+---
+
+## Librerías (`lib/`)
+
+### `contentful.ts`
+Cliente de Contentful + funciones de acceso a datos del blog. Crea el cliente con `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`. Expone:
+- `getAllPosts()` — todos los posts ordenados por `publishDate` descendente (listado del blog)
+- `getPostBySlug(slug)` — un post por su slug (página de artículo), o `null` si no existe
+- `getAllSlugs()` — solo los slugs (para `generateStaticParams`)
+
+Las tres usan `'use cache'` + `cacheLife('hours')` (caché de Next.js, revalida cada hora). El mapeo Contentful→`BlogPost` está en `mapEntry`: lee el campo `coverImage` y le antepone `https:` a la URL del asset.
 
 ---
 
@@ -164,7 +177,7 @@ public/
 - `GUIA-AMOR` — Guía "Amor en Equilibrio" (autocuidado y autoestima)
 - `CITA` — Sesión de terapia (el botón de pago aún no está en páginas de servicios, solo en guías)
 
-**⚠️ Bug conocido en `app/guias/page.tsx`:** los tres `BoldPaymentButton` tienen `description="Amor en equilibrio"` en todos los casos — es un copy-paste pendiente de corregir. Los `orderPrefix` sí son correctos.
+**✅ Bug corregido en `app/guias/page.tsx`:** cada `BoldPaymentButton` envía ya su `description` real ("Hablar para conectar", "Conexión real", "Amor en equilibrio"). Los `orderPrefix` siempre fueron correctos. También se eliminó un `console.log` que exponía `NEXT_PUBLIC_BOLD_API_KEY`.
 
 **Webhook — Estado actual:**
 - Variable de entorno usada para verificar firma: `BOLD_WEBHOOK_SECRET` (distinta de `BOLD_SECRET_KEY`)
@@ -185,26 +198,35 @@ public/
 
 ---
 
-## CMS Blog — Contentful (Pendiente de conectar)
+## CMS Blog — Contentful (✅ Conectado)
 
-**Estado:** Cuenta creada, Content Type `blogPost` definido con campos:
-- `title` (Short text)
+**Estado:** Integración completa y funcionando. El blog (`/blog` y `/blog/[slug]`) lee posts reales de Contentful. Ya no hay `MOCK_POSTS`.
+
+**Content Type `blogPost` — campos reales en el panel:**
+- `title` (Short text) — Entry title
 - `slug` (Short text, tipo Slug)
-- `coverImage` (Media)
-- `content` (Rich Text)
+- `coverImage` (Media) — ⚠️ el Field ID es `coverImage`, NO `heroImage`. El código lo lee como `coverImage`
+- `content` (Rich Text) — se renderiza con `@contentful/rich-text-react-renderer` y opciones de estilo en `app/blog/[slug]/page.tsx`. El mapeo (`richTextOptions`) cubre **todos** los nodos: marcas (bold, italic, underline, strikethrough, code, super/subscript), encabezados H1–H6, listas, cita, hr, saltos de línea suaves (`renderText`), **imágenes/archivos embebidos** (`EMBEDDED_ASSET` → `next/image` + pie de foto, o enlace de descarga si es PDF) y enlaces externos/internos/a assets. `getPostBySlug` usa `include: 2` para que el SDK resuelva esos enlaces embebidos
+- `excerpt` (Short text)
+- `publishDate` (Date & time) — el listado ordena por este campo descendente
+
+**Campos opcionales (con fallback en el código):**
+- `category` (Short text) — si no existe, el código usa `'General'`
+- `readTime` (Short text) — si no existe, el código usa `'5 min de lectura'`
+> Recomendado crearlos en Contentful para que las tarjetas muestren badge de categoría y tiempo de lectura reales. Los fallbacks están en `mapEntry` (`lib/contentful.ts`).
+
+**SDK instalado:** `contentful`, `@contentful/rich-text-react-renderer`, `@contentful/rich-text-types`.
+
+**Imágenes:** `next.config.ts` autoriza el dominio remoto `images.ctfassets.net` (CDN de Contentful) para `next/image`.
 
 **Variables de entorno necesarias:**
 ```
 CONTENTFUL_SPACE_ID=...
-CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # contenido publicado
-CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # borradores (opcional)
+CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # contenido publicado (el que usa el código)
+CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # borradores (opcional, no usado aún)
 ```
 
-**Próximos pasos:**
-1. Instalar SDK: `npm install contentful`
-2. Crear cliente en `lib/contentful.ts`
-3. Reemplazar el array `MOCK_POSTS` en `app/blog/page.tsx` con fetch real a Contentful
-4. Hacer lo mismo en `app/blog/[slug]/page.tsx`
+> ⚠️ La Delivery API solo devuelve entradas en estado **Published**. Un post en draft no aparecerá en la web.
 
 **PDFs de guías:** Se subirán a la pestaña Media de Contentful. Actualizar las URLs en el webhook una vez subidos.
 
@@ -253,7 +275,7 @@ NEXT_PUBLIC_BOLD_API_KEY=...   # pública, accesible en el cliente (abre el moda
 BOLD_SECRET_KEY=...            # genera el hash de integridad del botón de pago
 BOLD_WEBHOOK_SECRET=...        # verifica la firma de las notificaciones del webhook
 
-# Contentful (blog, pendiente de conectar al código)
+# Contentful (blog, ✅ conectado — usado en lib/contentful.ts)
 CONTENTFUL_SPACE_ID=...
 CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # para contenido publicado (producción)
 CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en desarrollo)
@@ -272,18 +294,19 @@ CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en des
 | Hub de Servicios | ✅ Completo |
 | Landings de embudo (4 servicios) | ✅ Completo |
 | Guías Digitales (UI) | ✅ Completo |
-| Blog (mock data) | ✅ UI completa, datos falsos |
+| Blog (Contentful) | ✅ Conectado a CMS real (listado + artículo + Rich Text) |
 | Página de Contacto | ✅ Completo |
 | Formulario → correo (Resend) | ✅ Funcionando |
 | Pasarela Bold (modo pruebas) | ✅ Funcionando |
 | Webhook Bold → correos | ✅ Funcionando (modo simulación, omite firma si no viene) |
 | Páginas pago-completado / pago-rechazado | ✅ Completo |
 | Vercel Analytics | ✅ Instalado |
-| Contentful → Blog real | 🔲 Pendiente |
+| Contentful → Blog real | ✅ Completo — `lib/contentful.ts` + build genera páginas estáticas por slug |
+| Newsletter del blog (envío real) | 🔲 Pendiente — `NewsletterForm` solo es UI (preventDefault) |
 | Supabase (base de datos) | 🔲 Pendiente |
 | PDFs guías en Contentful Media | 🔲 Pendiente |
 | BoldPaymentButton en páginas de servicios | 🔲 Pendiente — actualmente solo en /guias |
-| Bug: descriptions duplicadas en guias/page.tsx | 🐛 Pendiente — todos dicen "Amor en equilibrio" |
+| Bug: descriptions duplicadas en guias/page.tsx | ✅ Corregido — cada guía manda su nombre real |
 | Correos Resend → correo real de Daniela | 🔲 Pendiente — hardcodeado a correo de dev |
 | Dominio propio (DNS) | 🔲 Pendiente — dominio ya existente, solo falta apuntarlo a Vercel |
 | Llaves Bold de producción | 🔲 Pendiente — acceso a la cuenta ya disponible, falta pasar webhook a clave real y subir a env vars en Vercel |

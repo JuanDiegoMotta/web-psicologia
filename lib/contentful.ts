@@ -21,17 +21,17 @@ export type BlogPost = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapEntry(item: any): BlogPost {
   const f = item.fields;
-  const asset = f.heroImage?.fields?.file;
+  const asset = f.coverImage?.fields?.file;
   return {
     title: f.title,
     slug: f.slug,
     excerpt: f.excerpt,
-    category: f.category,
+    category: f.category ?? 'General',
     publishDate: f.publishDate,
-    readTime: f.readTime,
+    readTime: f.readTime ?? '5 min de lectura',
     heroImage: {
       url: asset ? `https:${asset.url}` : '',
-      alt: f.heroImage?.fields?.title ?? f.title,
+      alt: f.coverImage?.fields?.title ?? f.title,
     },
     content: f.content,
   };
@@ -57,6 +57,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     content_type: 'blogPost',
     'fields.slug': slug,
     limit: 1,
+    include: 2, // resuelve enlaces (imágenes/entradas embebidas en el Rich Text)
   });
 
   if (!entries.items.length) return null;
