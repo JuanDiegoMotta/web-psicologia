@@ -8,9 +8,9 @@ export default function GuiasDigitalesPage() {
     <main className="flex flex-col w-full">
       
       {/* --- HERO DE PRODUCTOS DIGITALES --- */}
-      <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-pink-200/40 to-white  text-center">
+      <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-salvia/40 to-white  text-center">
         <div className="max-w-3xl mx-auto">
-          <span className="text-pink-500 font-bold uppercase tracking-wider text-sm mb-4 block">Recursos Clínicos a tu ritmo</span>
+          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Recursos Clínicos a tu ritmo</span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight font-serif leading-tight">
             Transforma tu bienestar <br /> y tus relaciones
           </h1>
@@ -27,8 +27,8 @@ export default function GuiasDigitalesPage() {
           {/* GUÍA 1: Hablar para conectar */}
           <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
             {/* Imagen del E-book (Asegúrate de subir la imagen a la carpeta public) */}
-            <div className="w-full h-64 bg-pink-50 relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            <div className="w-full h-64 bg-arena relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
               {/* Aquí va el mockp de tu libro */}
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
                 <Image 
@@ -46,14 +46,14 @@ export default function GuiasDigitalesPage() {
                 <span className="text-2xl">📖</span>
                 <h3 className="text-2xl font-bold text-gray-800">Hablar para conectar</h3>
               </div>
-              <p className="text-pink-500 font-medium mb-6 text-sm">Guía práctica para mejorar la comunicación</p>
+              <p className="text-eucalipto-dark font-medium mb-6 text-sm">Guía práctica para mejorar la comunicación</p>
               
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">🔑 ¿Qué lograrás?</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Ideal para parejas que sienten que sí se aman, pero no siempre se entienden.
@@ -70,8 +70,8 @@ export default function GuiasDigitalesPage() {
 
           {/* GUÍA 2: Conexión Real */}
           <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-full h-64 bg-[#FFF5F3] relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-pink-200 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            <div className="w-full h-64 bg-blancoluz relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
                 <Image 
                   src="/images/guides/conexion-real.png" 
@@ -88,14 +88,14 @@ export default function GuiasDigitalesPage() {
                 <span className="text-2xl">💬</span>
                 <h3 className="text-2xl font-bold text-gray-800">Conexión real</h3>
               </div>
-              <p className="text-pink-500 font-medium mb-6 text-sm">50 preguntas de terapia para descubrirse</p>
+              <p className="text-eucalipto-dark font-medium mb-6 text-sm">50 preguntas de terapia para descubrirse</p>
               
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">💡 Lo que encontrarás:</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Para quienes desean sentirse más cerca y redescubrirse como pareja.
@@ -112,8 +112,8 @@ export default function GuiasDigitalesPage() {
 
           {/* GUÍA 3: Amor en equilibrio */}
           <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-full h-64 bg-pink-50 relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-pink-100 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            <div className="w-full h-64 bg-arena relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
                 <Image 
                   src="/images/guides/amor-en-equilibrio.png" 
@@ -130,15 +130,15 @@ export default function GuiasDigitalesPage() {
                 <span className="text-2xl">❤️</span>
                 <h3 className="text-2xl font-bold text-gray-800">Amor en equilibrio</h3>
               </div>
-              <p className="text-pink-500 font-medium mb-6 text-sm">Cómo cuidar de ti misma/o mientras amas</p>
+              <p className="text-eucalipto-dark font-medium mb-6 text-sm">Cómo cuidar de ti misma/o mientras amas</p>
               
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">🌿 Con esta guía aprenderás a:</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Amar sin perderte en la relación.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
-                  <li className="flex items-start gap-2"><span className="text-pink-400 mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Amar sin perderte en la relación.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Pensada para quienes han dado todo en una relación y ahora desean amar desde la plenitud.
@@ -157,10 +157,10 @@ export default function GuiasDigitalesPage() {
       </section>
 
       {/* --- CÓMO FUNCIONAN ESTAS GUÍAS (Propuesta de Valor) --- */}
-      <section className="w-full py-16 px-6 bg-[#FFF5F3]/50">
-        <div className="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-pink-100">
+      <section className="w-full py-16 px-6 bg-blancoluz/50">
+        <div className="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-salvia">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-2xl">🚀</div>
+            <div className="w-12 h-12 bg-salvia rounded-full flex items-center justify-center text-2xl">🚀</div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">
               ¿Cómo funcionan estas guías?
             </h2>
@@ -186,7 +186,7 @@ export default function GuiasDigitalesPage() {
       </section>
 
       {/* --- CTA FINAL --- */}
-      <section className="w-full py-24 px-6 bg-gradient-to-b from-white to-pink-200/40 text-center">
+      <section className="w-full py-24 px-6 bg-gradient-to-b from-white to-salvia/40 text-center">
         <div className="max-w-2xl mx-auto flex flex-col items-center">
           <div className="text-4xl mb-6">🎁</div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
@@ -201,7 +201,7 @@ export default function GuiasDigitalesPage() {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="bg-white text-pink-500 font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-1"
+            className="bg-white text-eucalipto-dark font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-1"
           >
             Ver catálogo de guías 👆
           </a>

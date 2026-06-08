@@ -24,12 +24,12 @@ export default function HomePage() {
 
         </video>
         {/*Capa de superposición (Overlay)*/}
-        <div className="absolute inset-0 bg-[#FFF5F3]/70 z-10"></div>
+        <div className="absolute inset-0 bg-blancoluz/70 z-10"></div>
 
         {/*Contenido principal del Hero*/}
         <div className="relative z-20 max-w-3xl flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight">
-            Tu espacio seguro para <span className="text-pink-500">sanar</span> y <span className="text-pink-500">crecer</span>.
+            Tu espacio seguro para <span className="text-eucalipto-dark">sanar</span> y <span className="text-eucalipto-dark">crecer</span>.
           </h1>
 
           <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shasdow-sm">
@@ -38,7 +38,7 @@ export default function HomePage() {
 
           <Link
             href="/servicios"
-            className="bg-pink-400 hover:bg-pink-500 text-white font-semibold py-4 px-8 rounded-full transition-all shadow-md hover:shadow-lg text-lg transform hover:-translate-y-1"
+            className="bg-eucalipto hover:bg-eucalipto-dark text-white font-semibold py-4 px-8 rounded-full transition-all shadow-md hover:shadow-lg text-lg transform hover:-translate-y-1"
           >
             Da el primer paso hoy
           </Link>
@@ -46,7 +46,7 @@ export default function HomePage() {
       </section>
 
       {/*--- SECCIÓN SOBRE MÍ ---*/}
-      <section className="w-full py-24 px-6 bg-[#FFF5F3]/30">
+      <section className="w-full py-24 px-6 bg-blancoluz/30">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 lg:gap-24">
 
           {/*--- Columna Izda: Imagen (Más grande y expandida) ---*/}
@@ -73,14 +73,14 @@ export default function HomePage() {
                 Soy <strong className="text-gray-800 font-semibold">Dani Vargas</strong>, Psicóloga Clínica especializada en terapias basadas en evidencia como la Cognitivo Conductual y Terapias Contextuales.
               </p>
               <p>
-                He acompañado personalmente <span className="text-pink-500 font-medium">más de 7.800 horas de terapia</span> a más de 700 personas, ayudándoles a recuperar la calma y el sentido en sus vidas.
+                He acompañado personalmente <span className="text-eucalipto-dark font-medium">más de 7.800 horas de terapia</span> a más de 700 personas, ayudándoles a recuperar la calma y el sentido en sus vidas.
               </p>
               <p>
                 Junto a mi equipo, acompañamos a miles de personas en Colombia, Latinoamérica y Estados Unidos con un enfoque claro:
               </p>
 
               {/* Cita Destacada (Blockquote) */}
-              <div className="bg-pink-50 border-l-4 border-pink-400 p-4 rounded-r-lg mt-4 text-left">
+              <div className="bg-arena border-l-4 border-eucalipto p-4 rounded-r-lg mt-4 text-left">
                 <p className="font-medium text-gray-800 italic">
                   "Mi misión es brindarte un espacio seguro, humano y práctico, donde puedas sanar y crecer."
                 </p>
@@ -89,7 +89,7 @@ export default function HomePage() {
 
             <Link
               href="/sobre-mi"
-              className="mt-8 inline-block border-2 border-pink-400 text-pink-500 hover:bg-pink-400 hover:text-white font-medium py-3 px-8 rounded-full transition-colors"
+              className="mt-8 inline-block border-2 border-eucalipto text-eucalipto-dark hover:bg-eucalipto hover:text-white font-medium py-3 px-8 rounded-full transition-colors"
             >
               Conóceme más
             </Link>
@@ -116,7 +116,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
 
             {/* Tarjeta 1: Individual */}
-            <div className="bg-[#FFF5F3]/60 p-8 md:p-10 rounded-3xl border border-pink-100 flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
+            <div className="bg-blancoluz/60 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
                 🛋️
               </div>
@@ -125,13 +125,13 @@ export default function HomePage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Un espacio seguro y confidencial 1 a 1 para trabajar en tu ansiedad, depresión, autoestima o gestión emocional.
               </p>
-              <Link href="/servicios" className="text-pink-500 font-bold hover:text-pink-600 flex items-center gap-2">
+              <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>
               </Link>
             </div>
 
             {/* Tarjeta 2: Pareja */}
-            <div className="bg-[#FFF5F3]/60 p-8 md:p-10 rounded-3xl border border-pink-100 flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
+            <div className="bg-blancoluz/60 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
                 🫶
               </div>
@@ -139,13 +139,13 @@ export default function HomePage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Mejora la comunicación, resuelve conflictos estancados y reconstruye la confianza en tu relación con herramientas prácticas.
               </p>
-              <Link href="/servicios" className="text-pink-500 font-bold hover:text-pink-600 flex items-center gap-2">
+              <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>
               </Link>
             </div>
 
             {/* Tarjeta 3: Online */}
-            <div className="bg-[#FFF5F3]/60 p-8 md:p-10 rounded-3xl border border-pink-100 flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
+            <div className="bg-blancoluz/60 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
                 💻
               </div>
@@ -153,7 +153,7 @@ export default function HomePage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 La misma calidad y calidez de la terapia presencial, pero desde la comodidad de tu casa, sin importar en qué país estés.
               </p>
-              <Link href="/servicios" className="text-pink-500 font-bold hover:text-pink-600 flex items-center gap-2">
+              <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>
               </Link>
             </div>
@@ -190,7 +190,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-8 w-full mt-4">
 
             {/* Testimonio 1 */}
-            <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
+            <div className="bg-blancoluz/30 px-8 pb-8 pt-14 rounded-3xl border border-arena relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
                 <Image
@@ -202,7 +202,7 @@ export default function HomePage() {
               </div>
 
               {/* Estrellas */}
-              <div className="flex justify-center gap-1 mb-4 text-pink-400 text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">
@@ -215,7 +215,7 @@ export default function HomePage() {
             </div>
 
             {/* Testimonio 2 */}
-            <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
+            <div className="bg-blancoluz/30 px-8 pb-8 pt-14 rounded-3xl border border-arena relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
                 <Image
@@ -226,7 +226,7 @@ export default function HomePage() {
                 />
               </div>
 
-              <div className="flex justify-center gap-1 mb-4 text-pink-400 text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">
@@ -239,7 +239,7 @@ export default function HomePage() {
             </div>
 
             {/* Testimonio 3 */}
-            <div className="bg-[#FFF5F3]/30 px-8 pb-8 pt-14 rounded-3xl border border-pink-50 relative flex flex-col">
+            <div className="bg-blancoluz/30 px-8 pb-8 pt-14 rounded-3xl border border-arena relative flex flex-col">
               {/* Avatar Flotante */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white rounded-full border-4 border-white shadow-md overflow-hidden">
                 <Image
@@ -250,7 +250,7 @@ export default function HomePage() {
                 />
               </div>
 
-              <div className="flex justify-center gap-1 mb-4 text-pink-400 text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">
@@ -268,11 +268,11 @@ export default function HomePage() {
 
       {/* --- AQUÍ IRÁN LAS SIGUIENTES SECCIONES (Servicios, etc.) --- */}
       {/* --- SECCIÓN: CONTACTO RÁPIDO --- */}
-      <section className="w-full py-24 px-6  bg-gradient-to-b from-[#FFF5F3](50) to-pink-200/40 border-t border-pink-100">
-        <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-pink-100/50">
+      <section className="w-full py-24 px-6  bg-gradient-to-b from-blancoluz(50) to-salvia/40 border-t border-salvia">
+        <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-salvia/50">
 
           {/* Mitad Izquierda: Info directa y WhatsApp */}
-          <div className="w-full lg:w-2/5 bg-pink-50 p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
+          <div className="w-full lg:w-2/5 bg-arena p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
             {/* Elementos decorativos sutiles */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/40 rounded-bl-full"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/40 rounded-tr-full"></div>
@@ -313,7 +313,7 @@ export default function HomePage() {
                   id="name-home"
                   placeholder="Tu nombre *"
                   required
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
+                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eucalipto transition-colors text-gray-700"
                 />
                 <input
                   type="tel"
@@ -321,7 +321,7 @@ export default function HomePage() {
                   id="cellphone-home"
                   placeholder="Celular / WhatsApp *"
                   required
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
+                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eucalipto transition-colors text-gray-700"
                 />
               </div>
 
@@ -331,7 +331,7 @@ export default function HomePage() {
                 id="email-home"
                 placeholder="Tu correo electrónico *"
                 required
-                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors text-gray-700"
+                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eucalipto transition-colors text-gray-700"
               />
 
               <textarea
@@ -339,7 +339,7 @@ export default function HomePage() {
                 id="reason-home"
                 rows={3}
                 placeholder="¿En qué te puedo ayudar? (Opcional)"
-                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors resize-none text-gray-700"
+                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eucalipto transition-colors resize-none text-gray-700"
               ></textarea>
 
               <button

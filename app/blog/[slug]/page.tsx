@@ -40,7 +40,7 @@ const richTextOptions = {
     [MARKS.UNDERLINE]: (text: React.ReactNode) => <u className="underline">{text}</u>,
     [MARKS.STRIKETHROUGH]: (text: React.ReactNode) => <s className="line-through">{text}</s>,
     [MARKS.CODE]: (text: React.ReactNode) => (
-      <code className="bg-gray-100 text-pink-600 px-1.5 py-0.5 rounded text-[0.9em] font-mono">{text}</code>
+      <code className="bg-gray-100 text-eucalipto-dark px-1.5 py-0.5 rounded text-[0.9em] font-mono">{text}</code>
     ),
     [MARKS.SUPERSCRIPT]: (text: React.ReactNode) => <sup>{text}</sup>,
     [MARKS.SUBSCRIPT]: (text: React.ReactNode) => <sub>{text}</sub>,
@@ -78,7 +78,7 @@ const richTextOptions = {
       <li className="leading-relaxed">{children}</li>
     ),
     [BLOCKS.QUOTE]: (_: unknown, children: React.ReactNode) => (
-      <blockquote className="border-l-4 border-pink-400 bg-pink-50 pl-4 pr-4 py-3 my-6 italic text-gray-600 rounded-r-lg">
+      <blockquote className="border-l-4 border-eucalipto bg-arena pl-4 pr-4 py-3 my-6 italic text-gray-600 rounded-r-lg">
         {children}
       </blockquote>
     ),
@@ -100,7 +100,7 @@ const richTextOptions = {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-pink-500 underline hover:text-pink-600 my-4"
+            className="inline-flex items-center gap-2 text-eucalipto-dark underline hover:text-eucalipto-darker my-4"
           >
             📎 {fields?.title || 'Descargar archivo'}
           </a>
@@ -130,7 +130,7 @@ const richTextOptions = {
         href={(node as Inline).data.uri}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-pink-500 underline hover:text-pink-600 transition-colors"
+        className="text-eucalipto-dark underline hover:text-eucalipto-darker transition-colors"
       >
         {children}
       </a>
@@ -144,7 +144,7 @@ const richTextOptions = {
           href={url ? `https:${url}` : '#'}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-pink-500 underline hover:text-pink-600 transition-colors"
+          className="text-eucalipto-dark underline hover:text-eucalipto-darker transition-colors"
         >
           {children}
         </a>
@@ -157,7 +157,7 @@ const richTextOptions = {
       return (
         <Link
           href={slug ? `/blog/${slug}` : '#'}
-          className="text-pink-500 underline hover:text-pink-600 transition-colors"
+          className="text-eucalipto-dark underline hover:text-eucalipto-darker transition-colors"
         >
           {children}
         </Link>
@@ -177,14 +177,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* --- BOTÓN VOLVER --- */}
       <div className="max-w-3xl mx-auto w-full px-6 pt-32 pb-8">
-        <Link href="/blog" className="text-pink-500 font-semibold hover:text-pink-600 flex items-center gap-2 transition-colors">
+        <Link href="/blog" className="text-eucalipto-dark font-semibold hover:text-eucalipto-darker flex items-center gap-2 transition-colors">
           <span>←</span> Volver al blog
         </Link>
       </div>
 
       {/* --- CABECERA DEL ARTÍCULO --- */}
       <header className="max-w-3xl mx-auto w-full px-6 text-center mb-10">
-        <span className="inline-block bg-pink-50 text-pink-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+        <span className="inline-block bg-arena text-eucalipto-dark px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
           {post.category}
         </span>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-serif leading-tight">
@@ -217,7 +217,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* --- CAJA DE AUTOR --- */}
       <section className="max-w-3xl mx-auto w-full px-6 mb-24">
-        <div className="bg-[#FFF5F3]/50 p-8 md:p-10 rounded-3xl border border-pink-100 flex flex-col md:flex-row items-center gap-8">
+        <div className="bg-blancoluz/50 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col md:flex-row items-center gap-8">
           <div className="w-24 h-24 relative rounded-full overflow-hidden shrink-0 border-2 border-white shadow-md">
             <Image
               src="/images/daniela/daniela-consulta.jpg"

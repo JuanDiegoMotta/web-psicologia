@@ -5,11 +5,11 @@ export default function ServiciosPage() {
     <main className="flex flex-col w-full">
       
       {/* --- HERO DE SERVICIOS --- */}
-        <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-pink-200/40 via-[#FFF5F3]/60 to-white text-center">
+        <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
             Encuentra el espacio perfecto <br />
-            <span className="text-pink-500">para tu proceso.</span>
+            <span className="text-eucalipto-dark">para tu proceso.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
             Trabajo con enfoques basados en evidencia para garantizar resultados reales. Elige el área en la que necesitas acompañamiento.
@@ -18,48 +18,48 @@ export default function ServiciosPage() {
       </section>
 
       {/* --- EL CATÁLOGO VISUAL (Grid de Servicios) --- */}
-      <section className="w-full py-24 px-6 bg-white border-y border-pink-100">
+      <section className="w-full py-24 px-6 bg-white border-y border-salvia">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             {/* Tarjeta 1: Terapia Individual */}
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-pink-200 transition-all duration-300 group flex flex-col items-start cursor-pointer">
-              <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-salvia transition-all duration-300 group flex flex-col items-start cursor-pointer">
+              <div className="w-16 h-16 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
                 🛋️
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Terapia Individual</h2>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Para manejar la ansiedad, la depresión o romper patrones que te bloquean. Un espacio 1 a 1, seguro y profesional, para recuperar tu vitalidad y confianza.
               </p>
-              <Link href="/servicios/terapia-individual" className="inline-flex items-center gap-2 bg-pink-50 text-pink-600 font-semibold py-3 px-6 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-individual" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>
 
             {/* Tarjeta 2: Terapia de Pareja */}
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-pink-200 transition-all duration-300 group flex flex-col items-start cursor-pointer">
-              <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-salvia transition-all duration-300 group flex flex-col items-start cursor-pointer">
+              <div className="w-16 h-16 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
                 🫶
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Terapia de Pareja</h2>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Reconstruye el vínculo, aprende herramientas prácticas para gestionar conflictos y crea una relación más sana, conectada y segura.
               </p>
-              <Link href="/servicios/terapia-de-pareja" className="inline-flex items-center gap-2 bg-pink-50 text-pink-600 font-semibold py-3 px-6 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-de-pareja" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>
 
             {/* Tarjeta 3: Orientación a Padres / Infantil */}
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-pink-200 transition-all duration-300 group flex flex-col items-start cursor-pointer">
-              <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-salvia transition-all duration-300 group flex flex-col items-start cursor-pointer">
+              <div className="w-16 h-16 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
                 🌱
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Acompañamiento a Padres</h2>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Orientación práctica si buscas comprender y apoyar mejor a tu hijo/a en sus emociones, fomentando su resiliencia y bienestar desde el hogar.
               </p>
-              <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-pink-50 text-pink-600 font-semibold py-3 px-6 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>
@@ -67,7 +67,7 @@ export default function ServiciosPage() {
             {/* Tarjeta 4: Modalidad Online (Destacada) */}
             <div className="bg-gray-800 p-10 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group flex flex-col items-start relative overflow-hidden">
               {/* Elemento decorativo */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/20 rounded-full blur-2xl"></div>
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-eucalipto-dark/20 rounded-full blur-2xl"></div>
               
               <div className="w-16 h-16 bg-gray-700/50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform z-10">
                 💻
@@ -86,11 +86,11 @@ export default function ServiciosPage() {
       </section>
 
       {/* --- SECCIÓN B2B: EMPRESAS --- */}
-      <section className="w-full py-24 px-6 bg-[#FFF5F3]/80 border-y border-pink-100">
+      <section className="w-full py-24 px-6 bg-blancoluz/80 border-y border-salvia">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
           
           <div className="w-full md:w-1/2">
-            <span className="text-pink-500 font-bold uppercase tracking-wider text-sm mb-2 block">Servicios Corporativos</span>
+            <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-2 block">Servicios Corporativos</span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight">
               Empresas y Entorno Laboral
             </h2>
@@ -98,11 +98,11 @@ export default function ServiciosPage() {
               Talleres y conferencias diseñadas para transformar tu equipo. Trabajamos habilidades críticas como la gestión del estrés, comunicación asertiva y prevención del burnout.
             </p>
             <div className="flex gap-4 mb-8">
-              <div className="flex-1 bg-white p-4 rounded-xl shadow-sm text-center border border-pink-50">
+              <div className="flex-1 bg-white p-4 rounded-xl shadow-sm text-center border border-arena">
                 <p className="text-2xl mb-1">🚀</p>
                 <p className="text-sm font-semibold text-gray-800">Más Productividad</p>
               </div>
-              <div className="flex-1 bg-white p-4 rounded-xl shadow-sm text-center border border-pink-50">
+              <div className="flex-1 bg-white p-4 rounded-xl shadow-sm text-center border border-arena">
                 <p className="text-2xl mb-1">👥</p>
                 <p className="text-sm font-semibold text-gray-800">Retención de Talento</p>
               </div>
@@ -197,7 +197,7 @@ export default function ServiciosPage() {
       </section>
 
       {/* --- CTA FINAL DIRECTO --- */}
-      <section className="w-full py-20 px-6 bg-gradient-to-b from-white to-pink-200/40 text-center">
+      <section className="w-full py-20 px-6 bg-gradient-to-b from-white to-salvia/40 text-center">
         <div className="max-w-2xl mx-auto flex flex-col items-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">
             Da tu primer paso hoy

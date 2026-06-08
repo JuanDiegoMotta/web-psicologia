@@ -108,20 +108,60 @@ El formulario usa `action={handleFormAction}` (React 19, no `onSubmit`). Todos l
 
 ## Paleta de colores y estilos
 
+**Paleta de marca (manual del cliente)** — definida como tokens `@theme` en `app/globals.css`. Cada token genera utilidades (`bg-`, `text-`, `border-`, `ring-`…, con opacidad: `bg-eucalipto/30`). **No usar `pink-*` ni colores arbitrarios de marca**; usar siempre estos tokens:
+
+| Token / clase | Hex | Uso |
+|---|---|---|
+| `blancoluz` | `#FDFBF1` | Fondo claro principal (antes la crema `#FFF5F3`) |
+| `arena` | `#F1EAE0` | Fondo neutro suave de secciones |
+| `lino` | `#E6DBC4` | Paneles cálidos / soporte |
+| `salvia` | `#C3D3AD` | Acentos suaves, bordes, fondos verdes claros |
+| `eucalipto` | `#8FAE96` | Acentos, iconos, fills claros (texto **oscuro** encima) |
+| `eucalipto-dark` | `#5E7C66` | **CTAs/botones con texto blanco y enlaces** (contraste AA) |
+| `eucalipto-darker` | `#46604E` | Hover de botones/enlaces, texto fuerte |
+| `tinta` | `#343434` | Texto fuerte y secciones oscuras (antes `#2D313A`/`gray-800`) |
+
+> Los tonos `eucalipto-dark`/`-darker` son **derivados** (no están en el manual): el eucalipto de marca `#8FAE96` es demasiado claro para texto/botones con texto blanco, así que se derivaron tonos más oscuros para garantizar legibilidad. Los hex de marca son **estimados de los swatches** (el manual no traía códigos salvo `#343434`); ajustar aquí en un solo sitio si el cliente da los exactos.
+
+**Mapeo histórico** (rosa→marca, por si aparece código viejo): `pink-50→arena`, `pink-100/200→salvia`, `pink-300/400→eucalipto`, `pink-500→eucalipto-dark`, `pink-600/700→eucalipto-darker`, `#FFF5F3→blancoluz`, `#2D313A→tinta`.
+
+### Sistema de uso (estandarizado — usar con propósito, no mezclar)
+
+Regla mental: **fondos neutros (~80%) + verde como acento (~20%) + toque cálido lino (~10%)**, máximo ~3 colores por sección (sigue la proporción 60/20/10/10 del manual). Cada color tiene **un** rol:
+
+| Rol | Color | Notas |
+|---|---|---|
+| Fondo de página / sección por defecto | `blancoluz` | El lienzo base |
+| Sección alterna (para dar ritmo) | `arena` | Alternar con blancoluz/white entre secciones |
+| Tarjetas / contenedores sobre el fondo | `bg-white` | Contenido elevado |
+| Secciones oscuras (footer, banda CTA dramática) | `tinta` | Texto claro encima |
+| **Acento de marca (texto): enlaces, eyebrows, palabras destacadas, botón primario** | `eucalipto-dark` | **Un único tono** para "esto es marca/interactivo". Texto verde = siempre este |
+| Hover/activo de lo anterior | `eucalipto-darker` | Solo estados hover/pressed |
+| Fills/decoración clara, chips de icono (texto **oscuro** encima) | `eucalipto` | Nunca para texto pequeño (contraste bajo) |
+| Acento suave: badges pequeños, bordes/divisores sutiles | `salvia` | No usar como fondo de secciones grandes |
+| Panel cálido destacado (uso escaso) | `lino` | El 10% de calidez; p. ej. una caja de cita |
+| Texto principal / secundario | `tinta`·`gray-800` / `gray-600` | — |
+
+> **Estandarización aplicada:** todo el texto verde "suelto" (no-hover) se unificó a `eucalipto-dark` (antes convivían `eucalipto`/`-dark`/`-darker` por herencia del rosa, lo que daba aspecto mezclado). Mantener esa disciplina: para texto-acento usar **siempre** `eucalipto-dark` (+ `hover:eucalipto-darker`).
+
+**⚠️ Regla de contraste (el acento verde cambia según el fondo):**
+- Sobre fondo **claro** (blancoluz/arena/white): texto-acento = `eucalipto-dark`.
+- Sobre fondo **oscuro** (`tinta`, `gray-800/900`, overlays de hero `bg-gray-900/xx`): texto-acento = `salvia` (verde **claro**). Nunca `eucalipto-dark` sobre oscuro (verde oscuro sobre oscuro = ilegible; era el bug del footer y los eyebrows de los heroes).
+- Texto sobre fill `salvia` (botones secundarios, círculos de paso): usar `eucalipto-darker` (no `eucalipto-dark`), para alcanzar contraste suficiente.
+- Botón primario: `bg-eucalipto-dark` + texto blanco (AA ✓), hover `bg-eucalipto-darker`.
+
 | Uso | Valor |
 |---|---|
-| Fondo principal (crema) | `#FFF5F3` |
-| Navbar y fondos suaves | `bg-[#FFF5F3]` / `bg-[#FFF5F3]/50` |
-| Rosa principal (CTAs, highlights) | `pink-500` / `pink-400` |
-| Fondo oscuro (footer, secciones dark) | `#2D313A` / `gray-800` |
-| Texto principal | `gray-800` |
+| Texto principal | `tinta` / `gray-800` |
 | Texto secundario | `gray-600` |
-| Bordes y separadores | `pink-100` / `gray-100` |
+| Bordes y separadores | `salvia` / `gray-100` |
 | Esquinas | `rounded-3xl` (tarjetas grandes), `rounded-2xl` (medias), `rounded-full` (botones) |
 
-**Tipografía:** Fuente Inter. Títulos usan `font-serif` para contraste elegante.
+**Tipografía:** Fuente Inter. Títulos usan `font-serif` para contraste elegante. *(El manual sugiere otras fuentes —Montserrat/Poppins en CapCut, Gliker/Alata en Canva— pero son para piezas gráficas, no necesariamente para la web; pendiente de confirmar con el cliente si quiere cambiar la tipografía web.)*
 
-**Gradientes:** Usar `bg-gradient-to-b from-pink-100/40 via-[#FFF5F3]/60 to-white` para héros sin imagen de fondo.
+**Gradientes:** Usar `bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white` para héros sin imagen de fondo.
+
+**Assets de imagen:** el logo `public/icons/logos/logo-mariposa-fondo.svg` ya se recoloreó a eucalipto (`fill:#5E7C66`, editable directo en el SVG). ⚠️ Aún quedan otros con rosa que el CSS no toca y habría que rediseñar: `public/images/backgrounds/fondoRosa.png` y varios SVG decorativos en `public/images/backgrounds/` (corazones, burbujas…), además de los "cerebros" malva del fondo del hero del blog.
 
 ---
 
