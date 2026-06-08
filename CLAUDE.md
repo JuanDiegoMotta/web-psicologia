@@ -31,7 +31,7 @@ El desarrollador tiene background en Java/backend y está aprendiendo el ecosist
 - **Correos:** Resend (`RESEND_API_KEY` en variables de entorno)
 - **Pagos:** Bold (pasarela colombiana). Tres variables distintas: `NEXT_PUBLIC_BOLD_API_KEY` (pública, abre el modal), `BOLD_SECRET_KEY` (genera el hash de integridad del botón, solo servidor) y `BOLD_WEBHOOK_SECRET` (verifica la firma de las notificaciones entrantes del webhook, solo servidor)
 - **CMS Blog:** Contentful (✅ conectado). Cliente en `lib/contentful.ts`. Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`
-- **Base de datos:** Supabase (planeada, no implementada aún)
+- **Base de datos:** Supabase (Postgres). ✅ Conectada — cliente server-only en `lib/supabase.ts`. Primer uso: el webhook de Bold guarda cada pago en la tabla `payments`. Llaves: `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` (secreta, solo servidor)
 
 ---
 
@@ -87,6 +87,11 @@ Cliente de Contentful + funciones de acceso a datos del blog. Crea el cliente co
 - `getAllSlugs()` — solo los slugs (para `generateStaticParams`)
 
 Las tres usan `'use cache'` + `cacheLife('hours')` (caché de Next.js, revalida cada hora). El mapeo Contentful→`BlogPost` está en `mapEntry`: lee el campo `coverImage` y le antepone `https:` a la URL del asset.
+
+### `supabase.ts`
+Cliente de Supabase (Postgres) con la `service_role key`. ⚠️ **Solo servidor** (Route Handlers, Server Actions): la `service_role` salta el RLS y nunca debe llegar al navegador (por eso su env var NO lleva `NEXT_PUBLIC_`). Expone `getSupabaseAdmin()`, que crea el cliente de forma **perezosa** (no se instancia al importar, sino en la primera llamada) para que el build no falle si faltan las variables.
+
+**Tabla `payments`** (creada en el SQL Editor de Supabase): guarda cada notificación del webhook de Bold. Columnas: `id` (uuid), `created_at`, `event_id`, `event_type`, `payment_id` (único, da idempotencia), `reference` (orderId completo), `product_prefix` (GUIA-HABLAR/…/CITA), `amount`, `currency`, `payer_email`, `status` (approved/rejected/…), `raw_payload` (jsonb con el evento completo). Tiene **RLS activado sin políticas públicas** → solo accesible desde el servidor con la `service_role`. La inserción se hace con `upsert(..., { onConflict: 'payment_id', ignoreDuplicates: true })` para que los reintentos de Bold no dupliquen filas.
 
 ---
 
@@ -279,6 +284,10 @@ BOLD_WEBHOOK_SECRET=...        # verifica la firma de las notificaciones del web
 CONTENTFUL_SPACE_ID=...
 CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # para contenido publicado (producción)
 CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en desarrollo)
+
+# Supabase (base de datos, ✅ conectado — usado en lib/supabase.ts)
+SUPABASE_URL=...                       # Project URL (Settings → API)
+SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, salta el RLS)
 ```
 
 ---
@@ -303,7 +312,7 @@ CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en des
 | Vercel Analytics | ✅ Instalado |
 | Contentful → Blog real | ✅ Completo — `lib/contentful.ts` + build genera páginas estáticas por slug |
 | Newsletter del blog (envío real) | 🔲 Pendiente — `NewsletterForm` solo es UI (preventDefault) |
-| Supabase (base de datos) | 🔲 Pendiente |
+| Supabase (base de datos) | ✅ Conectada — tabla `payments`; el webhook de Bold registra cada pago |
 | PDFs guías en Contentful Media | 🔲 Pendiente |
 | BoldPaymentButton en páginas de servicios | 🔲 Pendiente — actualmente solo en /guias |
 | Bug: descriptions duplicadas en guias/page.tsx | ✅ Corregido — cada guía manda su nombre real |

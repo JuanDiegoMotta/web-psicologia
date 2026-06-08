@@ -1,6 +1,23 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { Resend } from 'resend';
+import { getSupabaseAdmin } from '@/lib/supabase';
+
+// Prefijos de producto conocidos (deben coincidir con los orderPrefix de los botones de pago)
+const PRODUCT_PREFIXES = ['GUIA-HABLAR', 'GUIA-CONEXION', 'GUIA-AMOR', 'CITA'];
+
+// A partir de la referencia completa (p. ej. "GUIA-HABLAR-1234") devuelve el prefijo del producto
+function getProductPrefix(reference: string): string | null {
+  return PRODUCT_PREFIXES.find((p) => reference.startsWith(p)) ?? null;
+}
+
+// Traduce el tipo de evento de Bold a un estado simple para la columna `status`
+const STATUS_BY_EVENT: Record<string, string> = {
+  SALE_APPROVED: 'approved',
+  SALE_REJECTED: 'rejected',
+  VOID_APPROVED: 'voided',
+  VOID_REJECTED: 'void_rejected',
+};
 
 // === TIPOS DE TYPESCRIPT ===
 // Esto te dará autocompletado y evitará errores de tipeo
@@ -55,6 +72,39 @@ export async function POST(request: Request) {
     const body: BoldWebhookEvent = JSON.parse(rawBody);
     const eventType = body.type;
     const paymentData = body.data;
+
+    // 3.5. Persistimos el pago en Supabase (auditoría / histórico de ventas).
+    // Va en su propio try/catch: si la BD falla, NO queremos romper la respuesta
+    // al webhook ni bloquear el correo. Bold reintentaría si devolvemos error.
+    try {
+      const reference = paymentData.metadata?.reference ?? null;
+      const { error } = await getSupabaseAdmin()
+        .from('payments')
+        .upsert(
+          {
+            event_id: body.id,
+            event_type: eventType,
+            payment_id: paymentData.payment_id ?? null,
+            reference,
+            product_prefix: reference ? getProductPrefix(reference) : null,
+            amount: paymentData.amount?.total ?? null,
+            currency: 'COP',
+            payer_email: paymentData.payer_email ?? null,
+            status: STATUS_BY_EVENT[eventType] ?? eventType,
+            raw_payload: body,
+          },
+          // Idempotencia: si Bold reintenta el mismo pago, no se duplica la fila
+          { onConflict: 'payment_id', ignoreDuplicates: true },
+        );
+
+      if (error) {
+        console.error('🔴 [WEBHOOK BOLD] Error al guardar el pago en Supabase:', error.message);
+      } else {
+        console.log('🟢 [WEBHOOK BOLD] Pago registrado en Supabase. Ref:', reference);
+      }
+    } catch (dbError) {
+      console.error('🔴 [WEBHOOK BOLD] Excepción al guardar en Supabase:', dbError);
+    }
 
     // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {

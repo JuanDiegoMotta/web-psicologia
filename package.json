@@ -11,6 +11,7 @@
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^16.2.1",
     "@contentful/rich-text-types": "^17.2.7",
+    "@supabase/supabase-js": "^2.108.0",
     "@vercel/analytics": "^2.0.1",
     "contentful": "^11.12.2",
     "next": "^16.2.3",
