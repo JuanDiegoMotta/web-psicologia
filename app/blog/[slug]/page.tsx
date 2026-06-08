@@ -40,7 +40,7 @@ const richTextOptions = {
     [MARKS.UNDERLINE]: (text: React.ReactNode) => <u className="underline">{text}</u>,
     [MARKS.STRIKETHROUGH]: (text: React.ReactNode) => <s className="line-through">{text}</s>,
     [MARKS.CODE]: (text: React.ReactNode) => (
-      <code className="bg-gray-100 text-eucalipto-darker px-1.5 py-0.5 rounded text-[0.9em] font-mono">{text}</code>
+      <code className="bg-gray-100 text-eucalipto-dark px-1.5 py-0.5 rounded text-[0.9em] font-mono">{text}</code>
     ),
     [MARKS.SUPERSCRIPT]: (text: React.ReactNode) => <sup>{text}</sup>,
     [MARKS.SUBSCRIPT]: (text: React.ReactNode) => <sub>{text}</sub>,
@@ -184,7 +184,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* --- CABECERA DEL ARTÍCULO --- */}
       <header className="max-w-3xl mx-auto w-full px-6 text-center mb-10">
-        <span className="inline-block bg-arena text-eucalipto-darker px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+        <span className="inline-block bg-arena text-eucalipto-dark px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
           {post.category}
         </span>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-serif leading-tight">

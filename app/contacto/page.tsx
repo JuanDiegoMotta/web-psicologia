@@ -57,7 +57,7 @@ export default function ContactoPage() {
                   href="mailto:danielavargaspsicologa@gmail.com" 
                   className="flex items-center gap-4 bg-white p-4 rounded-2xl hover:shadow-md transition-shadow group"
                 >
-                  <div className="w-12 h-12 bg-salvia text-eucalipto-darker rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-salvia text-eucalipto-dark rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                     ✉️
                   </div>
                   <div>

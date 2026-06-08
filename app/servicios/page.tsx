@@ -31,7 +31,7 @@ export default function ServiciosPage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Para manejar la ansiedad, la depresión o romper patrones que te bloquean. Un espacio 1 a 1, seguro y profesional, para recuperar tu vitalidad y confianza.
               </p>
-              <Link href="/servicios/terapia-individual" className="inline-flex items-center gap-2 bg-arena text-eucalipto-darker font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-individual" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>
@@ -45,7 +45,7 @@ export default function ServiciosPage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Reconstruye el vínculo, aprende herramientas prácticas para gestionar conflictos y crea una relación más sana, conectada y segura.
               </p>
-              <Link href="/servicios/terapia-de-pareja" className="inline-flex items-center gap-2 bg-arena text-eucalipto-darker font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-de-pareja" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>
@@ -59,7 +59,7 @@ export default function ServiciosPage() {
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
                 Orientación práctica si buscas comprender y apoyar mejor a tu hijo/a en sus emociones, fomentando su resiliencia y bienestar desde el hogar.
               </p>
-              <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-arena text-eucalipto-darker font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
+              <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
               </Link>
             </div>

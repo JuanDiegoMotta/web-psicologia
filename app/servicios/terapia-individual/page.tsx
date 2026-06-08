@@ -60,11 +60,11 @@ export default function TerapiaIndividualPage() {
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Te entiendo, este espacio es para ti si buscas...</h2>
             <ul className="space-y-4 text-gray-600">
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✔</span> Manejar la ansiedad, la depresión o el estrés constante.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✔</span> Romper patrones repetitivos que te mantienen bloqueada/o.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✔</span> Encontrar un espacio seguro y humano donde hablar sin miedo a juicios.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✔</span> Aprender a manejar pensamientos intrusivos que no te dejan dormir.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✔</span> Dejar de compararte y reconstruir tu autoestima.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✔</span> Manejar la ansiedad, la depresión o el estrés constante.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✔</span> Romper patrones repetitivos que te mantienen bloqueada/o.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✔</span> Encontrar un espacio seguro y humano donde hablar sin miedo a juicios.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✔</span> Aprender a manejar pensamientos intrusivos que no te dejan dormir.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✔</span> Dejar de compararte y reconstruir tu autoestima.</li>
             </ul>
           </div>
 
@@ -75,11 +75,11 @@ export default function TerapiaIndividualPage() {
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Juntos lograremos:</h2>
             <ul className="space-y-4 text-gray-600">
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Más calma y confianza:</strong> Recuperando el control de tu mente y tu cuerpo.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Gestión Emocional:</strong> Herramientas para sentir sin desbordarte.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Vitalidad:</strong> Recuperar la energía, la motivación y el placer en tu día a día.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Relaciones sanas:</strong> Aprender a poner límites claros sin sentir culpa.</li>
-              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Aceptación:</strong> Soltar el pasado y avanzar con resiliencia.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✨</span> <strong>Más calma y confianza:</strong> Recuperando el control de tu mente y tu cuerpo.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✨</span> <strong>Gestión Emocional:</strong> Herramientas para sentir sin desbordarte.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✨</span> <strong>Vitalidad:</strong> Recuperar la energía, la motivación y el placer en tu día a día.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✨</span> <strong>Relaciones sanas:</strong> Aprender a poner límites claros sin sentir culpa.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto-dark">✨</span> <strong>Aceptación:</strong> Soltar el pasado y avanzar con resiliencia.</li>
             </ul>
           </div>
 
@@ -97,21 +97,21 @@ export default function TerapiaIndividualPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">1</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Primera sesión (70 min)</h3>
                   <p className="text-gray-600">Exploramos a profundidad tus desafíos, tu historia emocional y tus expectativas.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">2</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Plan de trabajo a medida</h3>
                   <p className="text-gray-600">Definimos con total claridad los objetivos y la ruta terapéutica a seguir.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">3</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Técnicas y herramientas</h3>
                   <p className="text-gray-600">Te llevarás tareas prácticas entre sesiones para que el progreso no se quede solo en el consultorio.</p>
@@ -208,7 +208,7 @@ export default function TerapiaIndividualPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Individual%20de%20terapia."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
+                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-dark font-bold py-3 rounded-xl transition-colors"
               >
                 Agendar 1 Sesión
               </a>

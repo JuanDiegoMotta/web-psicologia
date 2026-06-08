@@ -125,6 +125,25 @@ El formulario usa `action={handleFormAction}` (React 19, no `onSubmit`). Todos l
 
 **Mapeo histórico** (rosa→marca, por si aparece código viejo): `pink-50→arena`, `pink-100/200→salvia`, `pink-300/400→eucalipto`, `pink-500→eucalipto-dark`, `pink-600/700→eucalipto-darker`, `#FFF5F3→blancoluz`, `#2D313A→tinta`.
 
+### Sistema de uso (estandarizado — usar con propósito, no mezclar)
+
+Regla mental: **fondos neutros (~80%) + verde como acento (~20%) + toque cálido lino (~10%)**, máximo ~3 colores por sección (sigue la proporción 60/20/10/10 del manual). Cada color tiene **un** rol:
+
+| Rol | Color | Notas |
+|---|---|---|
+| Fondo de página / sección por defecto | `blancoluz` | El lienzo base |
+| Sección alterna (para dar ritmo) | `arena` | Alternar con blancoluz/white entre secciones |
+| Tarjetas / contenedores sobre el fondo | `bg-white` | Contenido elevado |
+| Secciones oscuras (footer, banda CTA dramática) | `tinta` | Texto claro encima |
+| **Acento de marca (texto): enlaces, eyebrows, palabras destacadas, botón primario** | `eucalipto-dark` | **Un único tono** para "esto es marca/interactivo". Texto verde = siempre este |
+| Hover/activo de lo anterior | `eucalipto-darker` | Solo estados hover/pressed |
+| Fills/decoración clara, chips de icono (texto **oscuro** encima) | `eucalipto` | Nunca para texto pequeño (contraste bajo) |
+| Acento suave: badges pequeños, bordes/divisores sutiles | `salvia` | No usar como fondo de secciones grandes |
+| Panel cálido destacado (uso escaso) | `lino` | El 10% de calidez; p. ej. una caja de cita |
+| Texto principal / secundario | `tinta`·`gray-800` / `gray-600` | — |
+
+> **Estandarización aplicada:** todo el texto verde "suelto" (no-hover) se unificó a `eucalipto-dark` (antes convivían `eucalipto`/`-dark`/`-darker` por herencia del rosa, lo que daba aspecto mezclado). Mantener esa disciplina: para texto-acento usar **siempre** `eucalipto-dark` (+ `hover:eucalipto-darker`).
+
 | Uso | Valor |
 |---|---|
 | Texto principal | `tinta` / `gray-800` |
@@ -136,7 +155,7 @@ El formulario usa `action={handleFormAction}` (React 19, no `onSubmit`). Todos l
 
 **Gradientes:** Usar `bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white` para héros sin imagen de fondo.
 
-**⚠️ Assets de imagen con rosa (no los toca el CSS):** quedan elementos gráficos con el coral/rosa antiguo que hay que **rediseñar/reemplazar** aparte: `public/icons/logos/logo-mariposa-fondo.svg` (el círculo del logo en la navbar), `public/images/backgrounds/fondoRosa.png` y varios SVG decorativos rosas en `public/images/backgrounds/`.
+**Assets de imagen:** el logo `public/icons/logos/logo-mariposa-fondo.svg` ya se recoloreó a eucalipto (`fill:#5E7C66`, editable directo en el SVG). ⚠️ Aún quedan otros con rosa que el CSS no toca y habría que rediseñar: `public/images/backgrounds/fondoRosa.png` y varios SVG decorativos en `public/images/backgrounds/` (corazones, burbujas…), además de los "cerebros" malva del fondo del hero del blog.
 
 ---
 

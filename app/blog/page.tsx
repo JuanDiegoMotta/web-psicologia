@@ -48,7 +48,7 @@ export default async function BlogPage() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-eucalipto-darker uppercase tracking-wider">
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-eucalipto-dark uppercase tracking-wider">
                   {post.category}
                 </div>
               </Link>

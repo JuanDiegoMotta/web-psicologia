@@ -202,7 +202,7 @@ export default function HomePage() {
               </div>
 
               {/* Estrellas */}
-              <div className="flex justify-center gap-1 mb-4 text-eucalipto text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">
@@ -226,7 +226,7 @@ export default function HomePage() {
                 />
               </div>
 
-              <div className="flex justify-center gap-1 mb-4 text-eucalipto text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">
@@ -250,7 +250,7 @@ export default function HomePage() {
                 />
               </div>
 
-              <div className="flex justify-center gap-1 mb-4 text-eucalipto text-sm">
+              <div className="flex justify-center gap-1 mb-4 text-eucalipto-dark text-sm">
                 ⭐⭐⭐⭐⭐
               </div>
               <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed text-center">

@@ -51,9 +51,9 @@ export default function GuiasDigitalesPage() {
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">🔑 ¿Qué lograrás?</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Ideal para parejas que sienten que sí se aman, pero no siempre se entienden.
@@ -93,9 +93,9 @@ export default function GuiasDigitalesPage() {
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">💡 Lo que encontrarás:</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Para quienes desean sentirse más cerca y redescubrirse como pareja.
@@ -135,10 +135,10 @@ export default function GuiasDigitalesPage() {
               <div className="flex-grow">
                 <p className="font-bold text-gray-800 mb-3 text-sm">🌿 Con esta guía aprenderás a:</p>
                 <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Amar sin perderte en la relación.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Amar sin perderte en la relación.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
+                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
                 </ul>
                 <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
                   👉 Pensada para quienes han dado todo en una relación y ahora desean amar desde la plenitud.
