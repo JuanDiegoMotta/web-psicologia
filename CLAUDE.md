@@ -31,7 +31,7 @@ El desarrollador tiene background en Java/backend y está aprendiendo el ecosist
 - **Correos:** Resend (`RESEND_API_KEY` en variables de entorno)
 - **Pagos:** Bold (pasarela colombiana). Tres variables distintas: `NEXT_PUBLIC_BOLD_API_KEY` (pública, abre el modal), `BOLD_SECRET_KEY` (genera el hash de integridad del botón, solo servidor) y `BOLD_WEBHOOK_SECRET` (verifica la firma de las notificaciones entrantes del webhook, solo servidor)
 - **CMS Blog:** Contentful (✅ conectado). Cliente en `lib/contentful.ts`. Llaves: `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN`
-- **Base de datos:** Supabase (planeada, no implementada aún)
+- **Base de datos:** Supabase (Postgres). ✅ Conectada — cliente server-only en `lib/supabase.ts`. Primer uso: el webhook de Bold guarda cada pago en la tabla `payments`. Llaves: `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` (secreta, solo servidor)
 
 ---
 
@@ -87,6 +87,11 @@ Cliente de Contentful + funciones de acceso a datos del blog. Crea el cliente co
 - `getAllSlugs()` — solo los slugs (para `generateStaticParams`)
 
 Las tres usan `'use cache'` + `cacheLife('hours')` (caché de Next.js, revalida cada hora). El mapeo Contentful→`BlogPost` está en `mapEntry`: lee el campo `coverImage` y le antepone `https:` a la URL del asset.
+
+### `supabase.ts`
+Cliente de Supabase (Postgres) con la `service_role key`. ⚠️ **Solo servidor** (Route Handlers, Server Actions): la `service_role` salta el RLS y nunca debe llegar al navegador (por eso su env var NO lleva `NEXT_PUBLIC_`). Expone `getSupabaseAdmin()`, que crea el cliente de forma **perezosa** (no se instancia al importar, sino en la primera llamada) para que el build no falle si faltan las variables.
+
+**Tabla `payments`** (creada en el SQL Editor de Supabase): guarda cada notificación del webhook de Bold. Columnas: `id` (uuid), `created_at`, `event_id`, `event_type`, `payment_id` (único, da idempotencia), `reference` (orderId completo), `product_prefix` (GUIA-HABLAR/…/CITA), `amount`, `currency`, `payer_email`, `status` (approved/rejected/…), `raw_payload` (jsonb con el evento completo). Tiene **RLS activado sin políticas públicas** → solo accesible desde el servidor con la `service_role`. La inserción se hace con `upsert(..., { onConflict: 'payment_id', ignoreDuplicates: true })` para que los reintentos de Bold no dupliquen filas.
 
 ---
 
@@ -279,7 +284,63 @@ BOLD_WEBHOOK_SECRET=...        # verifica la firma de las notificaciones del web
 CONTENTFUL_SPACE_ID=...
 CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # para contenido publicado (producción)
 CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en desarrollo)
+
+# Supabase (base de datos, ✅ conectado — usado en lib/supabase.ts)
+SUPABASE_URL=...                       # Project URL (Settings → API)
+SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, salta el RLS)
 ```
+
+---
+
+## 🚀 Despliegue a producción — variables y checklist
+
+> Sección de referencia para no olvidar nada al pasar de pruebas a producción. **Nada de esto está hecho aún**; es un recordatorio. Las variables de entorno de Vercel se configuran en **Project → Settings → Environment Variables**, y cada una se puede asignar a tres entornos: **Production** (rama `main`), **Preview** (otras ramas/PRs) y **Development** (`vercel dev`). `.env.local` es solo para tu máquina y no se sube al repo.
+
+### A) Variables que cambian de valor entre entornos (test/dev → producción)
+
+| Variable | Test / Dev | Producción | Notas |
+|---|---|---|---|
+| `NEXT_PUBLIC_BOLD_API_KEY` | identity key **de pruebas** | identity key **de producción** | Pública (identifica el comercio). Bold tiene versión test y prod de cada llave |
+| `BOLD_SECRET_KEY` | secret key **de pruebas** | secret key **de producción** | Privada, solo servidor. Genera el hash de integridad del botón |
+| `BOLD_WEBHOOK_SECRET` | string vacío `''` | secret key **de producción** | ⚠️ Según la doc de Bold, la firma del webhook usa **la misma secret key de integración** (no una llave aparte). En modo test la firma se calcula con **clave vacía**. Verificar en el panel de Bold si tu cuenta expone un secreto de webhook dedicado o si hay que usar el `BOLD_SECRET_KEY` de producción |
+| `RESEND_API_KEY` | key de pruebas | key de producción con permiso **solo de envío** (`sending_access`), idealmente restringida al dominio verificado | Principio de mínimo privilegio: limita el daño si se filtra |
+| `SUPABASE_URL` | proyecto Supabase **dev** | proyecto Supabase **prod** (otro distinto) | Proyectos separados para no mezclar pagos de prueba con reales |
+| `SUPABASE_SERVICE_ROLE_KEY` | service_role del proyecto dev | service_role del proyecto prod | Secreta, solo servidor |
+| `CONTENTFUL_DELIVERY_ACCESS_TOKEN` | (puede ser el mismo) | token **dedicado a producción** | Recomendado un token por entorno para poder revocarlos por separado |
+| `CONTENTFUL_SPACE_ID` | mismo space | mismo space | Un solo space; si en el futuro usas *environments* de Contentful (master vs sandbox), cambiaría |
+
+> **Regla general por integración:** crea **una API key distinta por entorno** siempre que el servicio lo permita (Resend, Contentful, Supabase). Si una se filtra, revocas solo esa y no tumbas todo.
+
+### B) Checklist de código/config antes de subir a PRO
+
+**Correos (Resend)** — requiere **verificar el dominio** en Resend (añadir registros DNS SPF/DKIM/DMARC). Hasta entonces solo se puede enviar desde `onboarding@resend.dev` y solo al correo de la cuenta:
+- [ ] `app/api/contacto/route.ts`: cambiar `from: 'Acme <onboarding@resend.dev>'` → `'Daniela Vargas <hola@psicologadanivargas.com>'`
+- [ ] `app/api/contacto/route.ts`: cambiar el `to:` hardcodeado `mottajuandiego.work@gmail.com` → correo real de Daniela
+- [ ] `app/api/webhooks/bold/route.ts`: mismo cambio de `from:`
+- [ ] `app/api/webhooks/bold/route.ts`: la variable `payerEmail` está **forzada** a `mottajuandiego.work@gmail.com` en vez de `paymentData.payer_email`. Tras verificar el dominio, usar el correo real del comprador para que reciba su guía
+- [ ] Crear una API key de Resend de solo envío para producción
+
+**Pagos (Bold)**:
+- [ ] `app/api/webhooks/bold/route.ts`: **quitar el bypass de simulación** (`if (!signature) { ...permitir ejecución temporal... }`). En producción Bold **sí** envía la firma `x-bold-signature` y la verificación debe ser obligatoria; un webhook sin firma debe rechazarse
+- [ ] Configurar en el panel de Bold la **URL del webhook de producción** apuntando al dominio real
+- [ ] Subir las **llaves de producción** de Bold (identity + secret) a las env vars de Vercel
+- [ ] **PDFs de las guías:** los correos del webhook tienen URLs de descarga placeholder (`https://tudominio.com/links-secretos/...` y varios `href="..."` vacíos en GUIA-AMOR y GUIA-HABLAR). Subir los PDFs reales (Contentful Media) y poner las URLs definitivas
+
+**Base de datos (Supabase)**:
+- [ ] Crear el **proyecto Supabase de producción** y correr en él el mismo SQL de la tabla `payments`
+- [ ] Poner `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` de ese proyecto **solo** en el entorno *Production* de Vercel
+
+**Contentful**:
+- [ ] Configurar `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN` en Vercel (sin ellas, el build de producción del blog falla)
+- [ ] Asegurarse de que los posts estén en estado **Published** (la Delivery API no devuelve borradores)
+
+**Dominio / Vercel**:
+- [ ] Apuntar el dominio propio a Vercel (DNS)
+- [ ] Añadir los registros DNS de verificación de dominio de Resend
+- [ ] Hacer `git push origin main` (el merge a `main` está hecho en local pero no empujado; `main` dispara deploy de producción en Vercel)
+- [ ] Revisar que las páginas `pago-completado` / `pago-rechazado` (noindex) y `verificar-pago` funcionan con el dominio real
+
+**Fuentes consultadas:** [Resend – Managing Domains](https://resend.com/docs/dashboard/domains/introduction), [Bold – Llaves de integración](https://developers.bold.co/pagos-en-linea/llaves-de-integracion), [Bold – Webhook](https://developers.bold.co/webhook), [Bold – Ambiente de pruebas](https://www.developers.bold.co/pagos-en-linea/boton-de-pagos/ambiente-pruebas), [Contentful – Authentication](https://www.contentful.com/developers/docs/references/authentication/).
 
 ---
 
@@ -303,7 +364,7 @@ CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en des
 | Vercel Analytics | ✅ Instalado |
 | Contentful → Blog real | ✅ Completo — `lib/contentful.ts` + build genera páginas estáticas por slug |
 | Newsletter del blog (envío real) | 🔲 Pendiente — `NewsletterForm` solo es UI (preventDefault) |
-| Supabase (base de datos) | 🔲 Pendiente |
+| Supabase (base de datos) | ✅ Conectada — tabla `payments`; el webhook de Bold registra cada pago |
 | PDFs guías en Contentful Media | 🔲 Pendiente |
 | BoldPaymentButton en páginas de servicios | 🔲 Pendiente — actualmente solo en /guias |
 | Bug: descriptions duplicadas en guias/page.tsx | ✅ Corregido — cada guía manda su nombre real |
