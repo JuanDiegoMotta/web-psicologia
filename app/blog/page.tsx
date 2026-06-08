@@ -21,7 +21,7 @@ export default async function BlogPage() {
         />
         <div className="absolute inset-0 bg-gray-900/60 z-10" />
         <div className="max-w-3xl mx-auto relative z-10">
-          <span className="text-pink-500 font-bold uppercase tracking-wider text-sm mb-4 block">Espacio de Lectura</span>
+          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Espacio de Lectura</span>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-serif">
             Reflexiones para tu salud mental
           </h1>
@@ -48,7 +48,7 @@ export default async function BlogPage() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-pink-600 uppercase tracking-wider">
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-eucalipto-darker uppercase tracking-wider">
                   {post.category}
                 </div>
               </Link>
@@ -62,7 +62,7 @@ export default async function BlogPage() {
                 </div>
 
                 <Link href={`/blog/${post.slug}`}>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-pink-500 transition-colors leading-snug">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-eucalipto-dark transition-colors leading-snug">
                     {post.title}
                   </h2>
                 </Link>
@@ -73,7 +73,7 @@ export default async function BlogPage() {
 
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="inline-flex items-center gap-2 text-pink-500 font-bold hover:text-pink-600 transition-colors"
+                  className="inline-flex items-center gap-2 text-eucalipto-dark font-bold hover:text-eucalipto-darker transition-colors"
                 >
                   Leer artículo completo <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </Link>

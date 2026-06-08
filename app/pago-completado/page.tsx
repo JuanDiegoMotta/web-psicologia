@@ -22,8 +22,8 @@ async function PagoCompletadoContent() {
     }
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30 px-6 py-24">
-            <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 md:p-14 text-center border border-pink-100">
+        <main className="min-h-screen flex items-center justify-center bg-blancoluz/30 px-6 py-24">
+            <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 md:p-14 text-center border border-salvia">
 
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-8 animate-bounce">
                     ✓
@@ -36,7 +36,7 @@ async function PagoCompletadoContent() {
                 <p className="text-gray-600 mb-8 leading-relaxed">
                     Muchas gracias por tu confianza. Tu transacción ha sido procesada correctamente.
                     <br /><br />
-                    <span className="font-semibold text-pink-500">¿Qué sigue ahora?</span>
+                    <span className="font-semibold text-eucalipto-dark">¿Qué sigue ahora?</span>
                     <br />
                     En unos minutos recibirás un correo electrónico con la confirmación y los detalles. No olvides revisar tu carpeta de <strong>Spam</strong>.
                 </p>
@@ -51,7 +51,7 @@ async function PagoCompletadoContent() {
 
                     <Link
                         href="/blog"
-                        className="block w-full text-pink-500 font-bold hover:underline"
+                        className="block w-full text-eucalipto-dark font-bold hover:underline"
                     >
                         Leer algo en el blog mientras tanto
                     </Link>

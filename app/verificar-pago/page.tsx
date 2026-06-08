@@ -33,7 +33,7 @@ function VerificarPagoContent() {
   return (
     <div className="text-center">
       {/* Un pequeño spinner de carga amigable */}
-      <div className="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin mx-auto mb-6"></div>
+      <div className="w-16 h-16 border-4 border-salvia border-t-eucalipto-dark rounded-full animate-spin mx-auto mb-6"></div>
       <h1 className="text-2xl font-bold text-gray-800 font-serif mb-2">
         Verificando tu pago...
       </h1>
@@ -45,7 +45,7 @@ function VerificarPagoContent() {
 // 2. Exportamos la página principal envolviendo el contenido en <Suspense>
 export default function VerificarPagoPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-[#FFF5F3]/30">
+    <main className="min-h-screen flex items-center justify-center bg-blancoluz/30">
       <Suspense fallback={
         // Este es un loader de repuesto que Next.js muestra mientras inicializa el Suspense
         <div className="text-center text-gray-500">Preparando verificación...</div>

@@ -1,1 +1,26 @@
 @import 'tailwindcss';
+
+/*
+  Paleta de marca — Psicóloga Dani Vargas
+  Definida como tokens de tema de Tailwind v4 (@theme): cada --color-X
+  genera utilidades bg-X / text-X / border-X / ring-X, etc. (también con
+  opacidad: bg-eucalipto/30). Un único sitio para ajustar la marca.
+
+  Tonos del manual (estimados de los swatches):
+    Blanco Luz #FDFBF1 · Arena #F1EAE0 · Lino #E6DBC4
+    Salvia #C3D3AD · Eucalipto #8FAE96 · Gris tinta #343434
+
+  Los tonos -dark / -darker del eucalipto son derivados (no están en el
+  manual): el eucalipto de marca es muy claro para texto/botones con
+  texto blanco, así que se usan estos para garantizar legibilidad (AA).
+*/
+@theme {
+  --color-blancoluz: #FDFBF1;        /* fondo claro principal */
+  --color-arena: #F1EAE0;            /* fondo neutro suave */
+  --color-lino: #E6DBC4;             /* paneles cálidos / soporte */
+  --color-salvia: #C3D3AD;           /* acentos suaves, bordes, fondos verdes claros */
+  --color-eucalipto: #8FAE96;        /* acentos, iconos, fills claros (texto oscuro encima) */
+  --color-eucalipto-dark: #5E7C66;   /* botones con texto blanco, enlaces (contraste AA) */
+  --color-eucalipto-darker: #46604E; /* hover de botones/enlaces, texto fuerte */
+  --color-tinta: #343434;            /* texto fuerte y secciones oscuras */
+}

@@ -21,18 +21,18 @@ export default function TerapiaParejaPage() {
         <div className="absolute inset-0 bg-gray-900/60 z-10" />
 
         <div className="max-w-4xl mx-auto relative z-20">
-          <span className="text-pink-400 font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
+          <span className="text-eucalipto font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
             Terapia Integrativa de Pareja (TIP)
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#FFF5F3] mb-8 tracking-tight font-serif leading-tight drop-shadow-md">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blancoluz mb-8 tracking-tight font-serif leading-tight drop-shadow-md">
             ¿Sienten que discuten más de lo que disfrutan juntos?
           </h1>
-          <p className="text-xl md:text-2xl text-[#FFF5F3]/80 mb-10 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
+          <p className="text-xl md:text-2xl text-blancoluz/80 mb-10 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
             Si la confianza se ha debilitado o la comunicación ya no fluye como antes, la terapia de pareja puede ser ese punto de inflexión para recuperar la conexión emocional y fortalecer el vínculo.
           </p>
           <a 
             href="#inversion" 
-            className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
+            className="inline-block bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
           >
             Queremos empezar nuestro proceso
           </a>
@@ -40,34 +40,34 @@ export default function TerapiaParejaPage() {
       </section>
 
       {/* --- IDENTIFICACIÓN DEL DOLOR Y LA SOLUCIÓN --- */}
-      <section className="w-full py-20 px-6 bg-[#FFF5F3]/30">
+      <section className="w-full py-20 px-6 bg-blancoluz/30">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           
           {/* Columna Izquierda: El Dolor / Objetivo */}
-          <div className="bg-white p-10 rounded-3xl shadow-sm border border-pink-50">
+          <div className="bg-white p-10 rounded-3xl shadow-sm border border-arena">
             <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
               💔
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Este espacio es para ustedes si buscan...</h2>
             <ul className="space-y-4 text-gray-600">
-              <li className="flex items-start gap-3"><span className="text-pink-400">💬</span> Mejorar la comunicación y dejar de girar en círculos.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">🔄</span> Resolver conflictos y diferencias estancadas.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">🤝</span> Recuperar la confianza mutua tras una crisis.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">🌱</span> Afrontar cambios importantes en su vida de pareja.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">💬</span> Mejorar la comunicación y dejar de girar en círculos.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">🔄</span> Resolver conflictos y diferencias estancadas.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">🤝</span> Recuperar la confianza mutua tras una crisis.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">🌱</span> Afrontar cambios importantes en su vida de pareja.</li>
             </ul>
           </div>
 
           {/* Columna Derecha: La Solución */}
-          <div className="bg-white p-10 rounded-3xl shadow-sm border border-pink-50">
-            <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+          <div className="bg-white p-10 rounded-3xl shadow-sm border border-arena">
+            <div className="w-14 h-14 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6">
               ❤️‍🩹
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Juntos lograremos:</h2>
             <ul className="space-y-4 text-gray-600">
-              <li className="flex items-start gap-3"><span className="text-pink-400">✨</span> <strong>Reconexión:</strong> Volver a encontrarse en lo emocional y lo sexual.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">✨</span> <strong>Perdón y Aceptación:</strong> Herramientas para sanar heridas del pasado.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">✨</span> <strong>Crecimiento mutuo:</strong> Crecer juntos como pareja y como individuos.</li>
-              <li className="flex items-start gap-3"><span className="text-pink-400">✨</span> <strong>Acuerdos reales:</strong> Transformar las discusiones en soluciones.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Reconexión:</strong> Volver a encontrarse en lo emocional y lo sexual.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Perdón y Aceptación:</strong> Herramientas para sanar heridas del pasado.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Crecimiento mutuo:</strong> Crecer juntos como pareja y como individuos.</li>
+              <li className="flex items-start gap-3"><span className="text-eucalipto">✨</span> <strong>Acuerdos reales:</strong> Transformar las discusiones en soluciones.</li>
             </ul>
           </div>
 
@@ -85,28 +85,28 @@ export default function TerapiaParejaPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">1</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Primera sesión (70 min)</h3>
                   <p className="text-gray-600">Exploramos sus desafíos actuales, la historia de la relación y sus expectativas conjuntas.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">2</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Evaluación inicial</h3>
                   <p className="text-gray-600">Identificamos las fortalezas, dificultades y dinámicas ocultas de la pareja.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">3</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Plan de trabajo</h3>
                   <p className="text-gray-600">Fijamos objetivos claros y realistas para mejorar la relación.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center font-bold">4</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">4</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Proceso continuo</h3>
                   <p className="text-gray-600">Avanzamos con técnicas y tareas prácticas basadas en la Terapia Integrativa de Pareja.</p>
@@ -117,7 +117,7 @@ export default function TerapiaParejaPage() {
 
           {/* Beneficios Online */}
           <div className="w-full lg:w-1/2 bg-gray-800 p-10 rounded-3xl text-white shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/20 rounded-bl-full blur-xl"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-eucalipto-dark/20 rounded-bl-full blur-xl"></div>
             <h3 className="text-2xl font-bold mb-8 z-10 relative">Beneficios de la modalidad Online</h3>
             <ul className="space-y-5 z-10 relative">
               <li className="flex items-center gap-3">
@@ -143,10 +143,10 @@ export default function TerapiaParejaPage() {
       </section>
 
       {/* --- AUTORIDAD (Mini Bio Parejas) --- */}
-      <section className="w-full py-16 px-6 bg-[#FFF5F3]/50 text-center">
+      <section className="w-full py-16 px-6 bg-blancoluz/50 text-center">
         <div className="max-w-4xl mx-auto">
           <p className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed italic mb-6">
-            "Soy Psicóloga Clínica con formación especializada en <strong className="text-pink-500">Terapia Integrativa de Pareja (TIP)</strong>. Mi compromiso es claro: ayudarles a construir una relación más sana, plena y consciente."
+            "Soy Psicóloga Clínica con formación especializada en <strong className="text-eucalipto-dark">Terapia Integrativa de Pareja (TIP)</strong>. Mi compromiso es claro: ayudarles a construir una relación más sana, plena y consciente."
           </p>
           <p className="text-gray-500">— Psicóloga Dani Vargas</p>
         </div>
@@ -182,18 +182,18 @@ export default function TerapiaParejaPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20una%20Sesi%C3%B3n%20%C3%9Anica%20de%20Pareja."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-3 rounded-xl transition-colors"
+                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
                 Agendar 1 Sesión
               </a>
             </div>
 
             {/* Paquete 2: 3 Sesiones */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-pink-400 flex flex-col h-full relative transform lg:-translate-y-4">
+            <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-eucalipto flex flex-col h-full relative transform lg:-translate-y-4">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
                 <span>✅</span> Paquete de 3 sesiones
               </h3>
-              <p className="text-3xl font-black text-pink-500 mb-1">$439.800 COP</p>
+              <p className="text-3xl font-black text-eucalipto-dark mb-1">$439.800 COP</p>
               <p className="text-xs text-gray-500 mb-6">Suscripción por 40 días • <span className="font-semibold text-green-600">Ahorran $70.200</span></p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
@@ -205,7 +205,7 @@ export default function TerapiaParejaPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20el%20Paquete%20de%203%20Sesiones%20de%20Pareja."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-xl transition-colors shadow-md"
+                className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
                 Agendar Paquete de 3
               </a>
@@ -251,7 +251,7 @@ export default function TerapiaParejaPage() {
             href="https://wa.me/573016245662?text=%C2%A1Hola%21%20estamos%20interesados%20en%20las%20consultas%20de%20pareja." 
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pink-500 font-bold text-xl hover:text-pink-600 underline underline-offset-4 transition-colors"
+            className="text-eucalipto-dark font-bold text-xl hover:text-eucalipto-darker underline underline-offset-4 transition-colors"
           >
             👉 Den hoy el primer paso hacia una relación más fuerte
           </a>

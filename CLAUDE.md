@@ -108,20 +108,35 @@ El formulario usa `action={handleFormAction}` (React 19, no `onSubmit`). Todos l
 
 ## Paleta de colores y estilos
 
+**Paleta de marca (manual del cliente)** — definida como tokens `@theme` en `app/globals.css`. Cada token genera utilidades (`bg-`, `text-`, `border-`, `ring-`…, con opacidad: `bg-eucalipto/30`). **No usar `pink-*` ni colores arbitrarios de marca**; usar siempre estos tokens:
+
+| Token / clase | Hex | Uso |
+|---|---|---|
+| `blancoluz` | `#FDFBF1` | Fondo claro principal (antes la crema `#FFF5F3`) |
+| `arena` | `#F1EAE0` | Fondo neutro suave de secciones |
+| `lino` | `#E6DBC4` | Paneles cálidos / soporte |
+| `salvia` | `#C3D3AD` | Acentos suaves, bordes, fondos verdes claros |
+| `eucalipto` | `#8FAE96` | Acentos, iconos, fills claros (texto **oscuro** encima) |
+| `eucalipto-dark` | `#5E7C66` | **CTAs/botones con texto blanco y enlaces** (contraste AA) |
+| `eucalipto-darker` | `#46604E` | Hover de botones/enlaces, texto fuerte |
+| `tinta` | `#343434` | Texto fuerte y secciones oscuras (antes `#2D313A`/`gray-800`) |
+
+> Los tonos `eucalipto-dark`/`-darker` son **derivados** (no están en el manual): el eucalipto de marca `#8FAE96` es demasiado claro para texto/botones con texto blanco, así que se derivaron tonos más oscuros para garantizar legibilidad. Los hex de marca son **estimados de los swatches** (el manual no traía códigos salvo `#343434`); ajustar aquí en un solo sitio si el cliente da los exactos.
+
+**Mapeo histórico** (rosa→marca, por si aparece código viejo): `pink-50→arena`, `pink-100/200→salvia`, `pink-300/400→eucalipto`, `pink-500→eucalipto-dark`, `pink-600/700→eucalipto-darker`, `#FFF5F3→blancoluz`, `#2D313A→tinta`.
+
 | Uso | Valor |
 |---|---|
-| Fondo principal (crema) | `#FFF5F3` |
-| Navbar y fondos suaves | `bg-[#FFF5F3]` / `bg-[#FFF5F3]/50` |
-| Rosa principal (CTAs, highlights) | `pink-500` / `pink-400` |
-| Fondo oscuro (footer, secciones dark) | `#2D313A` / `gray-800` |
-| Texto principal | `gray-800` |
+| Texto principal | `tinta` / `gray-800` |
 | Texto secundario | `gray-600` |
-| Bordes y separadores | `pink-100` / `gray-100` |
+| Bordes y separadores | `salvia` / `gray-100` |
 | Esquinas | `rounded-3xl` (tarjetas grandes), `rounded-2xl` (medias), `rounded-full` (botones) |
 
-**Tipografía:** Fuente Inter. Títulos usan `font-serif` para contraste elegante.
+**Tipografía:** Fuente Inter. Títulos usan `font-serif` para contraste elegante. *(El manual sugiere otras fuentes —Montserrat/Poppins en CapCut, Gliker/Alata en Canva— pero son para piezas gráficas, no necesariamente para la web; pendiente de confirmar con el cliente si quiere cambiar la tipografía web.)*
 
-**Gradientes:** Usar `bg-gradient-to-b from-pink-100/40 via-[#FFF5F3]/60 to-white` para héros sin imagen de fondo.
+**Gradientes:** Usar `bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white` para héros sin imagen de fondo.
+
+**⚠️ Assets de imagen con rosa (no los toca el CSS):** quedan elementos gráficos con el coral/rosa antiguo que hay que **rediseñar/reemplazar** aparte: `public/icons/logos/logo-mariposa-fondo.svg` (el círculo del logo en la navbar), `public/images/backgrounds/fondoRosa.png` y varios SVG decorativos rosas en `public/images/backgrounds/`.
 
 ---
 

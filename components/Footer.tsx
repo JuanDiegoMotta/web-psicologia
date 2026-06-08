@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 export default function Footer() {
     return (
-        <footer className="bg-[#2D313A] text-gray-200 py-6 px-8 text-sm text-center md:text-left">
+        <footer className="bg-tinta text-gray-200 py-6 px-8 text-sm text-center md:text-left">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Sección 1: Redes y Correo */}
         <div className="flex flex-col md:flex-row gap-6 ">
           <div>
-            <p className="mb-2 font-medium text-pink-300">Sígueme en mis redes 🧠</p>
+            <p className="mb-2 font-medium text-eucalipto">Sígueme en mis redes 🧠</p>
             <div className="flex gap-2 justify-center md:justify-start">
               {/* Enlace de Facebook */}
               <a 
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <p className="mb-1 font-medium text-pink-300">Escríbeme 💌</p>
+            <p className="mb-1 font-medium text-eucalipto">Escríbeme 💌</p>
             <p>danielavargaspsicologa@gmail.com</p>
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Sección 3: Legal y Copyright */}
         <div className="flex flex-col gap-1 items-center md:items-end ">
-          <Link href="#" className="hover:text-pink-400 underline transition-colors">
+          <Link href="#" className="hover:text-eucalipto underline transition-colors">
             Política de privacidad
           </Link>
           <p>Copyright 2020</p>

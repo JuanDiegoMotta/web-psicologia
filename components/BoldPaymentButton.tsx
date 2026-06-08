@@ -71,8 +71,8 @@ export default function BoldPaymentButton({ amount, description, orderPrefix }: 
         onClick={handlePayment}
         disabled={isLoading}
         className={`w-full py-4 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 ${isLoading
-          ? 'bg-pink-300 text-white cursor-not-allowed'
-          : 'bg-pink-500 hover:bg-pink-600 text-white transform hover:-translate-y-0.5'
+          ? 'bg-eucalipto text-white cursor-not-allowed'
+          : 'bg-eucalipto-dark hover:bg-eucalipto-darker text-white transform hover:-translate-y-0.5'
           }`}
       >
         {isLoading ? 'Cargando pasarela...' : `Pagar $${parseInt(amount).toLocaleString('es-CO')} COP`}
