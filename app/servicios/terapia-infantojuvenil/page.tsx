@@ -21,7 +21,7 @@ export default function TerapiaInfantojuvenilPage() {
         <div className="absolute inset-0 bg-gray-900/40 z-10" />
 
         <div className="max-w-4xl mx-auto relative z-20">
-          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
+          <span className="text-salvia font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
             Psicología para Niños y Adolescentes
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blancoluz mb-8 tracking-tight font-serif leading-tight drop-shadow-md">
@@ -94,28 +94,28 @@ export default function TerapiaInfantojuvenilPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">1</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Primera sesión (70 min)</h3>
                   <p className="text-gray-600">Espacio con los padres y el niño/a para conocer la situación actual, la historia familiar y las expectativas.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">2</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Evaluación inicial</h3>
                   <p className="text-gray-600">Comprensión profunda de los desafíos emocionales y conductuales del menor.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">3</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Plan de trabajo</h3>
                   <p className="text-gray-600">Definimos objetivos claros, tareas prácticas y un acompañamiento personalizado para la familia.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">4</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">4</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Seguimiento y Retroalimentación</h3>
                   <p className="text-gray-600">Sesiones periódicas con el menor y espacios exclusivos de retroalimentación para guiar a los padres.</p>
@@ -143,7 +143,7 @@ export default function TerapiaInfantojuvenilPage() {
               </li>
             </ul>
             <div className="mt-8 pt-6 border-t border-gray-700 z-10 relative">
-              <p className="text-eucalipto-dark text-sm font-medium">
+              <p className="text-salvia text-sm font-medium">
                 📍 Nota: También ofrecemos procesos presenciales en Bogotá, Colombia y alrededores si el caso lo requiere.
               </p>
             </div>
@@ -191,7 +191,7 @@ export default function TerapiaInfantojuvenilPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Infantojuvenil."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-dark font-bold py-3 rounded-xl transition-colors"
+                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
                 Agendar Valoración
               </a>

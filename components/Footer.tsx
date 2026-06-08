@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Sección 1: Redes y Correo */}
         <div className="flex flex-col md:flex-row gap-6 ">
           <div>
-            <p className="mb-2 font-medium text-eucalipto-dark">Sígueme en mis redes 🧠</p>
+            <p className="mb-2 font-medium text-salvia">Sígueme en mis redes 🧠</p>
             <div className="flex gap-2 justify-center md:justify-start">
               {/* Enlace de Facebook */}
               <a 
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <p className="mb-1 font-medium text-eucalipto-dark">Escríbeme 💌</p>
+            <p className="mb-1 font-medium text-salvia">Escríbeme 💌</p>
             <p>danielavargaspsicologa@gmail.com</p>
           </div>
         </div>

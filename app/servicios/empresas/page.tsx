@@ -21,7 +21,7 @@ export default function EmpresasPage() {
         <div className="absolute inset-0 bg-gray-900/70 z-10" />
 
         <div className="max-w-4xl mx-auto relative z-20">
-          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
+          <span className="text-salvia font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
             Psicología Clínica Corporativa
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blancoluz mb-8 tracking-tight font-serif leading-tight drop-shadow-md">

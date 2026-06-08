@@ -144,6 +144,12 @@ Regla mental: **fondos neutros (~80%) + verde como acento (~20%) + toque cálido
 
 > **Estandarización aplicada:** todo el texto verde "suelto" (no-hover) se unificó a `eucalipto-dark` (antes convivían `eucalipto`/`-dark`/`-darker` por herencia del rosa, lo que daba aspecto mezclado). Mantener esa disciplina: para texto-acento usar **siempre** `eucalipto-dark` (+ `hover:eucalipto-darker`).
 
+**⚠️ Regla de contraste (el acento verde cambia según el fondo):**
+- Sobre fondo **claro** (blancoluz/arena/white): texto-acento = `eucalipto-dark`.
+- Sobre fondo **oscuro** (`tinta`, `gray-800/900`, overlays de hero `bg-gray-900/xx`): texto-acento = `salvia` (verde **claro**). Nunca `eucalipto-dark` sobre oscuro (verde oscuro sobre oscuro = ilegible; era el bug del footer y los eyebrows de los heroes).
+- Texto sobre fill `salvia` (botones secundarios, círculos de paso): usar `eucalipto-darker` (no `eucalipto-dark`), para alcanzar contraste suficiente.
+- Botón primario: `bg-eucalipto-dark` + texto blanco (AA ✓), hover `bg-eucalipto-darker`.
+
 | Uso | Valor |
 |---|---|
 | Texto principal | `tinta` / `gray-800` |

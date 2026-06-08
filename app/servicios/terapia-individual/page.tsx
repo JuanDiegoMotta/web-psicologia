@@ -97,21 +97,21 @@ export default function TerapiaIndividualPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">1</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Primera sesión (70 min)</h3>
                   <p className="text-gray-600">Exploramos a profundidad tus desafíos, tu historia emocional y tus expectativas.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">2</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Plan de trabajo a medida</h3>
                   <p className="text-gray-600">Definimos con total claridad los objetivos y la ruta terapéutica a seguir.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">3</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Técnicas y herramientas</h3>
                   <p className="text-gray-600">Te llevarás tareas prácticas entre sesiones para que el progreso no se quede solo en el consultorio.</p>
@@ -208,7 +208,7 @@ export default function TerapiaIndividualPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Individual%20de%20terapia."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-dark font-bold py-3 rounded-xl transition-colors"
+                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
                 Agendar 1 Sesión
               </a>

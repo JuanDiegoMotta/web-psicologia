@@ -21,7 +21,7 @@ export default function TerapiaParejaPage() {
         <div className="absolute inset-0 bg-gray-900/60 z-10" />
 
         <div className="max-w-4xl mx-auto relative z-20">
-          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
+          <span className="text-salvia font-bold uppercase tracking-wider text-sm mb-4 block drop-shadow-sm">
             Terapia Integrativa de Pareja (TIP)
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blancoluz mb-8 tracking-tight font-serif leading-tight drop-shadow-md">
@@ -85,28 +85,28 @@ export default function TerapiaParejaPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">1</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Primera sesión (70 min)</h3>
                   <p className="text-gray-600">Exploramos sus desafíos actuales, la historia de la relación y sus expectativas conjuntas.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">2</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Evaluación inicial</h3>
                   <p className="text-gray-600">Identificamos las fortalezas, dificultades y dinámicas ocultas de la pareja.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">3</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Plan de trabajo</h3>
                   <p className="text-gray-600">Fijamos objetivos claros y realistas para mejorar la relación.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-dark rounded-full flex items-center justify-center font-bold">4</div>
+                <div className="w-10 h-10 shrink-0 bg-salvia text-eucalipto-darker rounded-full flex items-center justify-center font-bold">4</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Proceso continuo</h3>
                   <p className="text-gray-600">Avanzamos con técnicas y tareas prácticas basadas en la Terapia Integrativa de Pareja.</p>
@@ -182,7 +182,7 @@ export default function TerapiaParejaPage() {
                 href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20una%20Sesi%C3%B3n%20%C3%9Anica%20de%20Pareja."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-dark font-bold py-3 rounded-xl transition-colors"
+                className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
                 Agendar 1 Sesión
               </a>

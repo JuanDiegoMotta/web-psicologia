@@ -21,7 +21,7 @@ export default async function BlogPage() {
         />
         <div className="absolute inset-0 bg-gray-900/60 z-10" />
         <div className="max-w-3xl mx-auto relative z-10">
-          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Espacio de Lectura</span>
+          <span className="text-salvia font-bold uppercase tracking-wider text-sm mb-4 block">Espacio de Lectura</span>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-serif">
             Reflexiones para tu salud mental
           </h1>
