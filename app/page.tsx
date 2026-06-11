@@ -29,11 +29,11 @@ export default function HomePage() {
         {/*Contenido principal del Hero*/}
         <div className="relative z-20 max-w-3xl flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight">
-            Tu espacio seguro para <span className="text-eucalipto-dark">sanar</span> y <span className="text-eucalipto-dark">crecer</span>.
+            Transformamos tu vida con <span className="text-eucalipto-dark">humanidad</span> y <span className="text-eucalipto-dark">claridad</span>.
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shasdow-sm">
-            Te acompaño a través de terapia psicológica basada en evidencia para que recuperes la calma, la confianza y el sentido en tu vida.
+          <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shadow-sm">
+            Un espacio cálido y seguro para entender lo que sientes, ordenar tus emociones y avanzar en tu día a día con herramientas reales.
           </p>
 
           <Link
@@ -42,6 +42,22 @@ export default function HomePage() {
           >
             Da el primer paso hoy
           </Link>
+        </div>
+      </section>
+
+      {/*--- SECCIÓN: TU PROCESO PARA SANAR Y CRECER ---*/}
+      <section className="w-full py-24 px-6 bg-arena">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Tu proceso</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
+            Tu proceso para sanar y crecer
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed mb-5">
+            A veces la ansiedad no da tregua, la tristeza pesa más de lo que cuentas, o sientes que por mucho que lo intentes nunca es suficiente. No estás sola: a muchas mujeres les pasa, y darte cuenta es el primer paso.
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Aquí encuentras un espacio <span className="text-eucalipto-dark font-medium">sin juicios, profesional y humano</span>, donde por fin puedes mirar lo que sientes con calma y empezar a transformarlo, paso a paso y a tu ritmo.
+          </p>
         </div>
       </section>
 

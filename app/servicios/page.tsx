@@ -8,11 +8,11 @@ export default function ServiciosPage() {
         <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
-            Encuentra el espacio perfecto <br />
-            <span className="text-eucalipto-dark">para tu proceso.</span>
+            Cada proceso es único, <br />
+            <span className="text-eucalipto-dark">y el tuyo también.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-            Trabajo con enfoques basados en evidencia para garantizar resultados reales. Elige el área en la que necesitas acompañamiento.
+            Por eso trabajamos contigo desde una mirada cercana y personalizada, con terapias basadas en evidencia. Elige el área en la que necesitas acompañamiento y demos juntos el primer paso.
           </p>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default function ServiciosPage() {
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Acompañamiento a Padres</h2>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
-                Orientación práctica si buscas comprender y apoyar mejor a tu hijo/a en sus emociones, fomentando su resiliencia y bienestar desde el hogar.
+                Un espacio donde tu hijo/a aprende a entender y gestionar sus emociones y a construir resiliencia, con orientación práctica para que la familia le acompañe mejor desde casa.
               </p>
               <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
@@ -82,6 +82,22 @@ export default function ServiciosPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* --- NUESTRO EQUIPO TERAPÉUTICO --- */}
+      <section className="w-full py-24 px-6 bg-arena/40">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Nuestro equipo</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
+            Nuestro equipo terapéutico
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed mb-5">
+            Hoy, cerca del <span className="text-eucalipto-dark font-medium">90% de los procesos</span> los acompaña un equipo de psicólogos que comparte la misma esencia: cercanía, calidez humana y métodos basados en evidencia.
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            No es casualidad. Elegimos a cada profesional con cuidado, valorando su calidad humana, su ética, su formación y su capacidad de crear un espacio verdaderamente seguro donde te sientas en confianza.
+          </p>
         </div>
       </section>
 

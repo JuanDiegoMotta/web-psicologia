@@ -169,9 +169,9 @@ export default function TerapiaParejaPage() {
             {/* Paquete 1: 1 Sesión */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <span>📌</span> Sesión Única
+                <span>📌</span> Sesión Claridad
               </h3>
-              <p className="text-2xl font-black text-gray-900 mb-6">$170.000 COP</p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p className="font-medium text-gray-800">Ideal si desean:</p>
@@ -179,22 +179,21 @@ export default function TerapiaParejaPage() {
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20una%20Sesi%C3%B3n%20%C3%9Anica%20de%20Pareja."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20una%20Sesi%C3%B3n%20Claridad%20de%20pareja."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar 1 Sesión
+                Agendar Sesión Claridad
               </a>
             </div>
 
             {/* Paquete 2: 3 Sesiones */}
             <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-eucalipto flex flex-col h-full relative transform lg:-translate-y-4">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✅</span> Paquete de 3 sesiones
+                <span>✅</span> Paquete Impulso
               </h3>
-              <p className="text-3xl font-black text-eucalipto-dark mb-1">$439.800 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 40 días • <span className="font-semibold text-green-600">Ahorran $70.200</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p className="font-medium text-gray-800">Perfecto para:</p>
@@ -202,12 +201,12 @@ export default function TerapiaParejaPage() {
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20el%20Paquete%20de%203%20Sesiones%20de%20Pareja."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20el%20Paquete%20Impulso%20de%204%20sesiones%20de%20pareja."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
-                Agendar Paquete de 3
+                Agendar Paquete Impulso
               </a>
             </div>
 
@@ -217,10 +216,9 @@ export default function TerapiaParejaPage() {
                 Recomendado
               </div>
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✨</span> Paquete de 5 sesiones
+                <span>✨</span> Paquete Transformación
               </h3>
-              <p className="text-2xl font-black text-gray-900 mb-1">$636.900 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 60 días • <span className="font-semibold text-green-600">Ahorran $213.100</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p className="font-medium text-gray-800">Ideal si buscan:</p>
@@ -228,12 +226,12 @@ export default function TerapiaParejaPage() {
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20el%20Paquete%20de%205%20Sesiones%20de%20Pareja."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Queremos%20agendar%20el%20Paquete%20Transformaci%C3%B3n%20de%208%20sesiones%20de%20pareja."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Paquete de 5
+                Agendar Paquete Transformación
               </a>
             </div>
 

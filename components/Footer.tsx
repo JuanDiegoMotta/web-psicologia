@@ -41,7 +41,7 @@ export default function Footer() {
           
           <div>
             <p className="mb-1 font-medium text-salvia">Escríbeme 💌</p>
-            <p>danielavargaspsicologa@gmail.com</p>
+            <p>hola@psicologadanivargas.com</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Sección 3: Legal y Copyright */}
         <div className="flex flex-col gap-1 items-center md:items-end ">
-          <Link href="#" className="hover:text-eucalipto underline transition-colors">
+          <Link href="/politica-de-privacidad" className="hover:text-eucalipto underline transition-colors">
             Política de privacidad
           </Link>
           <p>Copyright 2020</p>

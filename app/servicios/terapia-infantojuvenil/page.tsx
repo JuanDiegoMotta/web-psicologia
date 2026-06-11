@@ -179,43 +179,42 @@ export default function TerapiaInfantojuvenilPage() {
             {/* Paquete 1: 1 Sesión */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <span>📌</span> Una Sesión
+                <span>📌</span> Sesión Claridad
               </h3>
-              <p className="text-2xl font-black text-gray-900 mb-6">$140.000 COP</p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p>El primer paso fundamental para comprender la situación actual, conocer al profesional y recibir orientación inicial sobre cómo abordar el problema en casa.</p>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Infantojuvenil."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Claridad%20infantojuvenil."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Valoración
+                Agendar Sesión Claridad
               </a>
             </div>
 
             {/* Paquete 2: 3 Sesiones */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>🌿</span> Paquete de 3 sesiones
+                <span>🌿</span> Paquete Impulso
               </h3>
-              <p className="text-3xl font-black text-gray-900 mb-1">$343.900 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 40 días • <span className="font-semibold text-green-600">Ahorras $76.100</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p>Ideal para comenzar a implementar cambios en casa. Permite hacer la evaluación inicial y las primeras devoluciones de pautas de crianza y manejo emocional.</p>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20de%203%20Sesiones%20Infantojuvenil."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20Impulso%20de%204%20sesiones%20infantojuvenil."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Paquete de 3
+                Agendar Paquete Impulso
               </a>
             </div>
 
@@ -225,22 +224,21 @@ export default function TerapiaInfantojuvenilPage() {
                 Mejor para Resultados
               </div>
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>🌟</span> Paquete de 5 sesiones
+                <span>🌟</span> Paquete Transformación
               </h3>
-              <p className="text-3xl font-black text-eucalipto-dark mb-1">$493.900 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 60 días • <span className="font-semibold text-green-600">Ahorras $206.100</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
               <div className="flex-grow space-y-4 text-sm text-gray-600">
                 <p><strong>La mejor opción.</strong> El trabajo con niños y adolescentes requiere tiempo para crear vínculo y confianza. Este paquete garantiza la constancia necesaria para ver resultados significativos en su conducta y bienestar.</p>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20de%205%20Sesiones%20Infantojuvenil."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20Transformaci%C3%B3n%20de%208%20sesiones%20infantojuvenil."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
-                Agendar Paquete de 5
+                Agendar Paquete Transformación
               </a>
             </div>
 
