@@ -384,6 +384,57 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 ---
 
+## 📋 Modificaciones solicitadas por el cliente (pendientes — reunión 10 jun 2026)
+
+> Recopiladas de la reunión + doc del cliente. **Nada implementado aún** (se abordará tras la ronda de pruebas). Referencias: carpeta de diseño del cliente (Google Drive) y ejemplo de página de pagos `psicologamariapaula.com/pagos/`.
+
+### Contenido — Página de inicio
+- [ ] **Hero / texto de apertura:** "Transformamos tu vida con humanidad y claridad" + línea de apoyo (espacio cálido y seguro para entender lo que sientes y avanzar). Propuesta de valor clara: qué, para quién, con qué enfoque.
+- [ ] **Nueva sección "Tu proceso para sanar y crecer"** como **segundo bloque**: conexión emocional con mujeres **19-34** (ansiedad, tristeza, frustración, sensación de insuficiencia); espacio sin juicios, profesional y humano. Objetivo: que la visitante se sienta vista y comprendida.
+- [ ] **Texto intro de servicios:** sustituir "Encuentra el espacio perfecto…" por enfoque pain-point→solución, personalizado y basado en evidencia ("Cada proceso es único. Por eso trabajamos contigo desde una mirada cercana…").
+- [ ] **Tres tipos de terapia:** individual y pareja OK; **actualizar descripción de infantojuvenil** (apoyo emocional + construcción de resiliencia).
+
+### Contenido — Página de servicios
+- [ ] **Nueva sección "Nuestro equipo terapéutico":** psicólogos que llevan el ~90% de los casos; calidez, conexión humana, métodos basados en evidencia; criterios de selección (calidad humana, ética, formación, creación de espacio seguro).
+
+### Precios / Paquetes (páginas de servicio)
+- [ ] **Quitar los precios** de la web; CTA → **WhatsApp** para cerrar la venta. ⚠️ Confirmado por el cliente: **las citas SOLO se agendan por WhatsApp** (no habrá pago online de sesiones; el pago online es exclusivo de las guías). Esto **cancela** el pendiente de poner `BoldPaymentButton` en páginas de servicio.
+- [ ] **Renombrar paquetes:** "Sesión Claridad" (1 sesión), "Paquete Impulso" (4 sesiones), "Paquete Transformación" (8 sesiones).
+- [ ] **Descripciones nuevas** por paquete: Claridad (evaluación emocional, identificación de pain-points, primeros pasos); Impulso (claridad emocional, guía profesional, patrones, feedback continuo, herramientas, plan estructurado); Transformación (exploración profunda, acompañamiento sostenido, origen de patrones, cambios duraderos de raíz).
+
+### Guías digitales — dinámicas desde Contentful
+- [ ] **Hacer las guías dinámicas** (nuevo content type en Contentful): el cliente irá añadiendo guías y quiere editarlas/pintarlas **sin tocar código**, incluido el **precio** (los actuales se consideran altos para público frío). Ver plan de modelo de datos en notas de sesión.
+- [ ] **Entrega de PDF por correo:** subir el PDF a Contentful (Media) y que el webhook de Bold, al aprobarse el pago, envíe el **enlace de descarga correcto** según la guía comprada. Primer paso de prueba acordado: subir **un PDF de prueba** y enviarlo en un pago exitoso. (Sustituye las URLs placeholder actuales del webhook.)
+- ✅ **Capa gratuita Contentful:** holgada para esto. Límites free relevantes: ~48 content types (usamos 1 `blogPost`, sumar `guia` = 2), 25.000 records, y ~0.85 TB/mes de ancho de banda de assets (CDN). Unas pocas guías + sus PDFs no se acercan a ningún límite. ⚠️ Las URLs de assets de Contentful son **públicas** (no autenticadas, pero difíciles de adivinar): valen para "enlace en el correo", pero quien tenga el link puede reenviarlo. Aceptable de momento; si se quiere proteger, habría que servir el PDF tras verificar el pago (fase futura).
+
+### Newsletter (la clienta la quiere) — **Opción A elegida: Resend Audiences + Broadcasts**
+- [ ] `NewsletterForm` → `/api/newsletter` → alta en una **Audience de Resend** (gestiona baja/unsubscribe y consentimiento automáticamente). Opcional: copia del email en Supabase (`subscribers`).
+- [ ] Envío de cada entrada del blog como **Broadcast**: manual desde el panel de Resend, o automatizado con un **webhook de Contentful "al publicar"** → API propia → Broadcast con el contenido del post.
+- ⚠️ **Capa gratuita Resend:** incluye **1.000 contactos de marketing** y dominio verificado, pero el **tope de 100 emails/día** es el cuello de botella: un envío a >100 suscriptores en un día puede requerir el plan de pago (~$20/mes). Free sirve para arrancar; al crecer la lista, presupuestar el upgrade. *(Los correos transaccionales —contacto, entrega de guía— comparten ese 100/día y 3.000/mes; uso actual mínimo.)*
+
+### Legal / Privacidad
+- [ ] **Página de Política de Privacidad** (el footer apunta a `#`). Adaptada a Colombia (**Ley 1581/2012** de protección de datos; ojo a datos sensibles de salud). Valorar plantilla base + **revisión legal**. Posible también: términos de productos digitales (guías) y política de reembolso.
+
+### Técnico / correos
+- [ ] **Correo oficial `hola@psicologadanivargas.com`** en footer y correos; **quitar el Gmail personal** (`danielavargaspsicologa@gmail.com`) del footer. (Parte ligada a verificar dominio en Resend → PRO.)
+- [ ] Quitar `console.log` de depuración del webhook de Bold.
+- [ ] (PRO) Resend `from`/`to` reales, `payerEmail` real del comprador, quitar bypass de firma del webhook.
+
+### Pagos — mejoras solicitadas (fuera del doc original, petición posterior)
+
+**a) Página intermedia de desglose antes de Bold (guías):**
+- [ ] Al pulsar "Pagar" en una guía, abrir una **página intermedia de checkout** con el desglose: **precio base** (el publicado en `/guias`) **+ 5% de comisión de Bold** = **total**; el botón de esa página redirige a Bold a cobrar el **total**.
+- Implica: "Pagar" deja de abrir el modal directo y navega a p. ej. `/checkout/[guia]`; se calcula `total = base * 1.05`, se genera el hash y se abre Bold por el total. El webhook/Supabase registraría el total (decidir si guardar base y comisión por separado).
+- ⚠️ Negocio/legal: trasladar la comisión del procesador al cliente debe ser transparente (lo es, va desglosado); confirmar que es aceptable para el método/jurisdicción.
+
+**b) Generador de links de pago dinámicos (importe libre) — solo usuarios autorizados:**
+- [ ] Página **privada** donde un usuario autorizado introduce un **importe** (y concepto) y **genera un link de pago** para enviar por WhatsApp; al abrirlo, el cliente paga ese importe por Bold.
+- **Enfoque recomendado (reutiliza la integración actual):** no generar un link "crudo" de Bold, sino un **link a una página propia** `/pago/[id]`. El importe se guarda **en BD** (tabla `payment_links`: id, importe, concepto, creado_por, estado, fecha) y el link referencia el `id` (no el importe en la URL → no manipulable). La página lee el importe de BD, genera el hash y abre Bold.
+- **Autenticación (lo nuevo):** sí implica **añadir auth**, pero **no** hay que guardar contraseñas a mano. Recomendado **Supabase Auth** (ya tenemos Supabase; incluido en su capa gratuita): credenciales hasheadas, login email/contraseña o magic-link; se crean los pocos usuarios autorizados y se protege la ruta con **middleware de Next.js** (sesión + allowlist de correos/rol). Alternativas: Auth.js/NextAuth, Clerk/Auth0 (SaaS), o Basic Auth con contraseña compartida (mínimo esfuerzo, menos seguro).
+- Implica: Supabase Auth, tabla `payment_links`, páginas `/login` + admin protegida + `/pago/[id]` pública, middleware, y (opcional) prefijo de referencia propio en el webhook (p. ej. `LINK-`).
+
+---
+
 ## Estado actual del proyecto
 
 | Funcionalidad | Estado |
