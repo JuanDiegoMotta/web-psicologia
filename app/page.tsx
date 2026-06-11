@@ -160,14 +160,14 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Tarjeta 3: Online */}
+            {/* Tarjeta 3: Niños y adolescentes */}
             <div className="bg-blancoluz/60 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                💻
+                🌱
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Terapia Online</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Terapia para niños y adolescentes</h3>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
-                La misma calidad y calidez de la terapia presencial, pero desde la comodidad de tu casa, sin importar en qué país estés.
+                Orientación para tu hijo/hija y para ti, si buscas comprender y apoyar mejor sus emociones, fomentando su resiliencia y bienestar desde el hogar.
               </p>
               <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>

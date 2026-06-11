@@ -186,22 +186,14 @@ export default function TerapiaIndividualPage() {
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Ideal si quieres:</p>
-                  <ul className="space-y-2">
-                    <li>• Explorar tu situación en un espacio seguro.</li>
-                    <li>• Tener una primera experiencia y sentir cómo trabajamos.</li>
-                    <li>• Obtener orientación y un primer paso claro.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Calma emocional y entendimiento.</li>
-                    <li>• 1-2 herramientas prácticas inmediatas.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para entender lo que estás viviendo y dar tus primeros pasos.</p>
+                <ul className="space-y-2">
+                  <li>• Evaluación profunda de tu situación emocional.</li>
+                  <li>• Identificamos lo que más te está costando y te damos retroalimentación clara.</li>
+                  <li>• Espacio seguro para ordenar tu proceso: lo urgente y lo confuso.</li>
+                  <li>• Primeros pasos para avanzar con acompañamiento profesional.</li>
+                </ul>
               </div>
               
               <a 
@@ -224,24 +216,17 @@ export default function TerapiaIndividualPage() {
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Perfecto si necesitas:</p>
-                  <ul className="space-y-2">
-                    <li>• Empezar a soltar cargas y patrones agotadores.</li>
-                    <li>• Saber poner límites sin sentir culpa.</li>
-                    <li>• Acompañamiento constante mientras te organizas.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Identificación clara de patrones.</li>
-                    <li>• Herramientas para regular emociones y decidir.</li>
-                    <li>• Avances visibles en cómo reaccionas al estrés.</li>
-                    <li>• Un plan estructural de hacia dónde vamos.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para avanzar con claridad, estructura y bases sólidas.</p>
+                <ul className="space-y-2">
+                  <li>• Claridad emocional y organización en lo que sientes.</li>
+                  <li>• Mayor avance con guía profesional constante.</li>
+                  <li>• Identificación de patrones y factores que te afectan.</li>
+                  <li>• Retroalimentación continua para avanzar con conciencia.</li>
+                  <li>• Construcción de bases reales para tu bienestar.</li>
+                  <li>• Herramientas aplicables a tu día a día.</li>
+                  <li>• Plan estructurado con objetivos y primeros avances.</li>
+                </ul>
               </div>
               
               <a 
@@ -261,23 +246,15 @@ export default function TerapiaIndividualPage() {
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Ideal si deseas:</p>
-                  <ul className="space-y-2">
-                    <li>• Recuperar estabilidad tras meses sintiéndote saturada.</li>
-                    <li>• Mejorar profundamente tu seguridad y autovaloración.</li>
-                    <li>• Construir una vida alineada con lo que realmente quieres.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Entendimiento profundo de tu historia.</li>
-                    <li>• Cambios reales y duraderos en tu comportamiento.</li>
-                    <li>• Herramientas sólidas y autonomía emocional.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para profundizar, sostener tu proceso y generar cambios duraderos.</p>
+                <ul className="space-y-2">
+                  <li>• Proceso profundo con continuidad emocional.</li>
+                  <li>• Exploración detallada de tus patrones y su origen.</li>
+                  <li>• Acompañamiento sostenido sesión a sesión.</li>
+                  <li>• Construcción de cambios estables en tu día a día.</li>
+                  <li>• Herramientas y seguimiento para transformar desde la raíz.</li>
+                </ul>
               </div>
               
               <a 
