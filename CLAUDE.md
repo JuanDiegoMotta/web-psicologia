@@ -312,8 +312,12 @@ CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # borradores (opcional, no usado aún)
 ## Variables de entorno requeridas
 
 ```
-# Resend (correos)
-RESEND_API_KEY=re_...
+# Resend (correos + newsletter)
+RESEND_API_KEY=re_...            # full access (crea contactos/segments/broadcasts)
+RESEND_SEGMENT_ID=...            # segmento "Newsletter" de Resend (destino del broadcast)
+
+# Newsletter — webhook de Contentful "al publicar"
+CONTENTFUL_WEBHOOK_SECRET=...    # debe coincidir con el header x-webhook-secret del webhook
 
 # Bold (pagos) — tres variables distintas con propósitos distintos
 NEXT_PUBLIC_BOLD_API_KEY=...   # pública, accesible en el cliente (abre el modal)
@@ -388,7 +392,7 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 > Recopiladas de la reunión + doc del cliente. Referencias: carpeta de diseño del cliente (Google Drive) y ejemplo de página de pagos `psicologamariapaula.com/pagos/`.
 >
-> **Estado:** ✅ **Fase 1 (contenido)**, ✅ **Fase 2 (guías dinámicas + PDF)** y ✅ **Fase 3 (checkout +5%)** implementadas. Pendientes: **newsletter** y **generador de links de pago dinámicos con auth** (Supabase Auth).
+> **Estado:** ✅ **Fase 1 (contenido)**, ✅ **Fase 2 (guías dinámicas + PDF)**, ✅ **Fase 3 (checkout +5%)** y ✅ **Fase 4 (newsletter — captación + cableado del broadcast)** implementadas. El **envío real del broadcast** queda a expensas de **verificar el dominio en Resend** (PRO). Pendiente: **Fase 5 — generador de links de pago dinámicos con auth** (Supabase Auth).
 
 ### Contenido — Página de inicio
 - [x] **Hero / texto de apertura:** "Transformamos tu vida con humanidad y claridad" + línea de apoyo. ✅ Hecho.
@@ -409,10 +413,13 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 - [x] **Entrega de PDF por correo** ✅ Hecho. El webhook de Bold busca la guía por la referencia (`getGuideByReference`) y manda el enlace real del `pdf` de Contentful + el título. `product_prefix` en Supabase guarda el slug. *(En PRO sigue pendiente el `to` real del comprador y el dominio verificado en Resend.)*
 - ✅ **Capa gratuita Contentful:** holgada para esto. Límites free relevantes: ~48 content types (usamos 1 `blogPost`, sumar `guia` = 2), 25.000 records, y ~0.85 TB/mes de ancho de banda de assets (CDN). Unas pocas guías + sus PDFs no se acercan a ningún límite. ⚠️ Las URLs de assets de Contentful son **públicas** (no autenticadas, pero difíciles de adivinar): valen para "enlace en el correo", pero quien tenga el link puede reenviarlo. Aceptable de momento; si se quiere proteger, habría que servir el PDF tras verificar el pago (fase futura).
 
-### Newsletter (la clienta la quiere) — **Opción A elegida: Resend Audiences + Broadcasts**
-- [ ] `NewsletterForm` → `/api/newsletter` → alta en una **Audience de Resend** (gestiona baja/unsubscribe y consentimiento automáticamente). Opcional: copia del email en Supabase (`subscribers`).
-- [ ] Envío de cada entrada del blog como **Broadcast**: manual desde el panel de Resend, o automatizado con un **webhook de Contentful "al publicar"** → API propia → Broadcast con el contenido del post.
-- ⚠️ **Capa gratuita Resend:** incluye **1.000 contactos de marketing** y dominio verificado, pero el **tope de 100 emails/día** es el cuello de botella: un envío a >100 suscriptores en un día puede requerir el plan de pago (~$20/mes). Free sirve para arrancar; al crecer la lista, presupuestar el upgrade. *(Los correos transaccionales —contacto, entrega de guía— comparten ese 100/día y 3.000/mes; uso actual mínimo.)*
+### Newsletter (la clienta la quiere) — **Resend Segments + Broadcasts** ✅ implementada (envío real pendiente de dominio)
+> ⚠️ Resend cambió el modelo (nov 2025): ya no hay "audiences" con `audienceId`; los contactos son globales y se agrupan en **Segments**. Los Broadcasts se envían a un **`segmentId`**. Por eso usamos `RESEND_SEGMENT_ID`, no audience.
+- [x] **Captación** ✅ `NewsletterForm` (client, con estados) → `POST /api/newsletter` → `resend.contacts.create({ email, segments:[{id: RESEND_SEGMENT_ID}] })`. Trata "ya suscrito" como éxito. **Funciona en free.**
+- [x] **Envío al publicar (cableado)** ✅ Webhook de Contentful (Entry→Publish de `blogPost`, filtrado por content type) → `app/api/webhooks/contentful/route.ts`: verifica header `x-webhook-secret` (`CONTENTFUL_WEBHOOK_SECRET`), obtiene el post (`getPostBySlug`) y hace `resend.broadcasts.create({ segmentId, from, subject, html, send:true })`. Responde siempre 200 (salvo 401) para no reintentar.
+- [ ] **Envío REAL del broadcast:** requiere **dominio verificado** en Resend (con `onboarding@resend.dev` no se mandan broadcasts). Al verificarlo, cambiar el `from` (en este webhook + `/api/contacto` + webhook de Bold) a la dirección del dominio. → ligado a PRO.
+- **Env vars:** `RESEND_SEGMENT_ID`, `CONTENTFUL_WEBHOOK_SECRET` (en `.env.local` y por entorno en Vercel).
+- ⚠️ **Capa gratuita Resend:** **1.000 contactos** + dominio verificado, pero **100 emails/día** es el cuello de botella: enviar a >100 suscriptores/día puede requerir plan de pago (~$20/mes). *(Transaccionales —contacto, guía— comparten ese 100/día y 3.000/mes.)*
 
 ### Legal / Privacidad
 - [x] **Página de Política de Privacidad** creada en `app/politica-de-privacidad/page.tsx` y enlazada desde el footer. ✅ Hecho como **borrador** adaptado a la Ley 1581/2012 (marcado en la propia página como pendiente de **validación legal** por la clienta/abogado). Posible ampliación futura: términos de productos digitales (guías) y política de reembolso.
