@@ -1,12 +1,13 @@
-'use client';
-
 import Image from 'next/image';
-import BoldPaymentButton from '@/components/BoldPaymentButton';
+import Link from 'next/link';
+import { getAllGuides } from '@/lib/contentful';
 
-export default function GuiasDigitalesPage() {
+export default async function GuiasDigitalesPage() {
+  const guides = await getAllGuides();
+
   return (
     <main className="flex flex-col w-full">
-      
+
       {/* --- HERO DE PRODUCTOS DIGITALES --- */}
       <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-salvia/40 to-white  text-center">
         <div className="max-w-3xl mx-auto">
@@ -20,138 +21,69 @@ export default function GuiasDigitalesPage() {
         </div>
       </section>
 
-      {/* --- GRID DE GUÍAS (E-COMMERCE STYLE) --- */}
-      <section className="w-full py-16 px-6 bg-white">
+      {/* --- GRID DE GUÍAS (E-COMMERCE STYLE) — dinámico desde Contentful --- */}
+      <section id="catalogo" className="w-full py-16 px-6 bg-white scroll-mt-24">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
-          
-          {/* GUÍA 1: Hablar para conectar */}
-          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            {/* Imagen del E-book (Asegúrate de subir la imagen a la carpeta public) */}
-            <div className="w-full h-64 bg-arena relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              {/* Aquí va el mockp de tu libro */}
-              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                <Image 
-                  src="/images/guides/hablar-para-conectar.png" // (Asegúrate de que esta ruta coincida con la tuya)
-                  alt="Libro digital Hablar para Conectar" 
-                  fill 
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              </div>
-            </div>
-            
-            <div className="p-8 flex flex-col flex-grow">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl">📖</span>
-                <h3 className="text-2xl font-bold text-gray-800">Hablar para conectar</h3>
-              </div>
-              <p className="text-eucalipto-dark font-medium mb-6 text-sm">Guía práctica para mejorar la comunicación</p>
-              
-              <div className="flex-grow">
-                <p className="font-bold text-gray-800 mb-3 text-sm">🔑 ¿Qué lograrás?</p>
-                <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Aprender a escuchar y validar emociones sin generar discusiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Expresar lo que sientes con claridad, sin culpar ni herir.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Descubrir la fuerza del lenguaje no verbal en tu relación.</li>
-                </ul>
-                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
-                  👉 Ideal para parejas que sienten que sí se aman, pero no siempre se entienden.
-                </p>
+
+          {guides.length === 0 && (
+            <p className="col-span-full text-center text-gray-500">
+              Pronto encontrarás aquí nuevas guías. ¡Vuelve en unos días!
+            </p>
+          )}
+
+          {guides.map((guide, i) => (
+            <div
+              key={guide.slug}
+              className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group"
+            >
+              {/* Imagen del E-book */}
+              <div className={`w-full h-64 ${i % 2 === 1 ? 'bg-blancoluz' : 'bg-arena'} relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden`}>
+                <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                {guide.coverImage.url && (
+                  <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                    <Image
+                      src={guide.coverImage.url}
+                      alt={guide.coverImage.alt}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                )}
               </div>
 
-              <BoldPaymentButton
-                amount = "150000"
-                description = "Hablar para conectar"
-                orderPrefix = "GUIA-HABLAR"
-              />
-            </div>
-          </div>
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">{guide.emoji}</span>
+                  <h3 className="text-2xl font-bold text-gray-800">{guide.title}</h3>
+                </div>
+                <p className="text-eucalipto-dark font-medium mb-6 text-sm">{guide.description}</p>
 
-          {/* GUÍA 2: Conexión Real */}
-          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-full h-64 bg-blancoluz relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                <Image 
-                  src="/images/guides/conexion-real.png" 
-                  alt="Libro digital Conexión Real" 
-                  fill 
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              </div>
-            </div>
-            
-            <div className="p-8 flex flex-col flex-grow">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl">💬</span>
-                <h3 className="text-2xl font-bold text-gray-800">Conexión real</h3>
-              </div>
-              <p className="text-eucalipto-dark font-medium mb-6 text-sm">50 preguntas de terapia para descubrirse</p>
-              
-              <div className="flex-grow">
-                <p className="font-bold text-gray-800 mb-3 text-sm">💡 Lo que encontrarás:</p>
-                <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> 5 categorías de preguntas (historia, metas, intimidad).</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Un método guiado para conversar cada semana sin juicios ni evasiones.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Herramienta para convertir la curiosidad en intimidad real.</li>
-                </ul>
-                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
-                  👉 Para quienes desean sentirse más cerca y redescubrirse como pareja.
-                </p>
-              </div>
+                <div className="flex-grow">
+                  <p className="font-bold text-gray-800 mb-3 text-sm">🔑 ¿Qué lograrás?</p>
+                  <ul className="space-y-3 text-gray-600 text-sm mb-6">
+                    {guide.benefits.map((benefit, j) => (
+                      <li key={j} className="flex items-start gap-2">
+                        <span className="text-eucalipto-dark mt-0.5">•</span> {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                  {guide.idealFor && (
+                    <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
+                      👉 {guide.idealFor}
+                    </p>
+                  )}
+                </div>
 
-              <BoldPaymentButton
-                amount = "150000"
-                description = "Conexión real"
-                orderPrefix = "GUIA-CONEXION"
-              />
-            </div>
-          </div>
-
-          {/* GUÍA 3: Amor en equilibrio */}
-          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-full h-64 bg-arena relative flex items-center justify-center p-6 border-b border-gray-50 overflow-hidden">
-              <div className="absolute inset-0 bg-salvia opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                <Image 
-                  src="/images/guides/amor-en-equilibrio.png" 
-                  alt="Libro digital Amor en Equilibrio" 
-                  fill 
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+                <Link
+                  href={`/checkout/${guide.slug}`}
+                  className="mt-6 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5"
+                >
+                  Comprar — ${guide.price.toLocaleString('es-CO')} COP
+                </Link>
               </div>
             </div>
-            
-            <div className="p-8 flex flex-col flex-grow">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl">❤️</span>
-                <h3 className="text-2xl font-bold text-gray-800">Amor en equilibrio</h3>
-              </div>
-              <p className="text-eucalipto-dark font-medium mb-6 text-sm">Cómo cuidar de ti misma/o mientras amas</p>
-              
-              <div className="flex-grow">
-                <p className="font-bold text-gray-800 mb-3 text-sm">🌿 Con esta guía aprenderás a:</p>
-                <ul className="space-y-3 text-gray-600 text-sm mb-6">
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Amar sin perderte en la relación.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Reconocer tu valor y fortalecer tu autoestima.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Establecer límites claros y sanos, sin culpa ni miedo.</li>
-                  <li className="flex items-start gap-2"><span className="text-eucalipto-dark mt-0.5">•</span> Crear rituales de autocuidado que nutran tu vida.</li>
-                </ul>
-                <p className="text-xs text-gray-500 italic bg-gray-50 p-3 rounded-xl border border-gray-100">
-                  👉 Pensada para quienes han dado todo en una relación y ahora desean amar desde la plenitud.
-                </p>
-              </div>
-
-              <BoldPaymentButton
-                amount = "150000"
-                description = "Amor en equilibrio"
-                orderPrefix = "GUIA-AMOR"
-              />
-            </div>
-          </div>
+          ))}
 
         </div>
       </section>
@@ -195,12 +127,8 @@ export default function GuiasDigitalesPage() {
           <p className="text-gray-600/80 mb-10 text-lg md:text-xl">
             Las relaciones más sanas no se construyen con suerte, sino con herramientas. Elige la guía que más resuene contigo y comienza a transformar tu vida emocional.
           </p>
-          <a 
-            href="#" 
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+          <a
+            href="#catalogo"
             className="bg-white text-eucalipto-dark font-bold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-1"
           >
             Ver catálogo de guías 👆

@@ -2,14 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { Resend } from 'resend';
 import { getSupabaseAdmin } from '@/lib/supabase';
-
-// Prefijos de producto conocidos (deben coincidir con los orderPrefix de los botones de pago)
-const PRODUCT_PREFIXES = ['GUIA-HABLAR', 'GUIA-CONEXION', 'GUIA-AMOR', 'CITA'];
-
-// A partir de la referencia completa (p. ej. "GUIA-HABLAR-1234") devuelve el prefijo del producto
-function getProductPrefix(reference: string): string | null {
-  return PRODUCT_PREFIXES.find((p) => reference.startsWith(p)) ?? null;
-}
+import { getGuideByReference } from '@/lib/contentful';
 
 // Traduce el tipo de evento de Bold a un estado simple para la columna `status`
 const STATUS_BY_EVENT: Record<string, string> = {
@@ -70,12 +63,21 @@ export async function POST(request: Request) {
     const body: BoldWebhookEvent = JSON.parse(rawBody);
     const eventType = body.type;
     const paymentData = body.data;
+    const reference = paymentData.metadata?.reference ?? null;
+
+    // Buscamos en Contentful la guía correspondiente a la referencia del pago.
+    // De aquí salen el título y el enlace del PDF para el correo, y el slug para Supabase.
+    let guide = null;
+    try {
+      guide = reference ? await getGuideByReference(reference) : null;
+    } catch (e) {
+      console.error('[WEBHOOK BOLD] No se pudo consultar la guía en Contentful:', e);
+    }
 
     // 3.5. Persistimos el pago en Supabase (auditoría / histórico de ventas).
     // Va en su propio try/catch: si la BD falla, NO queremos romper la respuesta
     // al webhook ni bloquear el correo. Bold reintentaría si devolvemos error.
     try {
-      const reference = paymentData.metadata?.reference ?? null;
       const { error } = await getSupabaseAdmin()
         .from('payments')
         .upsert(
@@ -84,7 +86,7 @@ export async function POST(request: Request) {
             event_type: eventType,
             payment_id: paymentData.payment_id ?? null,
             reference,
-            product_prefix: reference ? getProductPrefix(reference) : null,
+            product_prefix: guide?.slug ?? null,
             amount: paymentData.amount?.total ?? null,
             currency: 'COP',
             payer_email: paymentData.payer_email ?? null,
@@ -104,42 +106,37 @@ export async function POST(request: Request) {
 
     // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {
-      const reference = paymentData.metadata?.reference || '';
-
       // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
-      // Cuando pases a producción y verifiques tu dominio en Resend, cambia esto por: paymentData.payer_email
+      // En producción (dominio verificado) cambiar por: paymentData.payer_email
       const payerEmail = 'mottajuandiego.work@gmail.com';
 
-      // Preparamos el correo según la referencia
       let emailSubject = '';
       let emailHtml = '';
 
-      if (reference.startsWith('GUIA-CONEXION')) {
-        emailSubject = '🤝 Aquí tienes tu Guía: Conexión y Vínculos';
+      // La guía (y su PDF) se obtuvo arriba desde Contentful según la referencia del pago.
+      if (guide) {
+        emailSubject = `📘 Aquí tienes tu guía: ${guide.title}`;
+        const downloadBlock = guide.pdfUrl
+          ? `<p style="margin:24px 0;">
+               <a href="${guide.pdfUrl}" style="background:#5E7C66;color:#ffffff;text-decoration:none;padding:12px 24px;border-radius:9999px;font-weight:bold;display:inline-block;">Descargar mi guía (PDF)</a>
+             </p>
+             <p style="color:#666;font-size:13px;">Si el botón no funciona, copia y pega este enlace en tu navegador:<br/>${guide.pdfUrl}</p>`
+          : `<p>En breve te haremos llegar el enlace de descarga de tu guía.</p>`;
         emailHtml = `
-          <h2>¡Hola! Gracias por tu compra.</h2>
-          <p>Haz clic en el enlace de abajo para descargar tu guía en formato PDF:</p>
-          <a href="https://tudominio.com/links-secretos/guia-conexion.pdf" style="...">Descargar Guía</a>
+          <h2>¡Hola! Gracias por tu compra 💚</h2>
+          <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
+          ${downloadBlock}
+          <p style="margin-top:24px;">Un abrazo,<br/>Dani Vargas</p>
         `;
-      } else if (reference.startsWith('GUIA-AMOR')) {
-        emailSubject = '💖 Aquí tienes tu Guía: Amor Propio y Relaciones';
-        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Amor</a></p>`;
-      } else if (reference.startsWith('GUIA-HABLAR')) {
-        emailSubject = '💬 Aquí tienes tu Guía: Comunicación Asertiva';
-        emailHtml = `<h2>¡Hola! Gracias por tu compra.</h2><p>Descarga aquí: <a href="...">Guía de Comunicación</a></p>`;
-      } else if (reference.startsWith('CITA')) {
-        emailSubject = '💰 ¡Nuevo pago de sesión recibido!';
-        emailHtml = `<h2>¡Felicidades, Daniela!</h2><p>Pago de $${paymentData.amount.total} recibido de ${paymentData.payer_email}.</p>`;
       }
 
-      // 4. Envío de correo
-      // ATENCIÓN AL TIMEOUT: Resend suele tardar < 1s, lo cual entra en el límite de 2s de Bold.
+      // 4. Envío de correo (Resend tarda < 1s, dentro del límite de 2s de Bold).
       if (emailSubject) {
         await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a algo como 'hola@tudominio.com'
+          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a 'hola@psicologadanivargas.com'
           to: [payerEmail],
           subject: emailSubject,
-          html: emailHtml
+          html: emailHtml,
         });
       }
     }
