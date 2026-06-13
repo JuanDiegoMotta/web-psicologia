@@ -33,7 +33,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shadow-sm">
-            Un espacio cálido y seguro para entender lo que sientes, ordenar tus emociones y avanzar en tu día a día con herramientas reales.
+            Un espacio cálido y seguro para entender lo que sientes y avanzar en tu día a día.
           </p>
 
           <Link
@@ -49,14 +49,19 @@ export default function HomePage() {
       <section className="w-full py-24 px-6 bg-arena">
         <div className="max-w-3xl mx-auto text-center">
           <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Tu proceso</span>
+          <hr className="mx-auto mt-3 w-40 border-t-2 text-eucalipto-dark/40 mb-3" />
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
             Tu proceso para sanar y crecer
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed mb-5">
-            A veces la ansiedad no da tregua, la tristeza pesa más de lo que cuentas, o sientes que por mucho que lo intentes nunca es suficiente. No estás sola: a muchas mujeres les pasa, y darte cuenta es el primer paso.
+            A veces la ansiedad no da tregua, la tristeza pesa más de lo que desearías.
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed mb-5">
+            Sentir ansiedad, tristeza, frustración o insuficiencia puede ser agotador. Quizá llevas tiempo intentando mantener todo en orden mientras por dentro sientes que te falta claridad y avanzar.
+           <span className="text-eucalipto-dark font-medium"> No tienes que atravesar esto sola.</span>
           </p>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Aquí encuentras un espacio <span className="text-eucalipto-dark font-medium">sin juicios, profesional y humano</span>, donde por fin puedes mirar lo que sientes con calma y empezar a transformarlo, paso a paso y a tu ritmo.
+            Aquí encuentras un espacio <span className="text-eucalipto-dark font-medium">profesional</span> y <span className="text-eucalipto-dark font-medium">humano</span> para explorar lo que estás viviendo, con <span className="text-eucalipto-dark font-medium">calma</span>, con <span className="text-eucalipto-dark font-medium">escucha</span> y sin <span className="text-eucalipto-dark font-medium">juicios</span>.
           </p>
         </div>
       </section>
@@ -124,7 +129,7 @@ export default function HomePage() {
               ¿Cómo puedo ayudarte?
             </h2>
             <p className="text-gray-600 md:text-lg">
-              Encuentra el espacio perfecto para tus necesidades. Trabajo con enfoques basados en evidencia para garantizar los mejores resultados en tu proceso.
+              Cada proceso es único. Por eso trabajamos contigo desde una mirada cercana y basada en evidencia, para acompañarte paso a paso en el camino hacia sentirte mejor contigo misma.
             </p>
           </div>
 
@@ -167,7 +172,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-3">Terapia para niños y adolescentes</h3>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
-                Orientación para tu hijo/hija y para ti, si buscas comprender y apoyar mejor sus emociones, fomentando su resiliencia y bienestar desde el hogar.
+                Orientación para tu hijo y para ti, si buscas comprender y apoyar mejor sus emociones, fomentando su resiliencia y bienestar desde el hogar.
               </p>
               <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>
