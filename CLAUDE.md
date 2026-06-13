@@ -388,7 +388,7 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 > Recopiladas de la reunión + doc del cliente. Referencias: carpeta de diseño del cliente (Google Drive) y ejemplo de página de pagos `psicologamariapaula.com/pagos/`.
 >
-> **Estado:** ✅ **Fase 1 (contenido) implementada** en la rama `feature-contenido` (textos del inicio, equipo terapéutico, paquetes sin precios, privacidad, correo, limpieza). Pendientes: guías dinámicas, newsletter, y mejoras de pagos (desglose +5% y links dinámicos con auth).
+> **Estado:** ✅ **Fase 1 (contenido)**, ✅ **Fase 2 (guías dinámicas + PDF)** y ✅ **Fase 3 (checkout +5%)** implementadas. Pendientes: **newsletter** y **generador de links de pago dinámicos con auth** (Supabase Auth).
 
 ### Contenido — Página de inicio
 - [x] **Hero / texto de apertura:** "Transformamos tu vida con humanidad y claridad" + línea de apoyo. ✅ Hecho.
@@ -405,8 +405,8 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 - [x] **Descripciones nuevas** por paquete. ✅ Aplicadas con el texto exacto del cliente en **terapia individual**. ⚠️ Pareja e infantojuvenil conservan de momento su copy propia tailored; replicar el mismo esquema si el cliente lo pide.
 
 ### Guías digitales — dinámicas desde Contentful
-- [ ] **Hacer las guías dinámicas** (nuevo content type en Contentful): el cliente irá añadiendo guías y quiere editarlas/pintarlas **sin tocar código**, incluido el **precio** (los actuales se consideran altos para público frío). Ver plan de modelo de datos en notas de sesión.
-- [ ] **Entrega de PDF por correo:** subir el PDF a Contentful (Media) y que el webhook de Bold, al aprobarse el pago, envíe el **enlace de descarga correcto** según la guía comprada. Primer paso de prueba acordado: subir **un PDF de prueba** y enviarlo en un pago exitoso. (Sustituye las URLs placeholder actuales del webhook.)
+- [x] **Guías dinámicas** ✅ Hecho. Content type `guia` (campos: title, slug, description, price, coverImage, pdf, benefits, idealFor, emoji, order). `lib/contentful.ts` expone `getAllGuides`/`getGuideBySlug`/`getGuideByReference`. `app/guias/page.tsx` es Server Component que mapea las guías; el cliente edita precio/contenido sin tocar código. **El `slug` hace de prefijo de pago** (orderId de Bold), no hay campo `orderPrefix`.
+- [x] **Entrega de PDF por correo** ✅ Hecho. El webhook de Bold busca la guía por la referencia (`getGuideByReference`) y manda el enlace real del `pdf` de Contentful + el título. `product_prefix` en Supabase guarda el slug. *(En PRO sigue pendiente el `to` real del comprador y el dominio verificado en Resend.)*
 - ✅ **Capa gratuita Contentful:** holgada para esto. Límites free relevantes: ~48 content types (usamos 1 `blogPost`, sumar `guia` = 2), 25.000 records, y ~0.85 TB/mes de ancho de banda de assets (CDN). Unas pocas guías + sus PDFs no se acercan a ningún límite. ⚠️ Las URLs de assets de Contentful son **públicas** (no autenticadas, pero difíciles de adivinar): valen para "enlace en el correo", pero quien tenga el link puede reenviarlo. Aceptable de momento; si se quiere proteger, habría que servir el PDF tras verificar el pago (fase futura).
 
 ### Newsletter (la clienta la quiere) — **Opción A elegida: Resend Audiences + Broadcasts**
@@ -424,10 +424,9 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 ### Pagos — mejoras solicitadas (fuera del doc original, petición posterior)
 
-**a) Página intermedia de desglose antes de Bold (guías):**
-- [ ] Al pulsar "Pagar" en una guía, abrir una **página intermedia de checkout** con el desglose: **precio base** (el publicado en `/guias`) **+ 5% de comisión de Bold** = **total**; el botón de esa página redirige a Bold a cobrar el **total**.
-- Implica: "Pagar" deja de abrir el modal directo y navega a p. ej. `/checkout/[guia]`; se calcula `total = base * 1.05`, se genera el hash y se abre Bold por el total. El webhook/Supabase registraría el total (decidir si guardar base y comisión por separado).
-- ⚠️ Negocio/legal: trasladar la comisión del procesador al cliente debe ser transparente (lo es, va desglosado); confirmar que es aceptable para el método/jurisdicción.
+**a) Página intermedia de desglose antes de Bold (guías):** ✅ Hecho.
+- [x] `app/checkout/[slug]/page.tsx`: muestra **precio base + 5% comisión Bold = total** y el botón de Bold cobra el total. En `/guias` el botón "Comprar" ya no abre el modal: navega a `/checkout/[slug]`. La comisión es `lib/pricing.ts` → `BOLD_COMMISSION_RATE` (fuente única; `commission = round(base·5%)`, `total = base + commission`). Supabase guarda el **total** cobrado.
+- ⚠️ Negocio/legal **(pendiente de confirmar)**: trasladar la comisión del procesador al cliente va transparente y desglosado; confirmar que es aceptable para el método/jurisdicción.
 
 **b) Generador de links de pago dinámicos (importe libre) — solo usuarios autorizados:**
 - [ ] Página **privada** donde un usuario autorizado introduce un **importe** (y concepto) y **genera un link de pago** para enviar por WhatsApp; al abrirlo, el cliente paga ese importe por Bold.
