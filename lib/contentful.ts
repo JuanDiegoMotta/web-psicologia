@@ -126,6 +126,21 @@ export async function getAllGuides(): Promise<Guide[]> {
   return entries.items.map(mapGuide);
 }
 
+export async function getGuideBySlug(slug: string): Promise<Guide | null> {
+  'use cache';
+  cacheLife('hours');
+
+  const entries = await client.getEntries({
+    content_type: 'guia',
+    'fields.slug': slug,
+    limit: 1,
+    include: 1,
+  });
+
+  if (!entries.items.length) return null;
+  return mapGuide(entries.items[0]);
+}
+
 // Para el webhook de Bold: la referencia del pago es `${slug}-${timestamp}`.
 // Devuelve la guía cuyo slug encaja con el inicio de la referencia (match más
 // largo, por si un slug fuera prefijo de otro). null si no corresponde a ninguna.
