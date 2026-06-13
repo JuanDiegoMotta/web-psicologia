@@ -1,9 +1,10 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
+// Convención "proxy" de Next 16 (reemplaza a "middleware").
 // Protege las rutas /admin/**: exige sesión de Supabase y que el correo esté
 // en la allowlist (ADMIN_ALLOWED_EMAILS). Si no, redirige a /login.
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
