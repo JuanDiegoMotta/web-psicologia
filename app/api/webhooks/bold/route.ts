@@ -86,7 +86,7 @@ export async function POST(request: Request) {
             event_type: eventType,
             payment_id: paymentData.payment_id ?? null,
             reference,
-            product_prefix: guide?.slug ?? null,
+            product_prefix: guide?.slug ?? (reference?.startsWith('LINK-') ? 'LINK' : null),
             amount: paymentData.amount?.total ?? null,
             currency: 'COP',
             payer_email: paymentData.payer_email ?? null,
@@ -107,36 +107,68 @@ export async function POST(request: Request) {
     // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {
       // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
-      // En producción (dominio verificado) cambiar por: paymentData.payer_email
+      // En producción (dominio verificado) cambiar el `from` y usar paymentData.payer_email.
       const payerEmail = 'mottajuandiego.work@gmail.com';
+      const total = paymentData.amount?.total ?? 0;
+      let concept = ''; // descripción para la notificación al admin
 
-      let emailSubject = '';
-      let emailHtml = '';
-
-      // La guía (y su PDF) se obtuvo arriba desde Contentful según la referencia del pago.
+      // a) Compra de GUÍA → entregamos el PDF al comprador.
       if (guide) {
-        emailSubject = `📘 Aquí tienes tu guía: ${guide.title}`;
+        concept = `Guía: ${guide.title}`;
         const downloadBlock = guide.pdfUrl
           ? `<p style="margin:24px 0;">
                <a href="${guide.pdfUrl}" style="background:#5E7C66;color:#ffffff;text-decoration:none;padding:12px 24px;border-radius:9999px;font-weight:bold;display:inline-block;">Descargar mi guía (PDF)</a>
              </p>
-             <p style="color:#666;font-size:13px;">Si el botón no funciona, copia y pega este enlace en tu navegador:<br/>${guide.pdfUrl}</p>`
+             <p style="color:#666;font-size:13px;">Si el botón no funciona, copia y pega este enlace:<br/>${guide.pdfUrl}</p>`
           : `<p>En breve te haremos llegar el enlace de descarga de tu guía.</p>`;
-        emailHtml = `
-          <h2>¡Hola! Gracias por tu compra 💚</h2>
-          <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
-          ${downloadBlock}
-          <p style="margin-top:24px;">Un abrazo,<br/>Dani Vargas</p>
-        `;
-      }
-
-      // 4. Envío de correo (Resend tarda < 1s, dentro del límite de 2s de Bold).
-      if (emailSubject) {
         await resend.emails.send({
           from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a 'hola@psicologadanivargas.com'
           to: [payerEmail],
-          subject: emailSubject,
-          html: emailHtml,
+          subject: `📘 Aquí tienes tu guía: ${guide.title}`,
+          html: `
+            <h2>¡Hola! Gracias por tu compra 💚</h2>
+            <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
+            ${downloadBlock}
+            <p style="margin-top:24px;">Un abrazo,<br/>Dani Vargas</p>
+          `,
+        });
+      }
+      // b) Pago por LINK dinámico → marcamos el link como pagado (un solo uso).
+      else if (reference?.startsWith('LINK-')) {
+        const token = reference.match(/^LINK-([^-]+)-\d+$/)?.[1] ?? null;
+        if (token) {
+          try {
+            const { data } = await getSupabaseAdmin()
+              .from('payment_links')
+              .update({ status: 'paid', paid_at: new Date().toISOString() })
+              .eq('token', token)
+              .eq('status', 'active')
+              .select('concept')
+              .maybeSingle();
+            concept = `Link de pago: ${data?.concept ?? token}`;
+          } catch (e) {
+            console.error('[WEBHOOK BOLD] Error al marcar el link como pagado:', e);
+          }
+        }
+      }
+
+      // c) Notificación simple al admin/dueña en TODO pago aprobado.
+      const adminEmails = (process.env.ADMIN_NOTIFICATION_EMAILS || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (adminEmails.length > 0) {
+        await resend.emails.send({
+          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod al dominio verificado
+          to: adminEmails,
+          subject: '💰 Nuevo pago recibido',
+          html: `
+            <h2>Nuevo pago aprobado</h2>
+            <p><strong>${concept || 'Pago'}</strong></p>
+            <p>Importe: <strong>$${total.toLocaleString('es-CO')} COP</strong></p>
+            <p>Comprador: ${paymentData.payer_email ?? '—'}</p>
+            <p>Referencia: ${reference ?? '—'}</p>
+          `,
         });
       }
     }
