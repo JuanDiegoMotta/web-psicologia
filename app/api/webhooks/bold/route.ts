@@ -36,8 +36,6 @@ interface BoldWebhookEvent {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
-  console.log('🟢 [WEBHOOK BOLD] Petición recibida:', new Date().toISOString());
-  console.log('🟢 [WEBHOOK BOLD] URL:', request.url);
   try {
     const signature = request.headers.get('x-bold-signature');
 
@@ -98,9 +96,7 @@ export async function POST(request: Request) {
         );
 
       if (error) {
-        console.error('🔴 [WEBHOOK BOLD] Error al guardar el pago en Supabase:', error.message);
-      } else {
-        console.log('🟢 [WEBHOOK BOLD] Pago registrado en Supabase. Ref:', reference);
+        console.error('[WEBHOOK BOLD] Error al guardar el pago en Supabase:', error.message);
       }
     } catch (dbError) {
       console.error('🔴 [WEBHOOK BOLD] Excepción al guardar en Supabase:', dbError);
@@ -113,8 +109,6 @@ export async function POST(request: Request) {
       // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
       // Cuando pases a producción y verifiques tu dominio en Resend, cambia esto por: paymentData.payer_email
       const payerEmail = 'mottajuandiego.work@gmail.com';
-
-      console.log(`¡Pago aprobado! Ref: ${reference} | Email real comprador: ${paymentData.payer_email}`);
 
       // Preparamos el correo según la referencia
       let emailSubject = '';
@@ -147,10 +141,7 @@ export async function POST(request: Request) {
           subject: emailSubject,
           html: emailHtml
         });
-        console.log(`Correo enviado correctamente para la referencia: ${reference}`);
       }
-    } else if (eventType === 'SALE_REJECTED') {
-      console.log(`Pago rechazado para la ref: ${paymentData.metadata?.reference}`);
     }
 
     // 5. Respondemos 200 OK lo más rápido posible

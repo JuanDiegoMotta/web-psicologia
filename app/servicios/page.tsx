@@ -8,11 +8,11 @@ export default function ServiciosPage() {
         <section className="w-full pt-32 pb-20 px-6 bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
-            Encuentra el espacio perfecto <br />
-            <span className="text-eucalipto-dark">para tu proceso.</span>
+            Cada proceso es único, <br />
+            <span className="text-eucalipto-dark">y el tuyo también.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-            Trabajo con enfoques basados en evidencia para garantizar resultados reales. Elige el área en la que necesitas acompañamiento.
+            Por eso trabajamos contigo desde una mirada cercana y personalizada, con terapias basadas en evidencia. Elige el área en la que necesitas acompañamiento y demos juntos el primer paso.
           </p>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default function ServiciosPage() {
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Acompañamiento a Padres</h2>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
-                Orientación práctica si buscas comprender y apoyar mejor a tu hijo/a en sus emociones, fomentando su resiliencia y bienestar desde el hogar.
+                Un espacio donde tu hijo/a aprende a entender y gestionar sus emociones y a construir resiliencia, con orientación práctica para que la familia le acompañe mejor desde casa.
               </p>
               <Link href="/servicios/terapia-infantojuvenil" className="inline-flex items-center gap-2 bg-arena text-eucalipto-dark font-semibold py-3 px-6 rounded-full group-hover:bg-eucalipto-dark group-hover:text-white transition-colors">
                 Ver detalles <span>→</span>
@@ -79,6 +79,60 @@ export default function ServiciosPage() {
                 <li className="flex items-center gap-2">🕒 <span className="text-sm">Horarios flexibles.</span></li>
                 <li className="flex items-center gap-2">🤝 <span className="text-sm">Misma calidad y calidez que en presencial.</span></li>
               </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* --- NUESTRO EQUIPO TERAPÉUTICO --- */}
+      <section className="w-full py-24 px-6 bg-arena/40">
+        <div className="max-w-6xl mx-auto">
+          {/* Encabezado + lead */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Nuestro equipo</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
+              Nuestro equipo terapéutico
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Trabajamos con un equipo de psicólogas profesionales que comparten un mismo enfoque: un acompañamiento <span className="text-eucalipto-dark font-medium">cálido, humano y basado en evidencia científica</span>.
+            </p>
+          </div>
+
+          {/* Grid de cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {/* Card 1: Selección y evolución */}
+            <div className="bg-white p-8 rounded-3xl border border-salvia shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-start">
+              <div className="w-14 h-14 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                🌿
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Selección cuidadosa</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Seleccionamos a cada terapeuta con mucho cuidado, priorizando la calidad humana, la ética, la formación sólida y la capacidad de crear un espacio seguro para ti.
+              </p>
+            </div>
+
+            {/* Card 2: Acompañamiento a tu medida */}
+            <div className="bg-white p-8 rounded-3xl border border-salvia shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-start">
+              <div className="w-14 h-14 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                🎯
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Acompañamiento a tu medida</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Esto nos permite ofrecerte un acompañamiento flexible, especializado y alineado a tus necesidades emocionales.
+              </p>
+            </div>
+
+            {/* Card 3: Cerca de ti */}
+            <div className="bg-white p-8 rounded-3xl border border-salvia shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-start">
+              <div className="w-14 h-14 bg-arena rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                💛
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Cerca de ti</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Encontrarás un profesional que te escucha, te contiene y te guía con la claridad y el respeto que merece tu proceso.
+              </p>
             </div>
 
           </div>

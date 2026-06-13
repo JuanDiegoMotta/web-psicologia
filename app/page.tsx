@@ -29,11 +29,11 @@ export default function HomePage() {
         {/*Contenido principal del Hero*/}
         <div className="relative z-20 max-w-3xl flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 tracking-tight">
-            Tu espacio seguro para <span className="text-eucalipto-dark">sanar</span> y <span className="text-eucalipto-dark">crecer</span>.
+            Transformamos tu vida con <span className="text-eucalipto-dark">humanidad</span> y <span className="text-eucalipto-dark">claridad</span>.
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shasdow-sm">
-            Te acompaño a través de terapia psicológica basada en evidencia para que recuperes la calma, la confianza y el sentido en tu vida.
+          <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl drop-shadow-sm">
+            Un espacio cálido y seguro para entender lo que sientes y avanzar en tu día a día.
           </p>
 
           <Link
@@ -42,6 +42,27 @@ export default function HomePage() {
           >
             Da el primer paso hoy
           </Link>
+        </div>
+      </section>
+
+      {/*--- SECCIÓN: TU PROCESO PARA SANAR Y CRECER ---*/}
+      <section className="w-full py-24 px-6 bg-arena">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="text-eucalipto-dark font-bold uppercase tracking-wider text-sm mb-4 block">Tu proceso</span>
+          <hr className="mx-auto mt-3 w-40 border-t-2 text-eucalipto-dark/40 mb-3" />
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 tracking-tight font-serif">
+            Tu proceso para sanar y crecer
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed mb-5">
+            A veces la ansiedad no da tregua, la tristeza pesa más de lo que desearías.
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed mb-5">
+            Sentir ansiedad, tristeza, frustración o insuficiencia puede ser agotador. Quizá llevas tiempo intentando mantener todo en orden mientras por dentro sientes que te falta claridad y avanzar.
+           <span className="text-eucalipto-dark font-medium"> No tienes que atravesar esto sola.</span>
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Aquí encuentras un espacio <span className="text-eucalipto-dark font-medium">profesional</span> y <span className="text-eucalipto-dark font-medium">humano</span> para explorar lo que estás viviendo, con <span className="text-eucalipto-dark font-medium">calma</span>, con <span className="text-eucalipto-dark font-medium">escucha</span> y sin <span className="text-eucalipto-dark font-medium">juicios</span>.
+          </p>
         </div>
       </section>
 
@@ -108,7 +129,7 @@ export default function HomePage() {
               ¿Cómo puedo ayudarte?
             </h2>
             <p className="text-gray-600 md:text-lg">
-              Encuentra el espacio perfecto para tus necesidades. Trabajo con enfoques basados en evidencia para garantizar los mejores resultados en tu proceso.
+              Cada proceso es único. Por eso trabajamos contigo desde una mirada cercana y basada en evidencia, para acompañarte paso a paso en el camino hacia sentirte mejor contigo misma.
             </p>
           </div>
 
@@ -144,14 +165,14 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Tarjeta 3: Online */}
+            {/* Tarjeta 3: Niños y adolescentes */}
             <div className="bg-blancoluz/60 p-8 md:p-10 rounded-3xl border border-salvia flex flex-col items-start hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-default">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                💻
+                🌱
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Terapia Online</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Terapia para niños y adolescentes</h3>
               <p className="text-gray-600 mb-8 flex-grow leading-relaxed">
-                La misma calidad y calidez de la terapia presencial, pero desde la comodidad de tu casa, sin importar en qué país estés.
+                Orientación para tu hijo y para ti, si buscas comprender y apoyar mejor sus emociones, fomentando su resiliencia y bienestar desde el hogar.
               </p>
               <Link href="/servicios" className="text-eucalipto-dark font-bold hover:text-eucalipto-darker flex items-center gap-2">
                 Saber más <span className="transform group-hover:translate-x-2 transition-transform">→</span>

@@ -182,35 +182,27 @@ export default function TerapiaIndividualPage() {
             {/* Paquete 1: 1 Sesión */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <span>📌</span> Sesión Individual
+                <span>📌</span> Sesión Claridad
               </h3>
-              <p className="text-2xl font-black text-gray-900 mb-6">$140.000 COP</p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Ideal si quieres:</p>
-                  <ul className="space-y-2">
-                    <li>• Explorar tu situación en un espacio seguro.</li>
-                    <li>• Tener una primera experiencia y sentir cómo trabajamos.</li>
-                    <li>• Obtener orientación y un primer paso claro.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Calma emocional y entendimiento.</li>
-                    <li>• 1-2 herramientas prácticas inmediatas.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para entender lo que estás viviendo y dar tus primeros pasos.</p>
+                <ul className="space-y-2">
+                  <li>• Evaluación profunda de tu situación emocional.</li>
+                  <li>• Identificamos lo que más te está costando y te damos retroalimentación clara.</li>
+                  <li>• Espacio seguro para ordenar tu proceso: lo urgente y lo confuso.</li>
+                  <li>• Primeros pasos para avanzar con acompañamiento profesional.</li>
+                </ul>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Individual%20de%20terapia."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20una%20Sesi%C3%B3n%20Claridad%20de%20terapia%20individual."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-salvia hover:bg-salvia text-eucalipto-darker font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar 1 Sesión
+                Agendar Sesión Claridad
               </a>
             </div>
 
@@ -220,75 +212,58 @@ export default function TerapiaIndividualPage() {
                 Más Recomendado
               </div>
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✅</span> Paquete de 3 sesiones
+                <span>✅</span> Paquete Impulso
               </h3>
-              <p className="text-3xl font-black text-eucalipto-dark mb-1">$343.900 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 40 días • <span className="font-semibold text-green-600">Ahorras $76.100</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Perfecto si necesitas:</p>
-                  <ul className="space-y-2">
-                    <li>• Empezar a soltar cargas y patrones agotadores.</li>
-                    <li>• Saber poner límites sin sentir culpa.</li>
-                    <li>• Acompañamiento constante mientras te organizas.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Identificación clara de patrones.</li>
-                    <li>• Herramientas para regular emociones y decidir.</li>
-                    <li>• Avances visibles en cómo reaccionas al estrés.</li>
-                    <li>• Un plan estructural de hacia dónde vamos.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para avanzar con claridad, estructura y bases sólidas.</p>
+                <ul className="space-y-2">
+                  <li>• Claridad emocional y organización en lo que sientes.</li>
+                  <li>• Mayor avance con guía profesional constante.</li>
+                  <li>• Identificación de patrones y factores que te afectan.</li>
+                  <li>• Retroalimentación continua para avanzar con conciencia.</li>
+                  <li>• Construcción de bases reales para tu bienestar.</li>
+                  <li>• Herramientas aplicables a tu día a día.</li>
+                  <li>• Plan estructurado con objetivos y primeros avances.</li>
+                </ul>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20de%203%20Sesiones."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20Impulso%20de%204%20sesiones%20de%20terapia%20individual."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
-                Agendar Paquete de 3
+                Agendar Paquete Impulso
               </a>
             </div>
 
             {/* Paquete 3: 5 Sesiones */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✨</span> Paquete de 5 sesiones
+                <span>✨</span> Paquete Transformación
               </h3>
-              <p className="text-2xl font-black text-gray-900 mb-1">$493.900 COP</p>
-              <p className="text-xs text-gray-500 mb-6">Suscripción por 60 días • <span className="font-semibold text-green-600">Ahorras $206.100</span></p>
+              <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
-              <div className="flex-grow space-y-6 text-sm text-gray-600">
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">Ideal si deseas:</p>
-                  <ul className="space-y-2">
-                    <li>• Recuperar estabilidad tras meses sintiéndote saturada.</li>
-                    <li>• Mejorar profundamente tu seguridad y autovaloración.</li>
-                    <li>• Construir una vida alineada con lo que realmente quieres.</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-2">✅ Obtendrás:</p>
-                  <ul className="space-y-2">
-                    <li>• Entendimiento profundo de tu historia.</li>
-                    <li>• Cambios reales y duraderos en tu comportamiento.</li>
-                    <li>• Herramientas sólidas y autonomía emocional.</li>
-                  </ul>
-                </div>
+              <div className="flex-grow space-y-4 text-sm text-gray-600">
+                <p className="font-medium text-eucalipto-dark italic">Para profundizar, sostener tu proceso y generar cambios duraderos.</p>
+                <ul className="space-y-2">
+                  <li>• Proceso profundo con continuidad emocional.</li>
+                  <li>• Exploración detallada de tus patrones y su origen.</li>
+                  <li>• Acompañamiento sostenido sesión a sesión.</li>
+                  <li>• Construcción de cambios estables en tu día a día.</li>
+                  <li>• Herramientas y seguimiento para transformar desde la raíz.</li>
+                </ul>
               </div>
               
               <a 
-                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20de%205%20Sesiones."
+                href="https://wa.me/573016245662?text=%C2%A1Hola%21%20Quiero%20agendar%20el%20Paquete%20Transformaci%C3%B3n%20de%208%20sesiones%20de%20terapia%20individual."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Paquete de 5
+                Agendar Paquete Transformación
               </a>
             </div>
 
