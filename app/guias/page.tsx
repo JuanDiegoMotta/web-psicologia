@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import BoldPaymentButton from '@/components/BoldPaymentButton';
+import Link from 'next/link';
 import { getAllGuides } from '@/lib/contentful';
 
 export default async function GuiasDigitalesPage() {
@@ -75,13 +75,12 @@ export default async function GuiasDigitalesPage() {
                   )}
                 </div>
 
-                <div className="mt-6">
-                  <BoldPaymentButton
-                    amount={String(guide.price)}
-                    description={guide.title}
-                    orderPrefix={guide.slug}
-                  />
-                </div>
+                <Link
+                  href={`/checkout/${guide.slug}`}
+                  className="mt-6 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5"
+                >
+                  Comprar — ${guide.price.toLocaleString('es-CO')} COP
+                </Link>
               </div>
             </div>
           ))}
