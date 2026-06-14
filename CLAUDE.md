@@ -392,7 +392,7 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 > Recopiladas de la reunión + doc del cliente. Referencias: carpeta de diseño del cliente (Google Drive) y ejemplo de página de pagos `psicologamariapaula.com/pagos/`.
 >
-> **Estado:** ✅ **Fase 1 (contenido)**, ✅ **Fase 2 (guías dinámicas + PDF)**, ✅ **Fase 3 (checkout +5%)** y ✅ **Fase 4 (newsletter — captación + cableado del broadcast)** implementadas. El **envío real del broadcast** queda a expensas de **verificar el dominio en Resend** (PRO). Pendiente: **Fase 5 — generador de links de pago dinámicos con auth** (Supabase Auth).
+> **Estado:** ✅ **Las 5 fases de implementación están hechas** — Fase 1 (contenido), Fase 2 (guías dinámicas + PDF), Fase 3 (checkout +5%), Fase 4 (newsletter), Fase 5 (links de pago dinámicos + Supabase Auth). Lo que queda es el **go-live / PRO** (dominio verificado en Resend, llaves de producción de Bold + webhook prod + quitar bypass de firma, PDFs reales de guías, DNS del dominio). Ver "🚀 Despliegue a producción".
 
 ### Contenido — Página de inicio
 - [x] **Hero / texto de apertura:** "Transformamos tu vida con humanidad y claridad" + línea de apoyo. ✅ Hecho.
@@ -435,11 +435,12 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 - [x] `app/checkout/[slug]/page.tsx`: muestra **precio base + 5% comisión Bold = total** y el botón de Bold cobra el total. En `/guias` el botón "Comprar" ya no abre el modal: navega a `/checkout/[slug]`. La comisión es `lib/pricing.ts` → `BOLD_COMMISSION_RATE` (fuente única; `commission = round(base·5%)`, `total = base + commission`). Supabase guarda el **total** cobrado.
 - ⚠️ Negocio/legal **(pendiente de confirmar)**: trasladar la comisión del procesador al cliente va transparente y desglosado; confirmar que es aceptable para el método/jurisdicción.
 
-**b) Generador de links de pago dinámicos (importe libre) — solo usuarios autorizados:**
-- [ ] Página **privada** donde un usuario autorizado introduce un **importe** (y concepto) y **genera un link de pago** para enviar por WhatsApp; al abrirlo, el cliente paga ese importe por Bold.
-- **Enfoque recomendado (reutiliza la integración actual):** no generar un link "crudo" de Bold, sino un **link a una página propia** `/pago/[id]`. El importe se guarda **en BD** (tabla `payment_links`: id, importe, concepto, creado_por, estado, fecha) y el link referencia el `id` (no el importe en la URL → no manipulable). La página lee el importe de BD, genera el hash y abre Bold.
-- **Autenticación (lo nuevo):** sí implica **añadir auth**, pero **no** hay que guardar contraseñas a mano. Recomendado **Supabase Auth** (ya tenemos Supabase; incluido en su capa gratuita): credenciales hasheadas, login email/contraseña o magic-link; se crean los pocos usuarios autorizados y se protege la ruta con **middleware de Next.js** (sesión + allowlist de correos/rol). Alternativas: Auth.js/NextAuth, Clerk/Auth0 (SaaS), o Basic Auth con contraseña compartida (mínimo esfuerzo, menos seguro).
-- Implica: Supabase Auth, tabla `payment_links`, páginas `/login` + admin protegida + `/pago/[id]` pública, middleware, y (opcional) prefijo de referencia propio en el webhook (p. ej. `LINK-`).
+**b) Generador de links de pago dinámicos (importe libre) — solo usuarios autorizados:** ✅ Hecho.
+- [x] **Auth con Supabase** (`@supabase/ssr`, claves nuevas publishable/secret). `proxy.ts` (convención Next 16, antes `middleware.ts`) protege `/admin/**` con sesión + allowlist `ADMIN_ALLOWED_EMAILS`. `/login` con email+contraseña; usuarios creados a mano en Supabase (signups desactivados).
+- [x] **`/admin/pagos`** (protegida): crea el link (importe base + concepto → tabla `payment_links` con `token` aleatorio), lista links recientes, copiar / compartir por WhatsApp.
+- [x] **`/pago/[token]`** pública: desglose **base + 5% = total** (reutiliza `lib/pricing.ts`) y paga por Bold (`orderPrefix = LINK-<token>`). **Un solo uso:** se bloquea si el link no está `active`.
+- [x] **Webhook:** los pagos `LINK-` marcan el link como `paid` (idempotente, `product_prefix='LINK'`) y mandan **notificación a `ADMIN_NOTIFICATION_EMAILS`** (también en pagos de guía). El importe es **inmutable** (en BD, no en la URL).
+- ⚠️ **Prueba en preview/sandbox:** el webhook de Bold **no se autoentrega**; hay que lanzarlo a mano desde el panel de Bold (botón de prueba), y ese evento de test llega con **`amount.total: 0` y campos `XXXX`** (placeholders de Bold). En producción Bold lo llama solo con los datos reales. La fuente de verdad del importe de un link es `payment_links.amount`.
 
 ---
 
