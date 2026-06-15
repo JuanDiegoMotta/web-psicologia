@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     // Modelo nuevo: el Broadcast se envía a un segmentId (no audienceId). send:true lo manda ya.
     const { data, error } = await resend.broadcasts.create({
       segmentId,
-      from: 'Acme <onboarding@resend.dev>', // PROD: 'Dani Vargas <hola@psicologadanivargas.com>' (requiere dominio verificado)
+      from: process.env.RESEND_FROM || 'Acme <onboarding@resend.dev>',
       subject: `📬 Nuevo artículo: ${post.title}`,
       html,
       send: true,

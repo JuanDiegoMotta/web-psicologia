@@ -10,10 +10,15 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, cellphone, age = "No proporcionado", service = "Consulta general (desde Home)", reason = "Sin mensaje adicional" } = body;
 
-    // 2. Usamos Resend para enviar el correo
+    // 2. Usamos Resend para enviar el correo.
+    // from/to configurables por env (con fallback a dev): RESEND_FROM debe ser
+    // una dirección del dominio verificado en Resend; CONTACT_TO_EMAIL es el
+    // buzón donde la psicóloga recibe las solicitudes.
+    const from = process.env.RESEND_FROM || 'Acme <onboarding@resend.dev>';
+    const to = process.env.CONTACT_TO_EMAIL || 'mottajuandiego.work@gmail.com';
     const data = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>', // No cambies este email hasta que no verifiques un dominio en Resend
-      to: ['mottajuandiego.work@gmail.com'], // Pon AQUÍ el correo de Daniela (con el que te registraste en Resend)
+      from,
+      to: [to],
       subject: `Nueva solicitud de cita de ${name}`,
       html: `
         <h2>Tienes un nuevo mensaje desde la web</h2>

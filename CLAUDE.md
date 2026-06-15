@@ -315,6 +315,8 @@ CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # borradores (opcional, no usado aún)
 # Resend (correos + newsletter)
 RESEND_API_KEY=re_...            # full access (crea contactos/segments/broadcasts)
 RESEND_SEGMENT_ID=...            # segmento "Newsletter" de Resend (destino del broadcast)
+RESEND_FROM=...                  # remitente del dominio verificado, ej. "Dani Vargas <hola@psicologadanivargas.com>" (fallback dev: onboarding@resend.dev)
+CONTACT_TO_EMAIL=...             # destinatario del formulario de contacto (correo de Daniela)
 
 # Newsletter — webhook de Contentful "al publicar"
 CONTENTFUL_WEBHOOK_SECRET=...    # debe coincidir con el header x-webhook-secret del webhook
@@ -357,18 +359,17 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 
 ### B) Checklist de código/config antes de subir a PRO
 
-**Correos (Resend)** — requiere **verificar el dominio** en Resend (añadir registros DNS SPF/DKIM/DMARC). Hasta entonces solo se puede enviar desde `onboarding@resend.dev` y solo al correo de la cuenta:
-- [ ] `app/api/contacto/route.ts`: cambiar `from: 'Acme <onboarding@resend.dev>'` → `'Daniela Vargas <hola@psicologadanivargas.com>'`
-- [ ] `app/api/contacto/route.ts`: cambiar el `to:` hardcodeado `mottajuandiego.work@gmail.com` → correo real de Daniela
-- [ ] `app/api/webhooks/bold/route.ts`: mismo cambio de `from:`
-- [ ] `app/api/webhooks/bold/route.ts`: la variable `payerEmail` está **forzada** a `mottajuandiego.work@gmail.com` en vez de `paymentData.payer_email`. Tras verificar el dominio, usar el correo real del comprador para que reciba su guía
-- [ ] Crear una API key de Resend de solo envío para producción
+**Correos (Resend)** — dominio verificado; remitente y destinatarios **por env vars** (ya no hardcodeados):
+- [x] `from` unificado vía `RESEND_FROM` en los 3 sitios (contacto, webhook Bold, webhook Contentful). → **Configurar `RESEND_FROM`** = dirección del dominio verificado (p. ej. `Dani Vargas <hola@psicologadanivargas.com>` o del subdominio `send.`).
+- [x] `to` del formulario de contacto vía `CONTACT_TO_EMAIL`. → **Configurar** con el correo real de Daniela.
+- [x] Webhook de Bold: la guía se envía ya al **correo real del comprador** (`paymentData.payer_email`).
+- [ ] (Opcional, seguridad) Crear una API key de Resend de **solo envío** para producción.
 
 **Pagos (Bold)**:
-- [ ] `app/api/webhooks/bold/route.ts`: **quitar el bypass de simulación** (`if (!signature) { ...permitir ejecución temporal... }`). En producción Bold **sí** envía la firma `x-bold-signature` y la verificación debe ser obligatoria; un webhook sin firma debe rechazarse
-- [ ] Configurar en el panel de Bold la **URL del webhook de producción** apuntando al dominio real
-- [ ] Subir las **llaves de producción** de Bold (identity + secret) a las env vars de Vercel
-- [ ] **PDFs de las guías:** los correos del webhook tienen URLs de descarga placeholder (`https://tudominio.com/links-secretos/...` y varios `href="..."` vacíos en GUIA-AMOR y GUIA-HABLAR). Subir los PDFs reales (Contentful Media) y poner las URLs definitivas
+- [x] Webhook: la **firma es obligatoria en producción** (`VERCEL_ENV === 'production'`); en preview/dev se permite sin firma para las pruebas manuales del panel de Bold.
+- [x] URL del webhook configurada en el panel de Bold apuntando al dominio.
+- [ ] Subir las **llaves de producción** de Bold (identity + secret) a las env vars de Vercel.
+- [x] **PDFs de guías:** ya no hay placeholders; el webhook entrega el `pdf` real de la guía desde Contentful. *(Pendiente solo subir los PDFs definitivos de cada guía en Contentful.)*
 
 **Base de datos (Supabase)**:
 - [ ] Crear el **proyecto Supabase de producción** y correr en él el mismo SQL de la tabla `payments`
