@@ -35,9 +35,14 @@ export async function POST(request: Request) {
     // 1. Extraemos el Raw Body (Cuerpo crudo)
     const rawBody = await request.text();
 
-    // 2. Validación (MODIFICADA TEMPORALMENTE PARA SIMULACIÓN)
+    // 2. Validación de la firma del webhook (HMAC-SHA256 sobre el base64 del body).
     if (!signature) {
-      console.warn('⚠️ No se recibió firma de Bold. Permitiendo ejecución temporal por simulación.');
+      // En producción Bold SIEMPRE firma → sin firma se rechaza. En preview/dev se
+      // permite para poder lanzar el webhook de prueba a mano desde el panel de Bold.
+      if (process.env.VERCEL_ENV === 'production') {
+        return NextResponse.json({ error: 'Falta la firma del webhook' }, { status: 401 });
+      }
+      console.warn('[WEBHOOK BOLD] Petición sin firma (permitido fuera de producción).');
     } else {
       // Si SÍ hay firma, hacemos la validación normal
       const secretKey = process.env.BOLD_WEBHOOK_SECRET || '';
@@ -106,9 +111,9 @@ export async function POST(request: Request) {
 
     // --- LÓGICA DE NEGOCIO ---
     if (eventType === 'SALE_APPROVED') {
-      // OJO: En la capa gratuita de Resend solo puedes enviar a tu propio correo verificado.
-      // En producción (dominio verificado) cambiar el `from` y usar paymentData.payer_email.
-      const payerEmail = 'mottajuandiego.work@gmail.com';
+      // Remitente configurable (dominio verificado en Resend). Comprador = correo real del pago.
+      const from = process.env.RESEND_FROM || 'Acme <onboarding@resend.dev>';
+      const buyerEmail = paymentData.payer_email;
       const total = paymentData.amount?.total ?? 0;
       let concept = ''; // descripción para la notificación al admin
 
@@ -121,17 +126,23 @@ export async function POST(request: Request) {
              </p>
              <p style="color:#666;font-size:13px;">Si el botón no funciona, copia y pega este enlace:<br/>${guide.pdfUrl}</p>`
           : `<p>En breve te haremos llegar el enlace de descarga de tu guía.</p>`;
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod a 'hola@psicologadanivargas.com'
-          to: [payerEmail],
-          subject: `📘 Aquí tienes tu guía: ${guide.title}`,
-          html: `
-            <h2>¡Hola! Gracias por tu compra 💚</h2>
-            <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
-            ${downloadBlock}
-            <p style="margin-top:24px;">Un abrazo,<br/>Dani Vargas</p>
-          `,
-        });
+        if (buyerEmail) {
+          try {
+            await resend.emails.send({
+              from,
+              to: [buyerEmail],
+              subject: `📘 Aquí tienes tu guía: ${guide.title}`,
+              html: `
+                <h2>¡Hola! Gracias por tu compra 💚</h2>
+                <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
+                ${downloadBlock}
+                <p style="margin-top:24px;">Un abrazo,<br/>Dani Vargas</p>
+              `,
+            });
+          } catch (e) {
+            console.error('[WEBHOOK BOLD] Error al enviar la guía por correo:', e);
+          }
+        }
       }
       // b) Pago por LINK dinámico → marcamos el link como pagado (un solo uso).
       else if (reference?.startsWith('LINK-')) {
@@ -158,18 +169,22 @@ export async function POST(request: Request) {
         .map((s) => s.trim())
         .filter(Boolean);
       if (adminEmails.length > 0) {
-        await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>', // Cambiar en prod al dominio verificado
-          to: adminEmails,
-          subject: '💰 Nuevo pago recibido',
-          html: `
-            <h2>Nuevo pago aprobado</h2>
-            <p><strong>${concept || 'Pago'}</strong></p>
-            <p>Importe: <strong>$${total.toLocaleString('es-CO')} COP</strong></p>
-            <p>Comprador: ${paymentData.payer_email ?? '—'}</p>
-            <p>Referencia: ${reference ?? '—'}</p>
-          `,
-        });
+        try {
+          await resend.emails.send({
+            from,
+            to: adminEmails,
+            subject: '💰 Nuevo pago recibido',
+            html: `
+              <h2>Nuevo pago aprobado</h2>
+              <p><strong>${concept || 'Pago'}</strong></p>
+              <p>Importe: <strong>$${total.toLocaleString('es-CO')} COP</strong></p>
+              <p>Comprador: ${paymentData.payer_email ?? '—'}</p>
+              <p>Referencia: ${reference ?? '—'}</p>
+            `,
+          });
+        } catch (e) {
+          console.error('[WEBHOOK BOLD] Error al enviar la notificación al admin:', e);
+        }
       }
     }
 
