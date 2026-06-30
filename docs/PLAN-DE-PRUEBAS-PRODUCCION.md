@@ -25,6 +25,7 @@
 - [ ] **Bold:** la cuenta está en **modo producción** y la URL del webhook apunta al dominio real (`/api/webhooks/bold`), no a un preview antiguo.
 - [ ] **Contentful:** el webhook "al publicar" apunta a `https://<dominio>/api/webhooks/contentful` con el header `x-webhook-secret` correcto.
 - [ ] **Supabase:** existen las tablas `payments` y `payment_links` en el proyecto cuya URL/clave están en Production, y hay al menos un usuario admin creado (signups desactivados).
+- [ ] **Keep-alive Supabase:** el workflow `.github/workflows/keep-alive.yml` corrió en **verde** (pestaña Actions → "Keep Supabase Alive"), con los secretos de repo `SUPABASE_URL` y `SUPABASE_KEY` configurados. Evita que el plan free pause el proyecto por inactividad.
 
 ---
 
