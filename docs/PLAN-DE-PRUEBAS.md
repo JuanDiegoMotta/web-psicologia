@@ -17,57 +17,57 @@
 ## 1. Layout global (todas las páginas)
 
 **Navbar**
-- [ ] Sticky: se mantiene arriba al hacer scroll.
-- [ ] Logo (mariposa) se ve en **verde eucalipto** (no coral) y enlaza a `/`.
-- [ ] Enlaces: Inicio, Sobre mí, Servicios (con submenú), Guías digitales, Blog, Contacto.
-- [ ] Submenú de "Servicios" despliega al hover con las 4 landings.
-- [ ] Botón "Contacto" destacado (oscuro) y clicable.
-- [ ] Responsive: en móvil aparece el menú hamburguesa y abre/cierra correctamente.
+- [x] Sticky: se mantiene arriba al hacer scroll.
+- [x] Logo (mariposa) se ve en **verde eucalipto** (no coral) y enlaza a `/`.
+- [x] Enlaces: Inicio, Sobre mí, Servicios (con submenú), Guías digitales, Blog, Contacto.
+- [x] Submenú de "Servicios" despliega al hover con las 4 landings.
+- [x] Botón "Contacto" destacado (oscuro) y clicable.
+- [x] Responsive: en móvil aparece el menú hamburguesa y abre/cierra correctamente.
 
 **Footer**
-- [ ] Fondo oscuro (`tinta`) con cabeceras "Sígueme en mis redes" / "Escríbeme" **legibles** (verde claro salvia).
-- [ ] Enlaces de redes (Facebook, Instagram) abren en pestaña nueva y van a los perfiles correctos.
-- [ ] Correo mostrado correcto: `danielavargaspsicologa@gmail.com`.
-- [ ] Logos de pago (Bancolombia, Daviplata, PayPal, Nequi, PSE) se ven en blanco y con hover.
-- [ ] Enlace "Política de privacidad" (de momento `#`, anotar como pendiente).
+- [x] Fondo oscuro (`tinta`) con cabeceras "Sígueme en mis redes" / "Escríbeme" **legibles** (verde claro salvia).
+- [x] Enlaces de redes (Facebook, Instagram) abren en pestaña nueva y van a los perfiles correctos.
+- [x] Correo mostrado correcto: `danielavargaspsicologa@gmail.com`.
+- [x] Logos de pago (Bancolombia, Daviplata, PayPal, Nequi, PSE) se ven en blanco y con hover.
+- [x] Enlace "Política de privacidad" (de momento `#`, anotar como pendiente).
 
 **Botón flotante de WhatsApp**
-- [ ] Visible abajo-derecha en todas las páginas, por encima del contenido.
-- [ ] Abre chat de WhatsApp al número correcto.
+- [x] Visible abajo-derecha en todas las páginas, por encima del contenido.
+- [x] Abre chat de WhatsApp al número correcto.
 
 **Marca / contraste (revisión visual rápida en cada página)**
-- [ ] No queda **nada en rosa/coral** (salvo assets de imagen pendientes: `fondoRosa.png`, SVGs decorativos, "cerebros" del hero del blog).
-- [ ] Texto de acento verde legible: oscuro sobre fondo claro, claro (salvia) sobre fondo oscuro.
-- [ ] Botones primarios: verde `eucalipto-dark` + texto blanco, hover más oscuro.
+- [x] No queda **nada en rosa/coral** (salvo assets de imagen pendientes: `fondoRosa.png`, SVGs decorativos, "cerebros" del hero del blog).
+- [x] Texto de acento verde legible: oscuro sobre fondo claro, claro (salvia) sobre fondo oscuro.
+- [x] Botones primarios: verde `eucalipto-dark` + texto blanco, hover más oscuro.
 
 ---
 
 ## 2. Páginas (contenido y enlaces)
 
 **Inicio (`/`)**
-- [ ] Vídeo de hero carga y reproduce.
-- [ ] Todas las secciones renderizan sin solaparse.
-- [ ] CTAs llevan a las páginas correctas.
+- [x] Vídeo de hero carga y reproduce.
+- [x] Todas las secciones renderizan sin solaparse.
+- [x] CTAs llevan a las páginas correctas.
 
 **Sobre mí (`/sobre-mi`)**
-- [ ] Imágenes cargan (sin recuadros rotos).
-- [ ] Sección oscura "El equipo" legible.
+- [x] Imágenes cargan (sin recuadros rotos).
+- [x] Sección oscura "El equipo" legible.
 
 **Hub de Servicios (`/servicios`)**
-- [ ] Las 4 tarjetas enlazan a sus landings.
-- [ ] Tarjeta oscura "100% Online" legible.
+- [x] Las 4 tarjetas enlazan a sus landings.
+- [x] Tarjeta oscura "100% Online" legible.
 
 **Landings de servicio** (`/servicios/terapia-individual`, `/terapia-de-pareja`, `/terapia-infantojuvenil`, `/empresas`)
-- [ ] Hero con imagen + overlay; eyebrow y título legibles.
-- [ ] Listas de beneficios con checks verdes legibles.
-- [ ] Tarjetas de precio: precios correctos en COP; tarjeta destacada resalta.
-- [ ] Botones secundarios (salvia) y círculos de paso legibles.
-- [ ] Enlaces de WhatsApp con el mensaje pre-rellenado correcto.
+- [x] Hero con imagen + overlay; eyebrow y título legibles.
+- [x] Listas de beneficios con checks verdes legibles.
+- [x] Tarjetas de precio: precios correctos en COP; tarjeta destacada resalta.
+- [x] Botones secundarios (salvia) y círculos de paso legibles.
+- [x] Enlaces de WhatsApp con el mensaje pre-rellenado correcto.
 
 **Guías digitales (`/guias`)**
-- [ ] Las 3 guías muestran imagen, título y descripción correctos.
-- [ ] Botón de pago Bold en cada guía (ver sección 4).
-- [ ] CTA "Ver catálogo" hace scroll arriba.
+- [x] Las 3 guías muestran imagen, título y descripción correctos.
+- [x] Botón de pago Bold en cada guía (ver sección 4).
+- [x] CTA "Ver catálogo" hace scroll arriba.
 
 ---
 

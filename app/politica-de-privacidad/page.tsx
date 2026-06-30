@@ -13,14 +13,7 @@ export default function PoliticaPrivacidadPage() {
         <h1 className="text-3xl md:text-4xl font-bold text-tinta mb-3 font-serif">
           Política de Privacidad y Tratamiento de Datos
         </h1>
-        <p className="text-sm text-gray-500 mb-8">Última actualización: pendiente de publicación.</p>
-
-        {/* Aviso interno: borrador pendiente de validación legal */}
-        <div className="bg-arena border-l-4 border-eucalipto rounded-r-lg p-4 mb-10 text-sm text-gray-700">
-          ⚠️ <strong>Borrador.</strong> Este texto es una base adaptada a la{' '}
-          <strong>Ley 1581 de 2012</strong> (Habeas Data, Colombia) y debe ser{' '}
-          <strong>revisado y validado por un profesional legal</strong> antes de publicarse en producción.
-        </div>
+        <p className="text-sm text-gray-500 mb-10">Última actualización: 25 de junio de 2026.</p>
 
         <div className="space-y-8 text-gray-600 leading-relaxed">
           <section>

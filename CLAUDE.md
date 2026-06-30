@@ -321,26 +321,33 @@ CONTACT_TO_EMAIL=...             # destinatario del formulario de contacto (corr
 # Newsletter — webhook de Contentful "al publicar"
 CONTENTFUL_WEBHOOK_SECRET=...    # debe coincidir con el header x-webhook-secret del webhook
 
+# Admin / notificaciones (links de pago + avisos de venta)
+ADMIN_ALLOWED_EMAILS=...         # lista separada por comas; correos con acceso a /admin (proxy.ts)
+ADMIN_NOTIFICATION_EMAILS=...    # lista separada por comas; reciben el aviso "Nuevo pago recibido"
+SITE_URL=...                     # base absoluta para los enlaces del correo (opcional; si falta, se deriva del origen de la petición)
+
 # Bold (pagos) — tres variables distintas con propósitos distintos
 NEXT_PUBLIC_BOLD_API_KEY=...   # pública, accesible en el cliente (abre el modal)
 BOLD_SECRET_KEY=...            # genera el hash de integridad del botón de pago
-BOLD_WEBHOOK_SECRET=...        # verifica la firma de las notificaciones del webhook
+BOLD_WEBHOOK_SECRET=...        # verifica la firma del webhook. Bold NO da una llave aparte: en prod = mismo valor que BOLD_SECRET_KEY; en test/preview = vacío
 
 # Contentful (blog, ✅ conectado — usado en lib/contentful.ts)
 CONTENTFUL_SPACE_ID=...
 CONTENTFUL_DELIVERY_ACCESS_TOKEN=...   # para contenido publicado (producción)
 CONTENTFUL_PREVIEW_ACCESS_TOKEN=...    # para borradores (opcional, útil en desarrollo)
 
-# Supabase (base de datos, ✅ conectado — usado en lib/supabase.ts)
-SUPABASE_URL=...                       # Project URL (Settings → API)
-SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, salta el RLS)
+# Supabase (base de datos + auth) — modelo de claves de jun 2025 (publishable/secret, NO legacy anon/service_role)
+SUPABASE_URL=...                            # Project URL (Settings → API)
+SUPABASE_SECRET_KEY=...                     # sb_secret_... (secreta, SOLO servidor, salta el RLS). Usada por lib/supabase.ts
+NEXT_PUBLIC_SUPABASE_URL=...                # misma URL, expuesta al cliente para el auth SSR
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, respeta RLS). Usada por el cliente de auth (login admin)
 ```
 
 ---
 
 ## 🚀 Despliegue a producción — variables y checklist
 
-> Sección de referencia para no olvidar nada al pasar de pruebas a producción. **Nada de esto está hecho aún**; es un recordatorio. Las variables de entorno de Vercel se configuran en **Project → Settings → Environment Variables**, y cada una se puede asignar a tres entornos: **Production** (rama `main`), **Preview** (otras ramas/PRs) y **Development** (`vercel dev`). `.env.local` es solo para tu máquina y no se sube al repo.
+> Sección de referencia para el paso a producción. **Estado (jun 2026):** dominio configurado (Hostinger → DNS de Vercel + registros de Resend), claves de **producción** ya cargadas en el entorno *Production* de Vercel (Bold, Resend, Supabase, Contentful) y `BOLD_WEBHOOK_SECRET` aclarado (ver tabla A). **Lo que queda es operativo/validación:** subir los PDFs reales de las guías a Contentful, validar legalmente la política de privacidad, confirmar la comisión +5% y, sobre todo, **pasar la batería de pruebas de producción** (`docs/PLAN-DE-PRUEBAS-PRODUCCION.md`) con un pago real de prueba. Las variables de entorno de Vercel se configuran en **Project → Settings → Environment Variables**, y cada una se puede asignar a tres entornos: **Production** (rama `main`), **Preview** (otras ramas/PRs) y **Development** (`vercel dev`). `.env.local` es solo para tu máquina y no se sube al repo.
 
 ### A) Variables que cambian de valor entre entornos (test/dev → producción)
 
@@ -348,10 +355,11 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 |---|---|---|---|
 | `NEXT_PUBLIC_BOLD_API_KEY` | identity key **de pruebas** | identity key **de producción** | Pública (identifica el comercio). Bold tiene versión test y prod de cada llave |
 | `BOLD_SECRET_KEY` | secret key **de pruebas** | secret key **de producción** | Privada, solo servidor. Genera el hash de integridad del botón |
-| `BOLD_WEBHOOK_SECRET` | string vacío `''` | secret key **de producción** | ⚠️ Según la doc de Bold, la firma del webhook usa **la misma secret key de integración** (no una llave aparte). En modo test la firma se calcula con **clave vacía**. Verificar en el panel de Bold si tu cuenta expone un secreto de webhook dedicado o si hay que usar el `BOLD_SECRET_KEY` de producción |
+| `BOLD_WEBHOOK_SECRET` | string vacío `''` | **mismo valor que `BOLD_SECRET_KEY` de producción** | ✅ Aclarado: Bold **no** expone un secreto de webhook aparte; la firma usa la **misma secret key de integración**. En test/preview la firma se calcula con **clave vacía** (déjala sin valor). Si en prod el webhook diera 400 (firma inválida), revisar el panel de Bold por si esa cuenta sí tuviera un secreto dedicado |
 | `RESEND_API_KEY` | key de pruebas | key de producción con permiso **solo de envío** (`sending_access`), idealmente restringida al dominio verificado | Principio de mínimo privilegio: limita el daño si se filtra |
-| `SUPABASE_URL` | proyecto Supabase **dev** | proyecto Supabase **prod** (otro distinto) | Proyectos separados para no mezclar pagos de prueba con reales |
-| `SUPABASE_SERVICE_ROLE_KEY` | service_role del proyecto dev | service_role del proyecto prod | Secreta, solo servidor |
+| `SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_URL` | proyecto Supabase **dev** | proyecto Supabase **prod** (idealmente otro distinto) | Proyectos separados evitan mezclar pagos de prueba con reales |
+| `SUPABASE_SECRET_KEY` | `sb_secret_...` del proyecto dev | `sb_secret_...` del proyecto prod | Secreta, solo servidor (salta RLS) |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_...` dev | `sb_publishable_...` prod | Pública (respeta RLS), para el login del admin |
 | `CONTENTFUL_DELIVERY_ACCESS_TOKEN` | (puede ser el mismo) | token **dedicado a producción** | Recomendado un token por entorno para poder revocarlos por separado |
 | `CONTENTFUL_SPACE_ID` | mismo space | mismo space | Un solo space; si en el futuro usas *environments* de Contentful (master vs sandbox), cambiaría |
 
@@ -360,30 +368,33 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 ### B) Checklist de código/config antes de subir a PRO
 
 **Correos (Resend)** — dominio verificado; remitente y destinatarios **por env vars** (ya no hardcodeados):
-- [x] `from` unificado vía `RESEND_FROM` en los 3 sitios (contacto, webhook Bold, webhook Contentful). → **Configurar `RESEND_FROM`** = dirección del dominio verificado (p. ej. `Dani Vargas <hola@psicologadanivargas.com>` o del subdominio `send.`).
-- [x] `to` del formulario de contacto vía `CONTACT_TO_EMAIL`. → **Configurar** con el correo real de Daniela.
+- [x] `from` unificado vía `RESEND_FROM` en los 3 sitios (contacto, webhook Bold, webhook Contentful).
+- [x] **Configurado `RESEND_FROM`** = dirección del dominio verificado en el entorno Production de Vercel.
+- [x] **Configurado `CONTACT_TO_EMAIL`** con el correo real de Daniela.
 - [x] Webhook de Bold: la guía se envía ya al **correo real del comprador** (`paymentData.payer_email`).
 - [ ] (Opcional, seguridad) Crear una API key de Resend de **solo envío** para producción.
+- [ ] **Validar en PRO** que llegan de verdad: correo de contacto, entrega de guía (PDF) y aviso al admin (requiere pasar la batería de pruebas).
 
 **Pagos (Bold)**:
 - [x] Webhook: la **firma es obligatoria en producción** (`VERCEL_ENV === 'production'`); en preview/dev se permite sin firma para las pruebas manuales del panel de Bold.
 - [x] URL del webhook configurada en el panel de Bold apuntando al dominio.
-- [ ] Subir las **llaves de producción** de Bold (identity + secret) a las env vars de Vercel.
-- [x] **PDFs de guías:** ya no hay placeholders; el webhook entrega el `pdf` real de la guía desde Contentful. *(Pendiente solo subir los PDFs definitivos de cada guía en Contentful.)*
+- [x] **Llaves de producción** de Bold (identity + secret) cargadas en las env vars de Vercel, incl. `BOLD_WEBHOOK_SECRET = BOLD_SECRET_KEY`.
+- [x] **PDFs de guías (código):** ya no hay placeholders; el webhook entrega el `pdf` real de la guía desde Contentful.
+- [ ] **Subir los PDFs definitivos** de cada guía a Contentful (Media).
+- [ ] **Pago real de prueba en PRO** (importe pequeño) verificando que el webhook firmado pasa y registra el pago.
 
 **Base de datos (Supabase)**:
-- [ ] Crear el **proyecto Supabase de producción** y correr en él el mismo SQL de la tabla `payments`
-- [ ] Poner `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` de ese proyecto **solo** en el entorno *Production* de Vercel
+- [ ] (Recomendado) Crear un **proyecto Supabase de producción** separado y correr el SQL de `payments` + `payment_links`. *(Si se reutiliza el mismo proyecto que en dev, dejarlo anotado: pagos de prueba y reales conviven.)*
+- [x] `SUPABASE_URL` / `SUPABASE_SECRET_KEY` (modelo nuevo) cargadas en el entorno Production de Vercel.
 
 **Contentful**:
-- [ ] Configurar `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN` en Vercel (sin ellas, el build de producción del blog falla)
-- [ ] Asegurarse de que los posts estén en estado **Published** (la Delivery API no devuelve borradores)
+- [x] `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN` configurados en Vercel.
+- [ ] Asegurarse de que los posts y las guías estén en estado **Published** (la Delivery API no devuelve borradores).
 
 **Dominio / Vercel**:
-- [ ] Apuntar el dominio propio a Vercel (DNS)
-- [ ] Añadir los registros DNS de verificación de dominio de Resend
-- [ ] Hacer `git push origin main` (el merge a `main` está hecho en local pero no empujado; `main` dispara deploy de producción en Vercel)
-- [ ] Revisar que las páginas `pago-completado` / `pago-rechazado` (noindex) y `verificar-pago` funcionan con el dominio real
+- [x] Dominio (Hostinger) apuntado a Vercel (DNS) y registros de verificación de Resend añadidos.
+- [x] `git push origin main` hecho → deploy de producción disparado.
+- [ ] Revisar **en el dominio real** que `pago-completado` / `pago-rechazado` (noindex) y `verificar-pago` funcionan.
 
 **Fuentes consultadas:** [Resend – Managing Domains](https://resend.com/docs/dashboard/domains/introduction), [Bold – Llaves de integración](https://developers.bold.co/pagos-en-linea/llaves-de-integracion), [Bold – Webhook](https://developers.bold.co/webhook), [Bold – Ambiente de pruebas](https://www.developers.bold.co/pagos-en-linea/boton-de-pagos/ambiente-pruebas), [Contentful – Authentication](https://www.contentful.com/developers/docs/references/authentication/).
 
@@ -455,20 +466,21 @@ SUPABASE_SERVICE_ROLE_KEY=...          # service_role (secreta, SOLO servidor, s
 | Página Sobre Mí | ✅ Completo |
 | Hub de Servicios | ✅ Completo |
 | Landings de embudo (4 servicios) | ✅ Completo |
-| Guías Digitales (UI) | ✅ Completo |
+| Guías Digitales | ✅ Completo — dinámicas desde Contentful (`getAllGuides`) |
+| Checkout con desglose +5% (`/checkout/[slug]`) | ✅ Completo |
 | Blog (Contentful) | ✅ Conectado a CMS real (listado + artículo + Rich Text) |
 | Página de Contacto | ✅ Completo |
-| Formulario → correo (Resend) | ✅ Funcionando |
-| Pasarela Bold (modo pruebas) | ✅ Funcionando |
-| Webhook Bold → correos | ✅ Funcionando (modo simulación, omite firma si no viene) |
+| Formulario → correo (Resend) | ✅ Funcionando (from/to por env vars) |
+| Pasarela Bold | ✅ Funcionando (probada en sandbox) |
+| Webhook Bold → Supabase + correos | ✅ Funcionando — firma **obligatoria en producción**, registra pago + entrega PDF + avisa al admin |
 | Páginas pago-completado / pago-rechazado | ✅ Completo |
 | Vercel Analytics | ✅ Instalado |
 | Contentful → Blog real | ✅ Completo — `lib/contentful.ts` + build genera páginas estáticas por slug |
-| Newsletter del blog (envío real) | 🔲 Pendiente — `NewsletterForm` solo es UI (preventDefault) |
-| Supabase (base de datos) | ✅ Conectada — tabla `payments`; el webhook de Bold registra cada pago |
-| PDFs guías en Contentful Media | 🔲 Pendiente |
-| BoldPaymentButton en páginas de servicios | 🔲 Pendiente — actualmente solo en /guias |
-| Bug: descriptions duplicadas en guias/page.tsx | ✅ Corregido — cada guía manda su nombre real |
-| Correos Resend → correo real de Daniela | 🔲 Pendiente — hardcodeado a correo de dev |
-| Dominio propio (DNS) | 🔲 Pendiente — dominio ya existente, solo falta apuntarlo a Vercel |
-| Llaves Bold de producción | 🔲 Pendiente — acceso a la cuenta ya disponible, falta pasar webhook a clave real y subir a env vars en Vercel |
+| Newsletter (captación + envío al publicar) | ✅ Implementado — `NewsletterForm`→`/api/newsletter` + webhook Contentful→Broadcast. Envío real depende del dominio verificado (✅ configurado), pendiente validar en PRO |
+| Supabase (base de datos) | ✅ Conectada — tablas `payments` y `payment_links`; claves nuevas (secret/publishable) |
+| Supabase Auth + admin de links de pago | ✅ Completo — `/login`, `/admin/pagos`, `/pago/[token]`, `proxy.ts` protege `/admin/**` |
+| Política de privacidad | ✅ Borrador publicado (pendiente validación legal) |
+| PDFs definitivos de guías en Contentful Media | 🔲 Pendiente — subir los archivos reales |
+| Citas / sesiones | ✅ Solo por WhatsApp (sin pago online) — `BoldPaymentButton` en servicios **cancelado** |
+| Dominio propio + claves de producción | ✅ Configurados en Vercel (DNS, Resend, Bold, Supabase, Contentful) |
+| QA de producción (pago real + correos en el dominio) | 🔲 Pendiente — ver `docs/PLAN-DE-PRUEBAS-PRODUCCION.md` |
