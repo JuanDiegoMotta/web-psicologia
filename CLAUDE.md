@@ -347,7 +347,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 
 ## 🚀 Despliegue a producción — variables y checklist
 
-> Sección de referencia para el paso a producción. **Estado (jun 2026):** dominio configurado (Hostinger → DNS de Vercel + registros de Resend), claves de **producción** ya cargadas en el entorno *Production* de Vercel (Bold, Resend, Supabase, Contentful) y `BOLD_WEBHOOK_SECRET` aclarado (ver tabla A). **Lo que queda es operativo/validación:** subir los PDFs reales de las guías a Contentful, validar legalmente la política de privacidad, confirmar la comisión +5% y, sobre todo, **pasar la batería de pruebas de producción** (`docs/PLAN-DE-PRUEBAS-PRODUCCION.md`) con un pago real de prueba. Las variables de entorno de Vercel se configuran en **Project → Settings → Environment Variables**, y cada una se puede asignar a tres entornos: **Production** (rama `main`), **Preview** (otras ramas/PRs) y **Development** (`vercel dev`). `.env.local` es solo para tu máquina y no se sube al repo.
+> Sección de referencia para el paso a producción. **Estado (jun 2026):** dominio configurado (Hostinger → DNS de Vercel + registros de Resend), claves de **producción** ya cargadas en el entorno *Production* de Vercel (Bold, Resend, Supabase, Contentful) y `BOLD_WEBHOOK_SECRET` aclarado (ver tabla A). **Lo que queda es operativo/validación:** subir los PDFs reales de las guías a Contentful, confirmar la comisión +5% y, sobre todo, **pasar la batería de pruebas de producción** (`docs/PLAN-DE-PRUEBAS-PRODUCCION.md`) con un pago real de prueba. Las variables de entorno de Vercel se configuran en **Project → Settings → Environment Variables**, y cada una se puede asignar a tres entornos: **Production** (rama `main`), **Preview** (otras ramas/PRs) y **Development** (`vercel dev`). `.env.local` es solo para tu máquina y no se sube al repo.
 
 ### A) Variables que cambian de valor entre entornos (test/dev → producción)
 
@@ -386,6 +386,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 **Base de datos (Supabase)**:
 - [ ] (Recomendado) Crear un **proyecto Supabase de producción** separado y correr el SQL de `payments` + `payment_links`. *(Si se reutiliza el mismo proyecto que en dev, dejarlo anotado: pagos de prueba y reales conviven.)*
 - [x] `SUPABASE_URL` / `SUPABASE_SECRET_KEY` (modelo nuevo) cargadas en el entorno Production de Vercel.
+- [x] **Keep-alive** contra la pausa por inactividad del plan free: workflow `.github/workflows/keep-alive.yml` (GitHub Actions) hace un ping REST a la tabla `payments` lunes y jueves. Requiere los secretos de repo `SUPABASE_URL` y `SUPABASE_KEY` (publishable). *(El keep-alive solo evita pausas futuras; si el proyecto ya está pausado, "Resume project" en el dashboard primero.)*
 
 **Contentful**:
 - [x] `CONTENTFUL_SPACE_ID` y `CONTENTFUL_DELIVERY_ACCESS_TOKEN` configurados en Vercel.
@@ -434,7 +435,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 - ⚠️ **Capa gratuita Resend:** **1.000 contactos** + dominio verificado, pero **100 emails/día** es el cuello de botella: enviar a >100 suscriptores/día puede requerir plan de pago (~$20/mes). *(Transaccionales —contacto, guía— comparten ese 100/día y 3.000/mes.)*
 
 ### Legal / Privacidad
-- [x] **Página de Política de Privacidad** creada en `app/politica-de-privacidad/page.tsx` y enlazada desde el footer. ✅ Hecho como **borrador** adaptado a la Ley 1581/2012 (marcado en la propia página como pendiente de **validación legal** por la clienta/abogado). Posible ampliación futura: términos de productos digitales (guías) y política de reembolso.
+- [x] **Página de Política de Privacidad** creada en `app/politica-de-privacidad/page.tsx` y enlazada desde el footer. ✅ Hecho y **validada por la clienta** (adaptada a la Ley 1581/2012; ya sin aviso de borrador y con fecha de publicación). Posible ampliación futura: términos de productos digitales (guías) y política de reembolso.
 
 ### Técnico / correos
 - [x] **Correo oficial `hola@psicologadanivargas.com`** en el footer (quitado el Gmail personal). ✅ Hecho. *(El uso del correo real en los envíos de Resend sigue ligado a verificar dominio → PRO.)*
@@ -479,7 +480,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 | Newsletter (captación + envío al publicar) | ✅ Implementado — `NewsletterForm`→`/api/newsletter` + webhook Contentful→Broadcast. Envío real depende del dominio verificado (✅ configurado), pendiente validar en PRO |
 | Supabase (base de datos) | ✅ Conectada — tablas `payments` y `payment_links`; claves nuevas (secret/publishable) |
 | Supabase Auth + admin de links de pago | ✅ Completo — `/login`, `/admin/pagos`, `/pago/[token]`, `proxy.ts` protege `/admin/**` |
-| Política de privacidad | ✅ Borrador publicado (pendiente validación legal) |
+| Política de privacidad | ✅ Publicada y validada por la clienta |
 | PDFs definitivos de guías en Contentful Media | 🔲 Pendiente — subir los archivos reales |
 | Citas / sesiones | ✅ Solo por WhatsApp (sin pago online) — `BoldPaymentButton` en servicios **cancelado** |
 | Dominio propio + claves de producción | ✅ Configurados en Vercel (DNS, Resend, Bold, Supabase, Contentful) |

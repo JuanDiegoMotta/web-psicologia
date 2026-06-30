@@ -140,7 +140,6 @@ Para **cada** guía publicada en Contentful:
 ## Pendientes / dependencias conocidas (no son fallos)
 
 - PDFs definitivos de las guías: deben estar subidos a Contentful (Media) y publicados antes de vender.
-- Política de privacidad: borrador pendiente de **validación legal** por la clienta/abogado.
 - Comisión +5% trasladada al cliente: pendiente de **confirmación de negocio/legal**.
 - (Recomendado) Proyecto Supabase **separado** para producción; si se reutiliza el de dev, conviven pagos de prueba y reales.
 - (Opcional, seguridad) API key de Resend de **solo envío** para producción.

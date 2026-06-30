@@ -1,0 +1,37 @@
+name: Keep Supabase Alive
+
+# Evita que Supabase (plan free) pause el proyecto por inactividad (~7 días sin
+# tocar la base de datos). Lanza una consulta REST ligera dos veces por semana.
+# Las claves viven en GitHub Secrets (Settings → Secrets and variables → Actions):
+#   SUPABASE_URL  → Project URL (https://xxxxx.supabase.co)
+#   SUPABASE_KEY  → la publishable key (sb_publishable_...). Es la pública que
+#                   respeta RLS; basta para que la petición llegue a Postgres y
+#                   cuente como actividad, aunque RLS devuelva 0 filas.
+#                   (Si algún día no bastara, usar la secret key sb_secret_...)
+
+on:
+  schedule:
+    - cron: '0 9 * * 1,4'   # Lunes y jueves a las 09:00 UTC
+  workflow_dispatch:          # Permite lanzarlo a mano desde la pestaña Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar la base de datos (keep-alive)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          echo "Pinging Supabase REST..."
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
+            "$SUPABASE_URL/rest/v1/payments?select=id&limit=1" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY")
+          echo "HTTP status: $HTTP"
+          # 200 (con [] por RLS) = OK. >=400 (p. ej. 401 clave mal) = fallo real.
+          if [ "$HTTP" -ge 400 ]; then
+            echo "Keep-alive FALLÓ (status $HTTP). Revisa SUPABASE_URL / SUPABASE_KEY."
+            exit 1
+          fi
+          echo "Keep-alive OK."
