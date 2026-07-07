@@ -39,7 +39,7 @@ export default function SobreMiPage() {
                 {/* Foto 2 (Arriba, centro) */}
               <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-300">
                 <Image 
-                  src="/images/daniela/daniela-consulta.jpg" 
+                  src="/images/daniela/daniela-conexion4.webp" 
                   fill 
                   className="object-cover object-right" 
                   alt="Daniela Vargas en consulta" 
@@ -51,7 +51,7 @@ export default function SobreMiPage() {
               {/* Foto 3 (Arriba) */}
               <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-300">
                 <Image 
-                  src="/images/daniela/daniela-rio.png" 
+                  src="/images/daniela/daniela_conexion1.webp" 
                   fill 
                   className="object-cover" 
                   alt="Daniela Vargas en el río" 
@@ -63,7 +63,7 @@ export default function SobreMiPage() {
               {/* Foto 4 (Abajo) */}
               <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-300">
                 <Image 
-                  src="/images/daniela/daniela-escritorio.jpg" 
+                  src="/images/daniela/daniela-conexion5.webp" 
                   fill 
                   className="object-cover object-[70%_center]" 
                   alt="Daniela Vargas en su escritorio" 
@@ -74,7 +74,7 @@ export default function SobreMiPage() {
               {/* Foto 5 (Abajo) */}
               <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-300">
                 <Image 
-                  src="/images/daniela/daniela-sofa-tablet.jpg" 
+                  src="/images/daniela/daniela-conexion6.webp" 
                   fill 
                   className="object-cover" 
                   alt="Daniela Vargas con tablet" 

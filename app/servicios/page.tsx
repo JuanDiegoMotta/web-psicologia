@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ServiciosPage() {
   return (
@@ -167,12 +168,15 @@ export default function ServiciosPage() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
-            {/* Un pequeño collage o imagen representativa de corporativo */}
+            {/* Imagen representativa de servicios corporativos */}
             <div className="relative w-full aspect-[4/3] bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500">
-               {/* SUGERENCIA: Aquí puedes poner una de las fotos donde sales trabajando con gente o en taller */}
-               <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-400">
-                 [Añadir foto corporativa]
-               </div>
+               <Image
+                 src="/images/daniela/daniela_empresa.webp"
+                 alt="Dani Vargas impartiendo un taller corporativo a un equipo de trabajo"
+                 fill
+                 className="object-cover"
+                 sizes="(max-width: 768px) 100vw, 50vw"
+               />
             </div>
           </div>
 
