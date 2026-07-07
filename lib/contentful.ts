@@ -1,5 +1,5 @@
 import { createClient } from 'contentful';
-import { cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import type { Document } from '@contentful/rich-text-types';
 
 const client = createClient({
@@ -40,6 +40,9 @@ function mapEntry(item: any): BlogPost {
 export async function getAllPosts(): Promise<BlogPost[]> {
   'use cache';
   cacheLife('hours');
+  // Etiqueta de caché: el webhook de Contentful llama a revalidateTag('posts')
+  // al publicar un post, invalidando esta caché al instante (sin esperar 1h).
+  cacheTag('posts');
 
   const entries = await client.getEntries({
     content_type: 'blogPost',
@@ -52,6 +55,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   'use cache';
   cacheLife('hours');
+  cacheTag('posts');
 
   const entries = await client.getEntries({
     content_type: 'blogPost',
@@ -67,6 +71,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 export async function getAllSlugs(): Promise<string[]> {
   'use cache';
   cacheLife('hours');
+  cacheTag('posts');
 
   const entries = await client.getEntries({
     content_type: 'blogPost',
@@ -116,6 +121,9 @@ function mapGuide(item: any): Guide {
 export async function getAllGuides(): Promise<Guide[]> {
   'use cache';
   cacheLife('hours');
+  // Etiqueta de caché: el webhook de Contentful llama a revalidateTag('guides')
+  // al publicar una guía, reflejando cambios de precio/contenido al instante.
+  cacheTag('guides');
 
   const entries = await client.getEntries({
     content_type: 'guia',
@@ -129,6 +137,7 @@ export async function getAllGuides(): Promise<Guide[]> {
 export async function getGuideBySlug(slug: string): Promise<Guide | null> {
   'use cache';
   cacheLife('hours');
+  cacheTag('guides');
 
   const entries = await client.getEntries({
     content_type: 'guia',

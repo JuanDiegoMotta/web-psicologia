@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { Resend } from 'resend';
 import { getPostBySlug } from '@/lib/contentful';
 
@@ -23,8 +24,30 @@ export async function POST(request: Request) {
   // A partir de aquí devolvemos siempre 200 (salvo 401) para que Contentful no reintente en bucle.
   try {
     const payload = await request.json();
-    const slug = localized(payload?.fields?.slug);
+    // El content type del entry publicado viene en sys.contentType.sys.id
+    // (p. ej. 'blogPost' o 'guia'). Según cuál sea, revalidamos una caché u otra.
+    const contentType: string | null = payload?.sys?.contentType?.sys?.id ?? null;
 
+    // --- GUÍA publicada/editada → invalidar el caché de guías (precio, contenido) ---
+    if (contentType === 'guia') {
+      // revalidateTag marca como "stale" todo lo etiquetado con cacheTag('guides');
+      // la próxima visita a /guias o /checkout hará fetch fresco a Contentful.
+      revalidateTag('guides');
+      return NextResponse.json({ ok: true, revalidated: 'guides' }, { status: 200 });
+    }
+
+    // Si el tipo es CONOCIDO y no es blogPost, lo ignoramos. Si no se pudo
+    // detectar (contentType null), caemos al flujo de blog por retrocompatibilidad
+    // (así la newsletter sigue funcionando aunque el payload cambie de forma).
+    if (contentType && contentType !== 'blogPost') {
+      return NextResponse.json({ skipped: `content type no gestionado: ${contentType}` }, { status: 200 });
+    }
+
+    // --- POST de blog publicado → invalidar el listado + enviar el broadcast ---
+    // Revalidamos primero para que el listado /blog muestre el post nuevo al instante.
+    revalidateTag('posts');
+
+    const slug = localized(payload?.fields?.slug);
     if (!slug) {
       return NextResponse.json({ skipped: 'sin slug en el payload' }, { status: 200 });
     }
