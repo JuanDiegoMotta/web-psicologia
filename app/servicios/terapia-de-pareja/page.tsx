@@ -169,7 +169,7 @@ export default function TerapiaParejaPage() {
             {/* Paquete 1: 1 Sesión */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <span>📌</span> Sesión Claridad
+                <span>🌱</span> Sesión Claridad
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
@@ -191,7 +191,7 @@ export default function TerapiaParejaPage() {
             {/* Paquete 2: 3 Sesiones */}
             <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-eucalipto flex flex-col h-full relative transform lg:-translate-y-4">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✅</span> Paquete Impulso
+                <span>🤎</span>  Proceso Volver a Nosotros
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
@@ -206,7 +206,7 @@ export default function TerapiaParejaPage() {
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
-                Agendar Paquete Impulso
+                Agendar Proceso Volver a Nosotros
               </a>
             </div>
 
@@ -216,7 +216,7 @@ export default function TerapiaParejaPage() {
                 Recomendado
               </div>
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>✨</span> Paquete Transformación
+                <span>❤️‍🩹</span> Proceso Vivir en Conexión
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
@@ -231,7 +231,7 @@ export default function TerapiaParejaPage() {
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Paquete Transformación
+                Agendar Proceso Vivir en Conexión
               </a>
             </div>
 

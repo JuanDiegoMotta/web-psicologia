@@ -179,7 +179,7 @@ export default function TerapiaInfantojuvenilPage() {
             {/* Paquete 1: 1 Sesión */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <span>📌</span> Sesión Claridad
+                <span>🌱</span> Sesión Claridad
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">1 sesión</p>
               
@@ -200,7 +200,7 @@ export default function TerapiaInfantojuvenilPage() {
             {/* Paquete 2: 3 Sesiones */}
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>🌿</span> Paquete Impulso
+                <span>🤎</span> Proceso Crecer en Conexión 
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">4 sesiones</p>
               
@@ -214,7 +214,7 @@ export default function TerapiaInfantojuvenilPage() {
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition-colors"
               >
-                Agendar Paquete Impulso
+                Agendar Proceso Crecer en Conexión
               </a>
             </div>
 
@@ -224,7 +224,7 @@ export default function TerapiaInfantojuvenilPage() {
                 Mejor para Resultados
               </div>
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-1">
-                <span>🌟</span> Paquete Transformación
+                <span>❤️‍🩹</span> Proceso Crecer en Calma
               </h3>
               <p className="text-sm font-semibold text-eucalipto-dark mb-6">8 sesiones</p>
               
@@ -238,7 +238,7 @@ export default function TerapiaInfantojuvenilPage() {
                 rel="noopener noreferrer"
                 className="mt-8 w-full block text-center bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-4 rounded-xl transition-colors shadow-md"
               >
-                Agendar Paquete Transformación
+                Agendar Proceso Crecer en Calma
               </a>
             </div>
 
