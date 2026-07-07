@@ -30,9 +30,11 @@ export async function POST(request: Request) {
 
     // --- GUÍA publicada/editada → invalidar el caché de guías (precio, contenido) ---
     if (contentType === 'guia') {
-      // revalidateTag marca como "stale" todo lo etiquetado con cacheTag('guides');
-      // la próxima visita a /guias o /checkout hará fetch fresco a Contentful.
-      revalidateTag('guides');
+      // Next 16 (Cache Components): revalidateTag necesita 2º arg (perfil).
+      // `{ expire: 0 }` = expiración INMEDIATA, el patrón recomendado por la doc
+      // para webhooks/servicios externos (la próxima visita a /guias o /checkout
+      // hace fetch fresco a Contentful, sin servir el precio viejo una vez más).
+      revalidateTag('guides', { expire: 0 });
       return NextResponse.json({ ok: true, revalidated: 'guides' }, { status: 200 });
     }
 
@@ -45,7 +47,7 @@ export async function POST(request: Request) {
 
     // --- POST de blog publicado → invalidar el listado + enviar el broadcast ---
     // Revalidamos primero para que el listado /blog muestre el post nuevo al instante.
-    revalidateTag('posts');
+    revalidateTag('posts', { expire: 0 });
 
     const slug = localized(payload?.fields?.slug);
     if (!slug) {
