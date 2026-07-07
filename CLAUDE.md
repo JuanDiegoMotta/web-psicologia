@@ -225,11 +225,15 @@ public/
 **✅ Bug corregido en `app/guias/page.tsx`:** cada `BoldPaymentButton` envía ya su `description` real ("Hablar para conectar", "Conexión real", "Amor en equilibrio"). Los `orderPrefix` siempre fueron correctos. También se eliminó un `console.log` que exponía `NEXT_PUBLIC_BOLD_API_KEY`.
 
 **Webhook — Estado actual:**
-- Variable de entorno usada para verificar firma: `BOLD_WEBHOOK_SECRET` (distinta de `BOLD_SECRET_KEY`)
-- En modo simulación/pruebas: si Bold no envía firma, el webhook la omite y continúa (comportamiento temporal)
+- Variable de entorno usada para verificar firma: `BOLD_WEBHOOK_SECRET` (en prod = mismo valor que `BOLD_SECRET_KEY`; en test/preview = vacío)
+- Firma **obligatoria en producción** (`VERCEL_ENV === 'production'`): sin firma → 401. En preview/dev se omite para pruebas manuales del panel de Bold.
 - Si Bold envía firma: valida con `BOLD_WEBHOOK_SECRET` usando `crypto.timingSafeEqual`
 - Algoritmo: Base64 del rawBody → HMAC-SHA256 → comparar con header `x-bold-signature`
-- El correo `to:` está hardcodeado a `mottajuandiego.work@gmail.com` — cambiar al correo de Daniela cuando se verifique el dominio en Resend
+- Correos por env vars (`RESEND_FROM`, comprador real, `ADMIN_NOTIFICATION_EMAILS`) — ya no hardcodeados.
+
+> ⚠️ **GOTCHA del `www` (causa raíz de un fallo real en go-live).** El dominio **canónico** en Vercel es `www.psicologadanivargas.com`; el apex sin `www` responde **308 redirect** hacia el `www`. Un navegador sigue esa redirección, pero **los emisores de webhooks (Bold, Contentful) NO la siguen**: mandan el POST, reciben el 308 y ahí muere → la función **nunca se ejecuta** (ni logs, ni BD, ni correos), aunque el pago sí se cobre. **Regla:** todas las URLs de webhook (Bold, Contentful) deben apuntar al dominio **canónico con `www`**, p. ej. `https://www.psicologadanivargas.com/api/webhooks/bold`. Igual para `SITE_URL`. *(Diagnóstico: un `curl -i` al endpoint muestra `308` en el apex y `401 {"error":"Falta la firma..."}` — la función viva — en el `www`.)*
+
+> ℹ️ **Pago ≠ webhook (son asíncronos).** El cobro se confirma al cliente al instante; el webhook es una notificación servidor-a-servidor **con reintentos**. Puede llegar con **retraso** (segundos o minutos) o reintentarse si falla. Por eso el webhook es **idempotente** por `payment_id` (`upsert onConflict ignoreDuplicates`): un mismo evento repetido no duplica la fila en `payments`. *(Nota: los correos NO están deduplicados aún; un reintento reenvía los correos aunque no duplique la fila.)*
 
 ---
 
@@ -377,7 +381,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 
 **Pagos (Bold)**:
 - [x] Webhook: la **firma es obligatoria en producción** (`VERCEL_ENV === 'production'`); en preview/dev se permite sin firma para las pruebas manuales del panel de Bold.
-- [x] URL del webhook configurada en el panel de Bold apuntando al dominio.
+- [x] URL del webhook configurada en el panel de Bold apuntando al **dominio canónico con `www`** (`https://www.psicologadanivargas.com/api/webhooks/bold`). ⚠️ El apex sin `www` da 308 y Bold no lo sigue → ver "GOTCHA del `www`".
 - [x] **Llaves de producción** de Bold (identity + secret) cargadas en las env vars de Vercel, incl. `BOLD_WEBHOOK_SECRET = BOLD_SECRET_KEY`.
 - [x] **PDFs de guías (código):** ya no hay placeholders; el webhook entrega el `pdf` real de la guía desde Contentful.
 - [ ] **Subir los PDFs definitivos** de cada guía a Contentful (Media).
@@ -395,6 +399,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...    # sb_publishable_... (pública, resp
 **Dominio / Vercel**:
 - [x] Dominio (Hostinger) apuntado a Vercel (DNS) y registros de verificación de Resend añadidos.
 - [x] `git push origin main` hecho → deploy de producción disparado.
+- [x] **Dominio canónico = `www`.** El apex redirige (308) al `www`. ⚠️ Todas las **URLs de webhooks** (Bold, Contentful) y `SITE_URL` deben usar el `www` — ver "GOTCHA del `www`" en Integración Bold.
 - [ ] Revisar **en el dominio real** que `pago-completado` / `pago-rechazado` (noindex) y `verificar-pago` funcionan.
 
 **Fuentes consultadas:** [Resend – Managing Domains](https://resend.com/docs/dashboard/domains/introduction), [Bold – Llaves de integración](https://developers.bold.co/pagos-en-linea/llaves-de-integracion), [Bold – Webhook](https://developers.bold.co/webhook), [Bold – Ambiente de pruebas](https://www.developers.bold.co/pagos-en-linea/boton-de-pagos/ambiente-pruebas), [Contentful – Authentication](https://www.contentful.com/developers/docs/references/authentication/).

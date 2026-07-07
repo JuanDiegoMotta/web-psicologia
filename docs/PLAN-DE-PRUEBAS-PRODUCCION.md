@@ -21,21 +21,23 @@
   - [x] `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
   - [x] `NEXT_PUBLIC_BOLD_API_KEY` (**producción**), `BOLD_SECRET_KEY` (**producción**), `BOLD_WEBHOOK_SECRET` (= mismo valor que `BOLD_SECRET_KEY` de producción)
   - [x] `ADMIN_ALLOWED_EMAILS`, `ADMIN_NOTIFICATION_EMAILS`, `SITE_URL` (= dominio real)
-- [ ] **Resend:** el dominio aparece como **Verified** (registros SPF/DKIM/DMARC en verde).
-- [ ] **Bold:** la cuenta está en **modo producción** y la URL del webhook apunta al dominio real (`/api/webhooks/bold`), no a un preview antiguo.
-- [ ] **Contentful:** el webhook "al publicar" apunta a `https://<dominio>/api/webhooks/contentful` con el header `x-webhook-secret` correcto.
-- [ ] **Supabase:** existen las tablas `payments` y `payment_links` en el proyecto cuya URL/clave están en Production, y hay al menos un usuario admin creado (signups desactivados).
-- [ ] **Keep-alive Supabase:** el workflow `.github/workflows/keep-alive.yml` corrió en **verde** (pestaña Actions → "Keep Supabase Alive"), con los secretos de repo `SUPABASE_URL` y `SUPABASE_KEY` configurados. Evita que el plan free pause el proyecto por inactividad.
+- [x] **Resend:** el dominio aparece como **Verified** (registros SPF/DKIM/DMARC en verde).
+- [x] **Bold:** la cuenta está en **modo producción** y la URL del webhook apunta al **dominio canónico con `www`** (`https://www.psicologadanivargas.com/api/webhooks/bold`), no al apex (redirige 308 y Bold no lo sigue) ni a un preview antiguo.
+- [x] **Contentful:** el webhook "al publicar" apunta a `https://www.psicologadanivargas.com/api/webhooks/contentful` (con `www`) y el header `x-webhook-secret` correcto.
+
+> ⚠️ **GOTCHA del `www`:** el apex `psicologadanivargas.com` da **308 redirect** al `www` y los emisores de webhooks no siguen la redirección → el webhook no se ejecuta (sin logs/BD/correos) aunque el pago se cobre. Diagnóstico rápido: `curl -i -X POST <url>/api/webhooks/bold` → `308` en apex, `401 {"error":"Falta la firma..."}` en `www` (función viva). Aplica también a `SITE_URL`.
+- [x] **Supabase:** existen las tablas `payments` y `payment_links` en el proyecto cuya URL/clave están en Production, y hay al menos un usuario admin creado (signups desactivados).
+- [x] **Keep-alive Supabase:** el workflow `.github/workflows/keep-alive.yml` corrió en **verde** (pestaña Actions → "Keep Supabase Alive"), con los secretos de repo `SUPABASE_URL` y `SUPABASE_KEY` configurados. Evita que el plan free pause el proyecto por inactividad.
 
 ---
 
 ## 1. Humo general en el dominio real
 
-- [ ] Cargan sin error 500 ni pantalla en blanco: `/`, `/sobre-mi`, `/servicios` (+ las 4 landings), `/guias`, `/blog`, `/contacto`, `/politica-de-privacidad`.
-- [ ] Navbar, footer y botón flotante de WhatsApp aparecen en todas.
-- [ ] El footer muestra el correo `hola@psicologadanivargas.com` y el enlace a Política de privacidad funciona.
-- [ ] Sin errores en la consola del navegador en producción.
-- [ ] Vercel Analytics registra la visita (aparece en el panel pasados unos minutos).
+- [x] Cargan sin error 500 ni pantalla en blanco: `/`, `/sobre-mi`, `/servicios` (+ las 4 landings), `/guias`, `/blog`, `/contacto`, `/politica-de-privacidad`.
+- [x] Navbar, footer y botón flotante de WhatsApp aparecen en todas.
+- [x] El footer muestra el correo `hola@psicologadanivargas.com` y el enlace a Política de privacidad funciona.
+- [x] Sin errores en la consola del navegador en producción.
+- [x] Vercel Analytics registra la visita (aparece en el panel pasados unos minutos).
 
 > Para el detalle visual/responsive/contraste, usar `PLAN-DE-PRUEBAS.md` (secciones 1, 2, 8, 9).
 
@@ -44,36 +46,38 @@
 ## 2. Formulario de contacto → correo real
 
 Página `/contacto`:
-- [ ] Envío válido → estado de carga + mensaje de éxito.
-- [ ] **Llega el correo al buzón real de Daniela** (`CONTACT_TO_EMAIL`), no a la cuenta de dev.
-- [ ] El remitente es el del **dominio verificado** (`RESEND_FROM`), no `onboarding@resend.dev`.
-- [ ] El correo no cae en spam (revisar carpeta de no deseado la primera vez).
-- [ ] El correo contiene todos los datos (nombre, email, celular, edad, servicio, motivo).
+- [x] Envío válido → estado de carga + mensaje de éxito.
+- [x] **Llega el correo al buzón real de Daniela** (`CONTACT_TO_EMAIL`), no a la cuenta de dev.
+- [x] El remitente es el del **dominio verificado** (`RESEND_FROM`), no `onboarding@resend.dev`.
+- [x] El correo no cae en spam (revisar carpeta de no deseado la primera vez).
+- [x] El correo contiene todos los datos (nombre, email, celular, edad, servicio, motivo).
 
 ---
 
 ## 3. Guías + checkout con desglose +5%
 
 Para **cada** guía publicada en Contentful:
-- [ ] Aparece en `/guias` con imagen, título, descripción y **precio** reales (vienen de Contentful).
-- [ ] "Comprar" navega a `/checkout/[slug]` (no abre el modal directamente).
-- [ ] El checkout muestra el desglose **base + 5% comisión = total** y el total cuadra con `lib/pricing.ts`.
-- [ ] El botón de Bold abre el modal con el **total** (base + comisión) y la **descripción correcta** de esa guía.
+- [x] Aparece en `/guias` con imagen, título, descripción y **precio** reales (vienen de Contentful).
+- [x] "Comprar" navega a `/checkout/[slug]` (no abre el modal directamente).
+- [x] El checkout muestra el desglose **base + 5% comisión = total** y el total cuadra con `lib/pricing.ts`.
+- [x] El botón de Bold abre el modal con el **total** (base + comisión) y la **descripción correcta** de esa guía.
 
 ---
 
 ## 4. Pago REAL de prueba (Bold producción) — la prueba crítica
 
 > En producción Bold llama al webhook **solo y con firma**. Hacer **un pago real de importe pequeño** (puede reembolsarse luego) con una guía de prueba barata o un link de pago de bajo importe.
+>
+> ⏱️ **El webhook es asíncrono:** el pago se confirma al instante, pero la notificación (BD + correos + marcar link pagado) puede tardar **segundos o algunos minutos** en llegar/reintentarse. Si no ves la fila enseguida, **espera y recomprueba** antes de dar por fallido.
 
-- [ ] El pago se completa y redirige a `/verificar-pago?...=approved` → `/pago-completado`.
-- [ ] Un pago rechazado (si se puede forzar) redirige a `/pago-rechazado`.
-- [ ] **Webhook firmado:** en los logs de la función `api/webhooks/bold` (Vercel → Logs) el evento entra y responde `200`, **sin** caer en el 401 de "falta firma" ni en el 400 de "firma inválida". *(Si da 400 → `BOLD_WEBHOOK_SECRET` no coincide con la clave con la que Bold firma; revisar.)*
-- [ ] Se inserta **una fila** en `payments` (Supabase) con `status='approved'`, `payment_id`, `reference`, `product_prefix`, `amount` = **total real cobrado** (no 0), `payer_email` real, `currency='COP'`.
-- [ ] Reintento del mismo `payment_id` → **no duplica** la fila (idempotencia).
-- [ ] **Compra de guía:** llega al **correo del comprador** el email con el enlace de descarga del **PDF real** (el subido a Contentful), no un placeholder.
-- [ ] Llega el **aviso "💰 Nuevo pago recibido"** a `ADMIN_NOTIFICATION_EMAILS` con concepto, importe, comprador y referencia.
-- [ ] (Limpieza) Anular/reembolsar el pago de prueba en el panel de Bold si procede.
+- [x] El pago se completa y redirige a `/verificar-pago?...=approved` → `/pago-completado`.
+- [-] Un pago rechazado (si se puede forzar) redirige a `/pago-rechazado`.
+- [x] **Webhook firmado:** en los logs de la función `api/webhooks/bold` (Vercel → Logs) el evento entra y responde `200`, **sin** caer en el 401 de "falta firma" ni en el 400 de "firma inválida". *(Si da 400 → `BOLD_WEBHOOK_SECRET` no coincide con la clave con la que Bold firma; revisar.)*
+- [x] Se inserta **una fila** en `payments` (Supabase) con `status='approved'`, `payment_id`, `reference`, `product_prefix`, `amount` = **total real cobrado** (no 0), `payer_email` real, `currency='COP'`.
+- [x] Reintento del mismo `payment_id` → **no duplica** la fila (idempotencia).
+- [x] **Compra de guía:** llega al **correo del comprador** el email con el enlace de descarga del **PDF real** (el subido a Contentful), no un placeholder.
+- [x] Llega el **aviso "💰 Nuevo pago recibido"** a `ADMIN_NOTIFICATION_EMAILS` con concepto, importe, comprador y referencia.
+- [x] (Limpieza) Anular/reembolsar el pago de prueba en el panel de Bold si procede.
 
 ---
 

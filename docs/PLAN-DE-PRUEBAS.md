@@ -150,20 +150,20 @@ Simular evento (o pago real en sandbox) contra `/api/webhooks/bold`:
 ## 8. Responsive / cross-browser
 
 Probar en: **móvil (≤480px), tablet (~768px), desktop (≥1280px)** y en **Chrome + Safari/Firefox**:
-- [ ] Navbar/menú móvil.
-- [ ] Grids (servicios, guías, blog) se apilan bien.
-- [ ] Heroes con imagen no recortan texto importante.
-- [ ] Formularios usables en móvil.
-- [ ] Footer se reorganiza correctamente.
+- [x] Navbar/menú móvil.
+- [x] Grids (servicios, guías, blog) se apilan bien.
+- [x] Heroes con imagen no recortan texto importante.
+- [x] Formularios usables en móvil.
+- [x] Footer se reorganiza correctamente.
 
 ---
 
 ## 9. Accesibilidad (rápida)
 
-- [ ] Contraste de texto suficiente (especial atención a verdes sobre fondos claros/oscuros).
-- [ ] Imágenes con `alt` descriptivo.
-- [ ] Navegación por teclado en navbar y formularios.
-- [ ] Foco visible en inputs y botones.
+- [x] Contraste de texto suficiente (especial atención a verdes sobre fondos claros/oscuros).
+- [x] Imágenes con `alt` descriptivo.
+- [x] Navegación por teclado en navbar y formularios.
+- [x] Foco visible en inputs y botones.
 
 ---
 
