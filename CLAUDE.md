@@ -161,42 +161,33 @@ Regla mental: **fondos neutros (~80%) + verde como acento (~20%) + toque cálido
 
 **Gradientes:** Usar `bg-gradient-to-b from-salvia/40 via-blancoluz/60 to-white` para héros sin imagen de fondo.
 
-**Assets de imagen:** el logo `public/icons/logos/logo-mariposa-fondo.svg` ya se recoloreó a eucalipto (`fill:#5E7C66`, editable directo en el SVG). ⚠️ Aún quedan otros con rosa que el CSS no toca y habría que rediseñar: `public/images/backgrounds/fondoRosa.png` y varios SVG decorativos en `public/images/backgrounds/` (corazones, burbujas…), además de los "cerebros" malva del fondo del hero del blog.
+**Assets de imagen:** el logo `public/icons/logos/logo-mariposa-fondo.svg` ya se recoloreó a eucalipto (`fill:#5E7C66`, editable directo en el SVG). Los antiguos assets con rosa (`fondoRosa.png`, SVGs decorativos de corazones/burbujas, etc.) se **eliminaron** en la limpieza de jul 2026 al no estar en uso.
 
 ---
 
 ## Imágenes y assets (`public/`)
 
+> **Limpieza (jul 2026):** se eliminaron ~108 assets sin referenciar (testimonios/, people/, mission/, guías locales, iconos de sección, fondos decorativos rosa/SVG, iconos de pago/redes sin usar, defaults de create-next-app y fotos antiguas de Daniela). Lo que queda abajo es **exactamente lo que se usa en el código**. Si añades un asset nuevo, referéncialo o quedará huérfano.
+
 ```
-public/
-├── icon.svg                    # Favicon de la web (en app/, no en public/)
+public/                              # (icon.svg del favicon está en app/, no aquí)
 ├── icons/
-│   ├── logos/                  # logo-mariposa-fondo.svg (navbar), logo-psicologia1.3.png
-│   ├── socials/                # fb.svg, insta.svg, whatsapp.svg (los usados en código)
-│   │                           # también hay versiones .png antiguas sin usar
-│   ├── payments/               # bancolombia.svg, daviplata.svg, paypal-3.svg, nequi-2.svg,
-│   │                           # pse-logo.svg, american-express-1.svg, mastercard-4.svg, visa-5.svg
-│   ├── about_me/               # brain.png, mental-health.png, time.png
-│   ├── enterprise/             # ratings.png
-│   ├── guides/                 # like--v1.png, open-book--v2.png, speech-bubble-with-dots.png
-│   └── individual_therapy/     # clinic.png, for-you.png, neighbour.png
+│   ├── logos/                  # logo-mariposa-fondo.svg (navbar)
+│   ├── socials/                # fb.svg, insta.svg (footer), whatsapp.svg (botón flotante)
+│   └── payments/               # bancolombia.svg, daviplata.svg, paypal-3.svg, nequi-2.svg, pse-logo.svg (footer)
 ├── images/
-│   ├── daniela/                # daniela-rio.png, daniela-consulta.jpg, daniela-escritorio.jpg,
-│   │                           # daniela-sofa-tablet.jpg, daniela-bosque.jpeg, inst1-min.jpg, inst8-min.jpg
-│   ├── backgrounds/            # blog.jpg, couples.jpg, couples-2/3/4.jpg, enterprise.jpg, infant.jpg,
-│   │                           # hero-terapia-individual.jpg y variantes (-2, -3, -5),
-│   │                           # fondoRosa.png, SVGs decorativos (jigsaw, bubbles, heart, etc.)
-│   ├── guides/                 # hablar-para-conectar.png, conexion-real.png, amor-en-equilibrio.png
-│   ├── ilustrations/           # ⚠️ carpeta con typo (no "illustrations"). Contiene: avatar-couple.svg,
-│   │                           # avatar-male.svg, avatar-woman.svg, ins2-min.jpg … ins7-min.jpg
-│   ├── mission/                # mision.jpg
-│   ├── people/                 # img-1219.jpg … img-1227.jpeg
-│   └── testimonios/            # img-4252.jpg … img-4272.jpg, testimony3.jpg … testimony31.jpg
+│   ├── daniela/                # daniela-consulta.jpg (blog+sobre-mi), daniela-escritorio.jpg (home),
+│   │                           # daniela-rio.png + daniela_conexion1/-conexion4/5/6.webp (grid sobre-mi),
+│   │                           # daniela_empresa.webp (card corporativa del hub de servicios)
+│   ├── backgrounds/            # blog.jpg (hero blog), enterprise.jpg (hero empresas),
+│   │                           # couples-3.jpg (hero pareja), hero-terapia-individual-3.jpg (hero individual),
+│   │                           # infant.jpg (hero infantojuvenil)
+│   └── ilustrations/           # ⚠️ typo: una sola 'l'. avatar-woman/-couple/-male.svg (testimonios del home)
 └── video/
     └── hero-video.mp4          # Vídeo del hero de la página de inicio
 ```
 
-**⚠️ Typo en carpeta:** `public/images/ilustrations/` (una sola 'l'). Usar exactamente ese nombre en los `src` de las imágenes.
+**⚠️ Typo en carpeta:** `public/images/ilustrations/` (una sola 'l'). Usar exactamente ese nombre en los `src` de las imágenes. **Ojo:** en `app/page.tsx` los avatares se referencian **sin barra inicial** (`images/ilustrations/avatar-*.svg`).
 
 **Reglas de imágenes:**
 - Siempre añadir `sizes` cuando se use `fill` (evita warnings de Next.js)
