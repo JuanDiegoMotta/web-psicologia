@@ -120,6 +120,10 @@ export async function POST(request: Request) {
       // a) Compra de GUÍA → entregamos el PDF al comprador.
       if (guide) {
         concept = `Guía: ${guide.title}`;
+        // Logo de cabecera SOLO en el correo al cliente. Debe ser una URL pública
+        // y absoluta (los correos no admiten rutas locales ni SVG en Gmail), por eso
+        // un PNG servido desde el dominio canónico con www. SITE_URL manda si está.
+        const logoUrl = `${process.env.SITE_URL || 'https://www.psicologadanivargas.com'}/icons/logos/logo_email.png`;
         const downloadBlock = guide.pdfUrl
           ? `<p style="margin:24px 0;">
                <a href="${guide.pdfUrl}" style="background:#5E7C66;color:#ffffff;text-decoration:none;padding:12px 24px;border-radius:9999px;font-weight:bold;display:inline-block;">Descargar mi guía (PDF)</a>
@@ -133,6 +137,9 @@ export async function POST(request: Request) {
               to: [buyerEmail],
               subject: `📘 Aquí tienes tu guía: ${guide.title}`,
               html: `
+                <div style="text-align:center;margin:0 0 20px;">
+                  <img src="${logoUrl}" alt="Psicóloga Dani Vargas" width="100" height="100" style="display:inline-block;border:0;outline:none;text-decoration:none;" />
+                </div>
                 <h2>¡Hola! Gracias por tu compra 💚</h2>
                 <p>Aquí tienes tu guía <strong>${guide.title}</strong> en formato PDF, lista para descargar:</p>
                 ${downloadBlock}
