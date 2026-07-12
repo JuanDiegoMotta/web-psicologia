@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import BoldPaymentButton from '@/components/BoldPaymentButton';
 import { getSupabaseAdmin } from '@/lib/supabase';
-import { computeBreakdown, BOLD_COMMISSION_RATE } from '@/lib/pricing';
+import { computeBreakdown, BOLD_COMMISSION_RATE, BOLD_MIN_AMOUNT_COP } from '@/lib/pricing';
 
 const fmt = (n: number) => `$${n.toLocaleString('es-CO')} COP`;
 
@@ -35,6 +35,20 @@ async function PagoLoader({ params }: { params: Promise<{ token: string }> }) {
   }
 
   const { base, commission, total } = computeBreakdown(link.amount);
+
+  // Defensa: un link con total por debajo del mínimo de Bold fallaría con BTN-001
+  // en la pasarela. En vez de mandar al cliente a ese error, mostramos un aviso.
+  if (total < BOLD_MIN_AMOUNT_COP) {
+    return (
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-sm border border-salvia p-8 text-center">
+        <div className="text-4xl mb-4">⚠️</div>
+        <h1 className="text-2xl font-bold text-tinta mb-2 font-serif">Este enlace no es válido</h1>
+        <p className="text-gray-600">
+          El importe de este enlace no es correcto. Por favor, escríbenos por WhatsApp y te enviaremos uno nuevo.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-2xl">

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser';
-import { computeBreakdown } from '@/lib/pricing';
+import { computeBreakdown, parseCopAmount, BOLD_MIN_AMOUNT_COP } from '@/lib/pricing';
 import type { PaymentLink } from './page';
 
 const fmt = (n: number) => `$${n.toLocaleString('es-CO')} COP`;
@@ -20,8 +20,11 @@ export default function AdminPagosClient({ initialLinks }: { initialLinks: Payme
 
   useEffect(() => setOrigin(window.location.origin), []);
 
-  const base = Number(amount);
-  const preview = Number.isInteger(base) && base > 0 ? computeBreakdown(base) : null;
+  // parseCopAmount tolera el formato con puntos ("140.000" -> 140000).
+  const base = parseCopAmount(amount);
+  const preview = base > 0 ? computeBreakdown(base) : null;
+  const belowMin = preview !== null && preview.total < BOLD_MIN_AMOUNT_COP;
+  const canSubmit = preview !== null && !belowMin;
 
   function linkUrl(token: string) {
     return `${origin}/pago/${token}`;
@@ -95,32 +98,39 @@ export default function AdminPagosClient({ initialLinks }: { initialLinks: Payme
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">Importe base (COP, sin decimales)</label>
+              <label className="block text-sm text-gray-600 mb-1">Importe base en COP (mínimo ${BOLD_MIN_AMOUNT_COP.toLocaleString('es-CO')})</label>
               <input
-                type="number"
-                min="1"
-                step="1"
+                type="text"
+                inputMode="numeric"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Ej: 150000"
                 required
+                aria-invalid={belowMin}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eucalipto"
               />
+              <p className="text-xs text-gray-400 mt-1">Escribe solo el número. Si pones puntos de miles (140.000) se interpretan bien.</p>
             </div>
 
-            {preview && (
+            {preview && !belowMin && (
               <div className="text-sm text-gray-600 bg-arena/50 rounded-xl p-4">
                 Base {fmt(preview.base)} + comisión 5% {fmt(preview.commission)} ={' '}
                 <strong className="text-eucalipto-darker">total {fmt(preview.total)}</strong>
               </div>
             )}
 
+            {belowMin && (
+              <p className="text-red-600 text-sm">
+                El total ({fmt(preview!.total)}) es menor que el mínimo de Bold (${BOLD_MIN_AMOUNT_COP.toLocaleString('es-CO')} COP). Sube el importe.
+              </p>
+            )}
+
             {status === 'error' && <p className="text-red-600 text-sm">{error}</p>}
 
             <button
               type="submit"
-              disabled={status === 'loading'}
-              className="bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-3 rounded-xl transition-colors disabled:opacity-60"
+              disabled={status === 'loading' || !canSubmit}
+              className="bg-eucalipto-dark hover:bg-eucalipto-darker text-white font-bold py-3 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {status === 'loading' ? 'Generando…' : 'Generar link'}
             </button>
